@@ -11,24 +11,44 @@ import Card from './components/Card.vue'
   <TrendChart
     title="Overview"
   />
-  <!-- <Card 
-    icon="fas fa-shopping-cart"
-    title="Sales" 
-    value="$4,850" 
-    changeValue="- 3%" 
-    :isUp="false" 
-    periodText="vs last month"
-  /> -->
+  <div class="row">
+    <Card 
+      icon="fa-regular fa-user"
+      title="Users" 
+      value="1,248" 
+      changeValue="12%" 
+      :isUp="true" 
+    />
+    <Card 
+      icon="fa-solid fa-filter"
+      title="Conversions" 
+      value="320" 
+      changeValue="8%" 
+      :isUp="true" 
+    />
+    <Card 
+      icon="fa-regular fa-clock"
+      title="Avg. time" 
+      value="4m 32s" 
+      changeValue="5%" 
+      :isUp="false" 
+    />
+  </div>
 </template>
 
 <style>
 :root {
+  --shadow-color: rgba(0, 0, 0, 0.07);
   --bg-color: rgb(249, 250, 254);
   --key-color-lighter: rgb(241, 237, 254);
   --key-color-light: rgb(230, 221, 253);
   --key-color-dark: rgb(112, 65, 250);
   --x1-color-light: rgb(228, 238, 253);
   --x1-color-dark: rgb(104, 167, 253);
+  --x2-color-light: rgb(232, 249, 240);
+  --x2-color-dark: rgb(45, 198, 122);
+  --x3-color-light: rgb(254, 242, 226);
+  --x3-color-dark: rgb(253, 155, 17);
   --white-color: rgb(254, 254, 254);
   --font-color-dark: rgb(20, 36, 62);
   --font-color-light: rgb(137, 149, 169);
@@ -49,7 +69,12 @@ body {
   padding: 53px 16px 0px 16px;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, var(--bg-color) 270px, transparent 100px); /* TODO: REMOVE */
+  background: linear-gradient(to bottom, var(--bg-color) 400px, transparent 100px); /* TODO: REMOVE */
+}
+
+.row {
+  display: flex;
+  gap: 4px;
 }
 
 .widget-full {

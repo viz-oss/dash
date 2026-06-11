@@ -33,12 +33,12 @@ defineProps({
       <i :class="[icon, 'user-icon']"></i>
     </div>
 
-    <h3 class="metric-title">{{ title }}</h3>
+    <div class="metric-title">{{ title }}</div>
     <div class="metric-value">{{ value }}</div>
 
     <div class="metric-change">
       <span class="trend-icon" :class="isUp ? 'up-arrow' : 'down-arrow'">
-        <i :class="isUp ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+        <i :class="isUp ? 'fa-solid fa-arrow-up' : 'fa-solid fa-arrow-down'"></i>
       </span>
       
       <span class="percentage">{{ changeValue }}</span>
@@ -48,78 +48,101 @@ defineProps({
 </template>
 
 <style scoped>
-/* Widget Card Container Styling */
+
 .widget-card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* Subtle shadow for depth */
-  padding: 30px 40px;
+  background: var(--white-color);
+  border-radius: 10px;
+  box-shadow: 0 0 4px var(--shadow-color);
   text-align: left;
-  max-width: 350px; /* Limits the card width nicely */
+  width: calc(32.33% - 20px);
+  height: 96px;
+  padding: 10px 14px;
 }
 
 /* User Icon Styling */
 .icon-container {
+  background: rgba(255, 0, 0, 0.323);
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  align-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
 }
 
 .user-icon {
-  font-size: 3rem;
-  color: #4c9aee; /* A nice primary blue color */
+  font-size: 14px;
+}
+
+.row .widget-card:nth-child(1) .icon-container {
+  background-color: var(--x1-color-light);
+}
+
+.row .widget-card:nth-child(1) .user-icon,
+.row .widget-card:nth-child(1) .trend-icon,
+.row .widget-card:nth-child(1) .percentage {
+  color: var(--x1-color-dark);
+}
+
+.row .widget-card:nth-child(2) .icon-container {
+  background-color: var(--x2-color-light);
+}
+.row .widget-card:nth-child(2) .user-icon,
+.row .widget-card:nth-child(2) .trend-icon,
+.row .widget-card:nth-child(2) .percentage {
+  color: var(--x2-color-dark);
+}
+
+.row .widget-card:nth-child(3) .icon-container {
+  background-color: var(--x3-color-light);
+}
+.row .widget-card:nth-child(3) .user-icon,
+.row .widget-card:nth-child(3) .trend-icon,
+.row .widget-card:nth-child(3) .percentage {
+  color: var(--x3-color-dark);
 }
 
 /* Metric Title (e.g., "Users") */
 .metric-title {
-  font-size: 1rem;
-  color: #6b7280; /* Gray text for secondary information */
-  margin: 0 0 15px 0;
-  font-weight: 500;
+  font-size: 10px;
+  color: var(--font-color-light);
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-weight: 400;
+  letter-spacing: -0.8px;
 }
 
 /* Large Value (e.g., "1,248") */
 .metric-value {
-  font-size: 3.5rem; /* Large and impactful font size */
-  color: #1f2937; /* Darker text for main metric */
-  margin-bottom: 20px;
-  line-height: 1.1;
+  font-size: 16px;
+  color: var(--font-color-dark);
+  font-weight: 600;
+  margin-top: 6px;  
 }
 
 /* Change Indicator Container */
 .metric-change {
+  margin-top: 7px;
   display: flex;
   align-items: center;
-  gap: 8px; /* Space between elements in the change row */
+  gap: 3px;
 }
 
 /* Trend Icon (The arrow) */
 .trend-icon {
-  color: #10b981; /* Green for positive trend */
-  font-size: 1rem;
+  font-size: 7px;
 }
 
 /* Percentage Change (+ 12%) */
 .percentage {
-  font-size: 1.1rem;
+  font-size: 7px;
   font-weight: 600;
-  color: #10b981; /* Green color for the increase */
 }
 
 /* VS Last Week Text */
 .vs-text {
-  font-size: 0.95rem;
-  color: #9ca3af; /* Lighter gray text */
+  font-size: 7px;
+  color: var(--font-color-light);
 }
 
-/* Simple Responsive Adjustments */
-@media (max-width: 480px) {
-  .widget-card {
-    padding: 20px 25px;
-    max-width: 90%;
-  }
-  .metric-value {
-    font-size: 3rem;
-  }
-}
 </style>

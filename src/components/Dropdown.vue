@@ -19,6 +19,6 @@
   color: var(--font-color-light);
   background-color: var(--white-color);
   margin: 2px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 4px var(--shadow-color);
 }
 </style>

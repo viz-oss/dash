@@ -51,7 +51,7 @@ const todayName = computed(() => {
   margin-top: 16px;
   margin-bottom: 16px;
   background-color: var(--white-color);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 0 4px var(--shadow-color);
 }
 
 .title {
