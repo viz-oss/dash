@@ -1,14 +1,53 @@
-/* Basic Reset and Body Styling */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f4f7fa; /* Light background for dashboard feel */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-}
+<script setup lang="ts">
+defineProps({
+  icon: {
+    type: String,
+    default: 'fas fa-users'
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  value: {
+    type: [String, Number],
+    required: true
+  },
+  changeValue: {
+    type: String,
+    required: true
+  },
+  isUp: {
+    type: Boolean,
+    default: true
+  },
+  periodText: {
+    type: String,
+    default: 'vs last week'
+  }
+})
+</script>
 
+<template>
+  <div class="widget-card">
+    <div class="icon-container">
+      <i :class="[icon, 'user-icon']"></i>
+    </div>
+
+    <h3 class="metric-title">{{ title }}</h3>
+    <div class="metric-value">{{ value }}</div>
+
+    <div class="metric-change">
+      <span class="trend-icon" :class="isUp ? 'up-arrow' : 'down-arrow'">
+        <i :class="isUp ? 'fas fa-caret-up' : 'fas fa-caret-down'"></i>
+      </span>
+      
+      <span class="percentage">{{ changeValue }}</span>
+      <span class="vs-text">{{ periodText }}</span>
+    </div>
+  </div>
+</template>
+
+<style scoped>
 /* Widget Card Container Styling */
 .widget-card {
   background: #ffffff;
@@ -83,3 +122,4 @@ body {
     font-size: 3rem;
   }
 }
+</style>
