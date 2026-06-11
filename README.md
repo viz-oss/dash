@@ -2,8 +2,14 @@
 
 ## Techstack
 
+- Typescript
 - Target: ES2022
 - VUE3
+- Pinia
+- Vite
+- ESLint
+- Vitest
+- Cypress
 
 ## Recommended IDE Setup
 
