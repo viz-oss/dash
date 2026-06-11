@@ -138,6 +138,18 @@ dist
 !.yarn/versions
 
 # Vite files
+*.timestamp-*-*.mjs
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Vitest
+__screenshots__/
+
+# Typescript
+*.tsbuildinfo
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
