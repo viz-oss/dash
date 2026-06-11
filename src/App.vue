@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import WorkspaceNav from './components/WorkspaceNav.vue'
+import TrendChart from './components/TrendChart.vue'
 import Card from './components/Card.vue'
 </script>
 
 <template>
   <WorkspaceNav 
     icon="fa-regular fa-face-smile"
+  />
+  <TrendChart
+    title="Overview"
   />
   <!-- <Card 
     icon="fas fa-shopping-cart"
@@ -45,7 +49,7 @@ body {
   padding: 53px 16px 0px 16px;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, var(--bg-color) 100px, transparent 100px); /* TODO: REMOVE */
+  background: linear-gradient(to bottom, var(--bg-color) 270px, transparent 100px); /* TODO: REMOVE */
 }
 
 .widget-full {
