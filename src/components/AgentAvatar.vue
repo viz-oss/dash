@@ -9,6 +9,7 @@ const eyeRight = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   window.addEventListener('mousemove', onMouseMove, { passive: true })
+  startAnimationLoop()
 
   if (osName.value === 'ios') {
     if (eyeLeft.value) {
@@ -23,6 +24,11 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('mousemove', onMouseMove)
 
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId)
+    animationFrameId = null
+  }
+
   if (returnToCenterTimer !== null) {
     clearTimeout(returnToCenterTimer)
     returnToCenterTimer = null
@@ -33,7 +39,7 @@ onBeforeUnmount(() => {
  * Move both pupils toward the cursor.
  */
 
-function lookAt(cursorX: number, cursorY: number) {
+function lookAt(cursorX: number, cursorY: number): void {
   updatePupil(eyeLeft.value, cursorX, cursorY)
   updatePupil(eyeRight.value, cursorX, cursorY)
 }
@@ -42,43 +48,56 @@ function lookAt(cursorX: number, cursorY: number) {
  * Update one pupil offset and clamp it to a small radius.
  */
 
-function updatePupil(eye: HTMLElement | null, cursorX: number, cursorY: number) {
+function updatePupil(
+  eye: HTMLElement | null,
+  cursorX: number | null,
+  cursorY: number | null,
+): void {
   if (!eye) {
     return
   }
 
-  const rect = eye.getBoundingClientRect()
-  const centerX = rect.left + rect.width / 2
-  const centerY = rect.top + rect.height / 2
-  const deltaX = cursorX - centerX
-  const deltaY = cursorY - centerY
-  const distance = Math.hypot(deltaX, deltaY)
+  const state = pupilState.get(eye) ?? { x: 0, y: 0 }
+  let targetX = 0
+  let targetY = 0
 
-  let moveX = 0
-  let moveY = 0
+  if (cursorX !== null && cursorY !== null) {
+    const rect = eye.getBoundingClientRect()
+    const centerX = rect.left + rect.width / 2
+    const centerY = rect.top + rect.height / 2
+    const deltaX = cursorX - centerX
+    const deltaY = cursorY - centerY
+    const distance = Math.hypot(deltaX, deltaY)
 
-  if (distance > 0) {
-    const ratio = Math.min(maxPupilOffset / distance, 1)
-    moveX = deltaX * ratio
-    moveY = deltaY * ratio
+    if (distance > 0) {
+      const ratio = Math.min(maxPupilOffset / distance, 1)
+      targetX = deltaX * ratio
+      targetY = deltaY * ratio
+    }
   }
 
-  eye.style.setProperty('--pupil-x', `${moveX.toFixed(2)}px`)
-  eye.style.setProperty('--pupil-y', `${moveY.toFixed(2)}px`)
+  const easing = pointerActive ? followEasing : returnEasing
+  state.x += (targetX - state.x) * easing
+  state.y += (targetY - state.y) * easing
+  pupilState.set(eye, state)
+
+  eye.style.setProperty('--pupil-x', `${state.x.toFixed(2)}px`)
+  eye.style.setProperty('--pupil-y', `${state.y.toFixed(2)}px`)
 }
 
 /**
  * Return pupils to center after brief mouse inactivity.
  */
 
-function scheduleReturnToCenter() {
+function scheduleReturnToCenter(): void {
   if (returnToCenterTimer) {
     clearTimeout(returnToCenterTimer)
   }
 
   returnToCenterTimer = setTimeout(() => {
-    centerPupil(eyeLeft.value)
-    centerPupil(eyeRight.value)
+    pointerActive = false
+    targetCursorX = null
+    targetCursorY = null
     returnToCenterTimer = null
   }, returnToCenterDelay)
 }
@@ -87,21 +106,51 @@ function scheduleReturnToCenter() {
  * Reset one pupil offset to center.
  */
 
-function centerPupil(eye: HTMLElement | null) {
+function centerPupil(eye: HTMLElement | null): void {
   if (!eye) {
     return
   }
 
+  pupilState.set(eye, { x: 0, y: 0 })
   eye.style.setProperty('--pupil-x', '0px')
   eye.style.setProperty('--pupil-y', '0px')
+}
+
+function animatePupils(): void {
+  if (targetCursorX !== null && targetCursorY !== null) {
+    lookAt(targetCursorX, targetCursorY)
+  } else {
+    updatePupil(eyeLeft.value, null, null)
+    updatePupil(eyeRight.value, null, null)
+  }
+
+  animationFrameId = requestAnimationFrame(animatePupils)
+}
+
+function startAnimationLoop(): void {
+  if (animationFrameId !== null) {
+    return
+  }
+
+  animationFrameId = requestAnimationFrame(animatePupils)
 }
 
 // Pupils follow the cursor with a small bounded offset.
 const maxPupilOffset = 2.8
 const returnToCenterDelay = 800
+const followEasing = 0.24
+const returnEasing = 0.1
 let returnToCenterTimer: ReturnType<typeof setTimeout> | null = null
+let animationFrameId: number | null = null
+let targetCursorX: number | null = null
+let targetCursorY: number | null = null
+let pointerActive = false
+const pupilState = new WeakMap<HTMLElement, { x: number; y: number }>()
+
 const onMouseMove = (event: MouseEvent) => {
-  lookAt(event.clientX, event.clientY)
+  pointerActive = true
+  targetCursorX = event.clientX
+  targetCursorY = event.clientY
   scheduleReturnToCenter()
 }
 </script>
@@ -112,6 +161,7 @@ const onMouseMove = (event: MouseEvent) => {
       🌵
       <div ref="eyeLeft" class="eye left"></div>
       <div ref="eyeRight" class="eye right"></div>
+      <div class="cloud">Agent session</div>
     </div>
   </div>
 </template>
@@ -168,6 +218,31 @@ const onMouseMove = (event: MouseEvent) => {
   background-color: black;
   border-radius: 50%;
   transform: translate(var(--pupil-x, 0px), var(--pupil-y, 0px));
-  transition: transform 100ms ease-out;
+  transition: none;
+}
+
+.cloud {
+  position: absolute;
+  left: -23px;
+  top: -42px;
+  width: 74px;
+  font-size: 12px;
+  color: var(--font-color-light);
+  background: var(--white-color);
+  box-shadow: 0 0 4px var(--shadow-color);
+  border-radius: 16px;
+  padding: 10px 14px;
+}
+
+.cloud::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  right: 29px;
+  width: 12px;
+  height: 12px;
+  background: var(--white-color);
+  box-shadow: 2px 2px 4px var(--shadow-color);
+  transform: rotate(45deg);
 }
 </style>
