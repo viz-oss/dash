@@ -1,41 +1,43 @@
 <script setup lang="ts">
 import WorkspaceNav from './components/WorkspaceNav.vue'
 import TrendChart from './components/TrendChart.vue'
-import Card from './components/Card.vue'
+import StatCard from './components/StatCard.vue'
+import RingChart from './components/RingChart.vue'
 </script>
 
 <template>
-  <WorkspaceNav 
+  <WorkspaceNav
     icon="fa-regular fa-face-smile"
     title="Project Name"
     username="Tester"
     description="Workspace for testing purposes"
   />
-  <TrendChart
-    title="Overview"
-  />
+  <TrendChart title="Overview" />
   <div class="row">
-    <Card 
+    <StatCard
       icon="fa-regular fa-user"
-      title="Users" 
-      value="1,248" 
-      changeValue="12%" 
-      :isUp="true" 
+      title="Users"
+      value="1,248"
+      changeValue="12%"
+      :isUp="true"
     />
-    <Card 
+    <StatCard
       icon="fa-solid fa-filter"
-      title="Conversions" 
-      value="320" 
-      changeValue="8%" 
-      :isUp="true" 
+      title="Conversions"
+      value="320"
+      changeValue="8%"
+      :isUp="true"
     />
-    <Card 
+    <StatCard
       icon="fa-regular fa-clock"
-      title="Avg. time" 
-      value="4m 32s" 
-      changeValue="5%" 
-      :isUp="false" 
+      title="Avg. time"
+      value="4m 32s"
+      changeValue="5%"
+      :isUp="false"
     />
+  </div>
+  <div class="row">
+    <RingChart />
   </div>
 </template>
 
@@ -72,7 +74,11 @@ body {
   padding: 53px 16px 0px 16px;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(to bottom, var(--bg-color) 400px, transparent 100px); /* TODO: REMOVE */
+  background: linear-gradient(
+    to bottom,
+    var(--bg-color) 400px,
+    transparent 100px
+  ); /* TODO: REMOVE */
 }
 
 .row {
@@ -80,7 +86,21 @@ body {
   gap: 4px;
 }
 
-.widget-full {
+.card {
+  background: var(--white-color);
+  border-radius: 10px;
+  box-shadow: 0 0 4px var(--shadow-color);
+  text-align: left;
+  width: calc(32.33% - 20px);
+  height: 96px;
+  padding: 10px 14px;
+}
+
+.card.double {
+  width: calc(66.66% - 20px);
+}
+
+.card.full {
   width: calc(100% - 32px);
 }
 </style>
