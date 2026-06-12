@@ -32,7 +32,15 @@ const todayName = computed(() => {
     <div class="top">
       <div class="title">{{ title }}</div>
     </div>
-    <div class="middle"></div>
+    <div
+      class="middle"
+      style="
+        background-image: url('public/_concept-wave-graph.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      "
+    ></div>
     <div class="bottom">
       <div class="days">
         <div v-for="day in days" :key="day" class="day-name" :class="{ today: day === todayName }">
