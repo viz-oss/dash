@@ -17,13 +17,14 @@ onMounted(() => {
     eyeLeft.value.addEventListener('animationiteration', onBlinkIteration)
   }
 
+  console.log(osName.value)
   if (osName.value === 'ios') {
-    if (eyeLeft.value) {
-      eyeLeft.value.style.left = '27px'
-    }
-    if (eyeRight.value) {
-      eyeRight.value.style.right = '0px'
-    }
+    if (eyeLeft.value) eyeLeft.value.style.left = '27px'
+    if (eyeRight.value) eyeRight.value.style.right = '0px'
+  }
+  else if (osName.value === 'macos') {
+    if (eyeLeft.value) eyeLeft.value.style.left = '16px'
+    if (eyeRight.value) eyeRight.value.style.right = '12px'
   }
 })
 
@@ -252,22 +253,22 @@ const onMouseMove = (event: MouseEvent) => {
 
 .cloud {
   position: absolute;
-  left: -23px;
-  top: -42px;
-  width: 74px;
+  left: -30px;
+  top: -37px;
+  width: 80px;
   font-size: 12px;
   color: var(--font-color-light);
   background: var(--white-color);
   box-shadow: 0 0 4px var(--shadow-color);
   border-radius: 16px;
-  padding: 10px 14px;
+  padding: 8px 10px;
 }
 
 .cloud::after {
   content: '';
   position: absolute;
   bottom: -6px;
-  right: 29px;
+  right: 32px;
   width: 12px;
   height: 12px;
   background: var(--white-color);
