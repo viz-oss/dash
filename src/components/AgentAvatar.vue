@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { useOS } from '@/composables/useOS'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
+import '@douxcode/vue-spring-bottom-sheet/dist/style.css'
+
 const { osName } = useOS()
+const sheet = ref(false)
 
 // Cactus eye positioning
 const cactus = ref<HTMLElement | null>(null)
@@ -186,7 +190,7 @@ const onMouseMove = (event: MouseEvent) => {
 </script>
 
 <template>
-  <div class="card">
+  <div class="card" @click="sheet = true">
     <div ref="cactus" class="cactus">
       🌵
       <div ref="eyeLeft" class="eye left"></div>
@@ -194,6 +198,7 @@ const onMouseMove = (event: MouseEvent) => {
       <div class="cloud">Agent session</div>
     </div>
   </div>
+  <BottomSheet v-model="sheet"> Your content </BottomSheet>
 </template>
 
 <style scoped>
