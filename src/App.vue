@@ -7,6 +7,7 @@ import AgentAvatar from './components/AgentAvatar.vue'
 </script>
 
 <template>
+  <img src="/public/_concept-mobile.png" />
   <WorkspaceNav
     icon="fa-regular fa-face-smile"
     title="Project Name"
@@ -41,6 +42,7 @@ import AgentAvatar from './components/AgentAvatar.vue'
     <RingChart />
     <AgentAvatar />
   </div>
+  <img src="/public/_landscape-mountains.png" style="margin-top: 20px" />
 </template>
 
 <style>
@@ -66,21 +68,18 @@ body {
   background-color: var(--bg-color);
   min-height: 100vh;
   margin: 0;
-  /*background-image: url('/public/dash-concept.png');*/ /* TODO: REMOVE */
-  background-size: cover; /* TODO: REMOVE */
-  background-position: center; /* TODO: REMOVE */
-  background-repeat: no-repeat; /* TODO: REMOVE */
 }
 
 #app {
-  padding: 53px 16px 0px 16px;
+  padding: 0px 16px 0px 16px;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
+  /* TODO: REMOVE */
+  /* background: linear-gradient(
     to bottom,
     var(--bg-color) 400px,
     transparent 100px
-  ); /* TODO: REMOVE */
+  );  */
 }
 
 .row {
@@ -105,5 +104,11 @@ body {
 
 .card.full {
   width: calc(100% - 32px);
+}
+
+.card .title {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--font-color-dark);
 }
 </style>

@@ -20,8 +20,10 @@
   },
   "dependencies": {
     "@douxcode/vue-spring-bottom-sheet": "^3.2.0",
+    "apexcharts": "^5.15.0",
     "pinia": "^3.0.4",
-    "vue": "^3.5.32"
+    "vue": "^3.5.32",
+    "vue3-apexcharts": "^1.11.1"
   },
   "devDependencies": {
     "@tsconfig/node24": "^24.0.4",

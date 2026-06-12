@@ -56,12 +56,6 @@ const todayName = computed(() => {
   height: 160px;
 }
 
-.title {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--font-color-dark);
-}
-
 .middle {
   height: 128px;
 }
