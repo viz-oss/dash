@@ -54,8 +54,6 @@ const todayName = computed(() => {
 <style scoped>
 .trend-chart {
   height: 160px;
-  margin-top: 16px;
-  margin-bottom: 16px;
 }
 
 .title {

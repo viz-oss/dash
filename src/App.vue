@@ -3,6 +3,7 @@ import WorkspaceNav from './components/WorkspaceNav.vue'
 import TrendChart from './components/TrendChart.vue'
 import StatCard from './components/StatCard.vue'
 import RingChart from './components/RingChart.vue'
+import AgentAvatar from './components/AgentAvatar.vue'
 </script>
 
 <template>
@@ -38,6 +39,7 @@ import RingChart from './components/RingChart.vue'
   </div>
   <div class="row">
     <RingChart />
+    <AgentAvatar />
   </div>
 </template>
 
@@ -64,7 +66,7 @@ body {
   background-color: var(--bg-color);
   min-height: 100vh;
   margin: 0;
-  background-image: url('/public/dash-concept.png'); /* TODO: REMOVE */
+  /*background-image: url('/public/dash-concept.png');*/ /* TODO: REMOVE */
   background-size: cover; /* TODO: REMOVE */
   background-position: center; /* TODO: REMOVE */
   background-repeat: no-repeat; /* TODO: REMOVE */
@@ -94,10 +96,11 @@ body {
   width: calc(32.33% - 20px);
   height: 96px;
   padding: 10px 14px;
+  margin-top: 16px;
 }
 
 .card.double {
-  width: calc(66.66% - 20px);
+  width: calc(64.66% - 8px);
 }
 
 .card.full {
