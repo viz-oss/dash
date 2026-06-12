@@ -4,12 +4,18 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 const { osName } = useOS()
 
 // Cactus eye positioning
+const cactus = ref<HTMLElement | null>(null)
 const eyeLeft = ref<HTMLElement | null>(null)
 const eyeRight = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   window.addEventListener('mousemove', onMouseMove, { passive: true })
   startAnimationLoop()
+  randomizeBlinkTiming(true)
+
+  if (eyeLeft.value) {
+    eyeLeft.value.addEventListener('animationiteration', onBlinkIteration)
+  }
 
   if (osName.value === 'ios') {
     if (eyeLeft.value) {
@@ -23,6 +29,10 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('mousemove', onMouseMove)
+
+  if (eyeLeft.value) {
+    eyeLeft.value.removeEventListener('animationiteration', onBlinkIteration)
+  }
 
   if (animationFrameId !== null) {
     cancelAnimationFrame(animationFrameId)
@@ -135,6 +145,25 @@ function startAnimationLoop(): void {
   animationFrameId = requestAnimationFrame(animatePupils)
 }
 
+function randomizeBlinkTiming(setDelay = false): void {
+  if (!cactus.value) {
+    return
+  }
+
+  // Keep blinks fairly sparse and natural.
+  const interval = 12 + Math.random() * 12
+  cactus.value.style.setProperty('--agent-blink-interval', `${interval.toFixed(2)}s`)
+
+  if (setDelay) {
+    const delay = -Math.random() * interval
+    cactus.value.style.setProperty('--agent-blink-delay', `${delay.toFixed(2)}s`)
+  }
+}
+
+function onBlinkIteration(): void {
+  randomizeBlinkTiming(false)
+}
+
 // Pupils follow the cursor with a small bounded offset.
 const maxPupilOffset = 2.8
 const returnToCenterDelay = 800
@@ -157,7 +186,7 @@ const onMouseMove = (event: MouseEvent) => {
 
 <template>
   <div class="card">
-    <div class="cactus">
+    <div ref="cactus" class="cactus">
       🌵
       <div ref="eyeLeft" class="eye left"></div>
       <div ref="eyeRight" class="eye right"></div>
@@ -244,5 +273,33 @@ const onMouseMove = (event: MouseEvent) => {
   background: var(--white-color);
   box-shadow: 2px 2px 4px var(--shadow-color);
   transform: rotate(45deg);
+}
+
+@keyframes agent-eye-blink {
+  0%,
+  24.8%,
+  26.0%,
+  73.9%,
+  75.1%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  25.05%,
+  74.15% {
+    transform: scaleY(0.35);
+  }
+
+  25.35%,
+  25.75%,
+  74.45%,
+  74.85% {
+    transform: scaleY(0.08);
+  }
+
+  25.2%,
+  74.3% {
+    transform: scaleY(0.16);
+  }
 }
 </style>
