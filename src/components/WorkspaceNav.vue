@@ -7,6 +7,18 @@ defineProps({
     type: String,
     default: 'fa-regular fa-face-smile'
   },
+  title: {
+    type: String,
+    default: 'Project Name'
+  },
+  username: {
+    type: String,
+    default: 'Tester'
+  },
+  description: {
+    type: String,
+    default: 'Workspace for testing purposes'
+  }
 })
 </script>
 
@@ -14,8 +26,8 @@ defineProps({
   <div class="widget-full workspace-nav">
     <Icon :icon="icon" />
     <div class="text">
-        <div class="title">Project ABC, Tester</div>
-        <div class="description">Workspace for testing purposes</div>
+        <div class="title">{{ title }}, {{ username }}</div>
+        <div class="description">{{ description }}</div>
     </div>
     <Dropdown style="margin-left: auto;" />
   </div>

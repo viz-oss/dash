@@ -7,6 +7,9 @@ import Card from './components/Card.vue'
 <template>
   <WorkspaceNav 
     icon="fa-regular fa-face-smile"
+    title="Project Name"
+    username="Tester"
+    description="Workspace for testing purposes"
   />
   <TrendChart
     title="Overview"
