@@ -3,7 +3,6 @@
 ## Techstack
 
 - Typescript
-- Target: ES2022
 - VUE3
 - Pinia
 - Vite

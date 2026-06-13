@@ -21,13 +21,16 @@ onMounted(() => {
     eyeLeft.value.addEventListener('animationiteration', onBlinkIteration)
   }
 
-  if (osName.value === 'ios') {
+  console.log('Detected OS:', osName.value)
+  if (osName.value === 'Windows') {
     if (eyeLeft.value) eyeLeft.value.style.left = '27px'
     if (eyeRight.value) eyeRight.value.style.right = '0px'
-  }
-  else if (osName.value === 'macos') {
+  } else if (osName.value === 'macOS') {
     if (eyeLeft.value) eyeLeft.value.style.left = '16px'
     if (eyeRight.value) eyeRight.value.style.right = '12px'
+  } else if (osName.value === 'iOS') {
+    if (eyeLeft.value) eyeLeft.value.style.left = '27px'
+    if (eyeRight.value) eyeRight.value.style.right = '0px'
   }
 })
 
