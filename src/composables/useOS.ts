@@ -24,17 +24,34 @@ export function useOS(): UseOSReturn {
 
   onMounted(() => {
     const nav = navigator as ExtendedNavigator
+    let platform: string;
 
     if (nav.userAgentData?.platform) {
-      const platform = nav.userAgentData.platform.toLowerCase()
-      isMac.value = platform.includes('macos')
-      isWindows.value = platform.includes('windows')
-      osName.value = platform
+      platform = nav.userAgentData.platform.toLowerCase();
+    } else if (nav.platform) {
+      platform = nav.platform.toLowerCase();
     } else {
-      const platform = nav.platform.toLowerCase()
-      isMac.value = platform.includes('mac')
-      isWindows.value = platform.includes('win')
-      osName.value = isMac.value ? 'macos' : isWindows.value ? 'windows' : 'unknown'
+      platform = 'unknown';
+    }
+
+    isMac.value = false;
+    isWindows.value = false;
+
+    if (platform.includes('mac') || platform.includes('macos')) {
+      isMac.value = true;
+      osName.value = 'macOS';
+    } else if (platform.includes('win') || platform.includes('windows')) {
+      isWindows.value = true;
+      osName.value = 'Windows';
+    } else if (platform.includes('android')) {
+      osName.value = 'Android';
+    } else if (platform.includes('ios') || platform.includes('ipad')) {
+      osName.value = 'iOS';
+    } else if (platform.includes('linux')) {
+      osName.value = 'Linux';
+    } else {
+      // Fallback to the detected platform name or a generic message
+      osName.value = platform.length > 10 ? platform : 'unknown_os';
     }
   })
 
