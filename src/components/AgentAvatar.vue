@@ -3,6 +3,14 @@ import { useOS } from '@/composables/useOS'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
 import '@douxcode/vue-spring-bottom-sheet/dist/style.css'
+import Chat from './Chat.vue'
+
+defineProps({
+  hint: {
+    type: String,
+    default: 'Agent session',
+  },
+})
 
 const { osName } = useOS()
 const sheet = ref(false)
@@ -21,7 +29,6 @@ onMounted(() => {
     eyeLeft.value.addEventListener('animationiteration', onBlinkIteration)
   }
 
-  console.log('Detected OS:', osName.value)
   if (osName.value === 'Windows') {
     if (eyeLeft.value) eyeLeft.value.style.left = '27px'
     if (eyeRight.value) eyeRight.value.style.right = '0px'
@@ -197,10 +204,12 @@ const onMouseMove = (event: MouseEvent) => {
       🌵
       <div ref="eyeLeft" class="eye left"></div>
       <div ref="eyeRight" class="eye right"></div>
-      <div class="cloud">Agent session</div>
+      <div class="cloud">{{ hint }}</div>
     </div>
   </div>
-  <BottomSheet v-model="sheet"> Your content </BottomSheet>
+  <BottomSheet v-model="sheet">
+    <Chat url="https://ai.grindwallet.com/ask?q=%message%&ssid=%ssid%}" />
+  </BottomSheet>
 </template>
 
 <style scoped>
