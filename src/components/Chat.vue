@@ -97,7 +97,7 @@ const send = async (text: string) => {
       </div>
       <!-- Typing Indicator -->
       <div v-if="isLoadingTyping" class="message-bubble left typing-indicator">
-        <div style="padding-left: 8px; font-size: 14px">
+        <div style="padding: 0 8px; font-size: 14px">
           <span class="dot">&bull;</span>
           <span class="dot">&bull;</span>
           <span class="dot">&bull;</span>
@@ -137,6 +137,7 @@ const send = async (text: string) => {
 /* Message Bubble Styling (General) */
 .message-bubble {
   max-width: 70%;
+  width: fit-content;
   padding: 10px 15px;
   margin-bottom: 15px;
   border-radius: 20px;
