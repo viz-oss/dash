@@ -3,7 +3,9 @@ import { ref } from 'vue'
 import type { ApexOptions } from 'apexcharts'
 import apexchart from 'vue3-apexcharts'
 
-const series = ref([80, 30]) 
+const title = ref("Company's wiki")
+const series = ref([80, 30])
+const seriesDesc = ref(['finished writing', 'team use'])
 
 const chartOptions = ref<ApexOptions>({
   chart: {
@@ -31,7 +33,7 @@ const chartOptions = ref<ApexOptions>({
     },
   },
   stroke: {
-    lineCap: 'round'
+    lineCap: 'round',
   },
   colors: ['rgb(112, 65, 250)', 'rgb(173, 172, 254)'],
 })
@@ -39,17 +41,20 @@ const chartOptions = ref<ApexOptions>({
 
 <template>
   <div class="card double">
-    <apexchart 
-      type="radialBar" 
+    <apexchart
+      type="radialBar"
       width="140"
-      height="140" 
-      :options="chartOptions" 
+      height="140"
+      :options="chartOptions"
       :series="series"
-      style="width: 134px; margin-left: -26px; margin-top: -22px;"
+      style="width: 134px; margin-left: -26px; margin-top: -22px"
     />
-    <div>
-      <h3 style="font-size: 18px; font-weight: 500; margin-bottom: 4px;">80%</h3>
-      <p style="font-size: 14px; color: rgb(112, 65, 250);">Completed</p>
+    <div class="right">
+      <div class="title">{{ title }}</div>
+      <div class="percent">{{ series[0] }}%</div>
+      <div class="description">{{ seriesDesc[0] }}</div>
+      <div class="percent">{{ series[1] }}%</div>
+      <div class="description">{{ seriesDesc[1] }}</div>
     </div>
   </div>
 </template>
@@ -58,5 +63,23 @@ const chartOptions = ref<ApexOptions>({
 .card {
   display: flex;
   flex-direction: row;
+}
+
+.right {
+  width: 50%;
+  text-align: right;
+}
+
+.percent {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 4px;
+  margin-bottom: 0px;
+}
+
+.description {
+  margin-top: 0px;
+  font-size: 10px;
+  color: var(--key-color-dark);
 }
 </style>
