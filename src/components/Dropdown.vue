@@ -3,7 +3,7 @@
 <template>
   <div class="icon">
     <!-- <i class="fa-solid fa-chevron-down"></i> TODO: jak nie będę robił tutaj dropdown to użyć icon -->
-    <i class="fa-regular fa-bell"></i>
+    <i class="fa-regular fa-pen-to-square"></i>
   </div>
 </template>
 
