@@ -39,7 +39,7 @@ import AgentAvatar from './components/AgentAvatar.vue'
     />
   </div>
   <div class="row">
-    <RingChart />
+    <RingChart title="Company's wiki" :series="{ 'finished writing': 81, 'team use': 32 }" />
     <AgentAvatar />
   </div>
   <img src="/public/_landscape-mountains.png" style="margin-top: 20px" />

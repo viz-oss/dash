@@ -3,9 +3,20 @@ import { ref } from 'vue'
 import type { ApexOptions } from 'apexcharts'
 import apexchart from 'vue3-apexcharts'
 
-const title = ref("Company's wiki")
-const series = ref([80, 30])
-const seriesDesc = ref(['finished writing', 'team use'])
+defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+  series: {
+    type: Object as () => Record<string, number>,
+    required: true,
+  },
+})
+
+const formatSeries = (series: Record<string, number>) => {
+  return Object.values(series)
+}
 
 const chartOptions = ref<ApexOptions>({
   chart: {
@@ -46,15 +57,15 @@ const chartOptions = ref<ApexOptions>({
       width="140"
       height="140"
       :options="chartOptions"
-      :series="series"
+      :series="formatSeries(series)"
       style="width: 134px; margin-left: -26px; margin-top: -22px"
     />
     <div class="right">
       <div class="title">{{ title }}</div>
-      <div class="percent">{{ series[0] }}%</div>
-      <div class="description">{{ seriesDesc[0] }}</div>
-      <div class="percent">{{ series[1] }}%</div>
-      <div class="description">{{ seriesDesc[1] }}</div>
+      <div class="percent">{{ formatSeries(series)[0] }}%</div>
+      <div class="description">{{ Object.keys(series)[0] }}</div>
+      <div class="percent">{{ formatSeries(series)[1] }}%</div>
+      <div class="description">{{ Object.keys(series)[1] }}</div>
     </div>
   </div>
 </template>
