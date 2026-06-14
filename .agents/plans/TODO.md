@@ -1,13 +1,17 @@
 # TODO
 
+- postawić wiki na serwerze i dokończyć
 - podłączenie metryki wiki do endpointu API albo lepiej MCP
 
 ---
 
-- jeszcze dodać na chwilę jeden rząd ikon - czy się scrolluje ?
-- edit zmienić na normalną ikonę z callabckiem click
+- edit: zmienić na normalną ikonę z callabckiem click
 - edit: powiawiają się (x) oraz (+) na dole po środku (editmode w pinia)
-- (+) dodanie nowego kafelka to normalnie rozmowa z agentem
+  równiez mozna zmienic ikone workspace, nazwe i opis, i theme
+- (+) dodanie nowego kafelka:
+  na początek przetestować zwykłą rozmowę
+  u góry kwadraty z listą kafelków, na dole pole do rozmowy (lub wklejenia endpointu)
+  gdy wybierzemy kafelek to przechodzi dalej (dostępne < wstecz) i wtedy jest plansza z opcjami
 - navbar i przełączanie workspace
 - jakiś persistent zapisujący layout i workspace
 
