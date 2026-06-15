@@ -28,7 +28,7 @@ defineProps({
         <div class="title">{{ title }}, {{ username }}</div>
         <div class="description">{{ description }}</div>
     </div>
-    <Icon :icon="'fa-regular fa-pen-to-square'" style="margin-left: auto" />
+    <Icon :icon="'fa-regular fa-pen-to-square'" class="edit-icon" />
   </div>
 </template>
 
@@ -63,5 +63,15 @@ defineProps({
   font-weight: 500;
   color: var(--font-color-light);
   margin-bottom: 2px;
+}
+
+.edit-icon {
+  margin-left: auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  color: var(--font-color-dark);
+  background-color: var(--white-color);
+  box-shadow: 0 0 4px var(--shadow-color);
 }
 </style>

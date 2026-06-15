@@ -8,7 +8,6 @@ DEMO z API/MCP
 
 ---
 
-- edit: zmienić na normalną ikonę z callabckiem click
 - edit: powiawiają się (x) oraz (+) na dole po środku (editmode w pinia)
   równiez mozna zmienic ikone workspace, nazwe i opis, i theme
 - (+) dodanie nowego kafelka:
