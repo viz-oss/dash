@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Icon from './Icon.vue';
-import Dropdown from './Dropdown.vue';
 
 defineProps({
   icon: {
@@ -29,7 +28,7 @@ defineProps({
         <div class="title">{{ title }}, {{ username }}</div>
         <div class="description">{{ description }}</div>
     </div>
-    <Dropdown style="margin-left: auto;" />
+    <Icon :icon="'fa-regular fa-pen-to-square'" style="margin-left: auto" />
   </div>
 </template>
 
