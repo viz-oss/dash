@@ -32,7 +32,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="card">
+  <div :class="'card' + (editmodeStore.editmode ? ' editmode' : '')">
     <i v-if="editmodeStore.editmode" class="fa-solid fa-xmark close"></i>
     <div class="icon-container">
       <i :class="[icon, 'user-icon']"></i>

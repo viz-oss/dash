@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import WorkspaceNav from './components/WorkspaceNav.vue'
 import TrendChart from './components/TrendChart.vue'
 import StatCard from './components/StatCard.vue'
@@ -111,6 +112,15 @@ body {
   font-size: 11px;
   font-weight: 500;
   color: var(--font-color-dark);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+.card.editmode {
+  animation: float 1s ease-in-out infinite;
 }
 
 .card .close {
