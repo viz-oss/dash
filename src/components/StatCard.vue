@@ -2,6 +2,7 @@
 import { useEditmodeStore } from '../stores/editmode';
 
 const editmodeStore = useEditmodeStore();
+const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`;
 
 defineProps({
   icon: {
@@ -32,7 +33,7 @@ defineProps({
 </script>
 
 <template>
-  <div :class="'card' + (editmodeStore.editmode ? ' editmode' : '')">
+  <div :class="'card' + (editmodeStore.editmode ? ' editmode' : '')" :style="{ '--float-delay': randomFloatDelay }">
     <i v-if="editmodeStore.editmode" class="fa-solid fa-xmark close"></i>
     <div class="icon-container">
       <i :class="[icon, 'user-icon']"></i>

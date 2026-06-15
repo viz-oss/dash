@@ -120,7 +120,8 @@ body {
 }
 
 .card.editmode {
-  animation: float 1s ease-in-out infinite;
+  animation: float 2s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
 }
 
 .card .close {
