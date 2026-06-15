@@ -1,0 +1,3 @@
+# Data persistence
+
+@capacitor/preferences
