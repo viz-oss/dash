@@ -1,7 +1,10 @@
 # TODO
 
-- postawić wiki na serwerze i dokończyć
-- podłączenie metryki wiki do endpointu API albo lepiej MCP
+DEMO z API/MCP
+
+- wymyśleć ciekawy use-case
+- podłączenie do klasycznego API jakiegoś istniejącego serwisu
+- podłączenie do klasycznego MCP jakiegoś istniejącego serwisu
 
 ---
 
@@ -14,6 +17,19 @@
   gdy wybierzemy kafelek to przechodzi dalej (dostępne < wstecz) i wtedy jest plansza z opcjami
 - navbar i przełączanie workspace
 - jakiś persistent zapisujący layout i workspace
+- persistent do cache
+- prawdziwy plot wykresu 'Overview'
+  - na podstawie prawdziwych danych
+  - przełączanie zakresu (tydzień/miesiąc) - przyda się Dropdown
+
+---
+
+DEMO z WIKI
+
+- postawić wiki na serwerze i dokończyć
+- podłączenie metryki wiki do endpointu API albo lepiej MCP
+- uzupełnianie wiki przez agenta
+- wykres w jakich dniach była uzupełniana
 
 ---
 
