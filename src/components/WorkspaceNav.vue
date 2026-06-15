@@ -31,7 +31,7 @@ defineProps({
         <div class="title">{{ title }}, {{ username }}</div>
         <div class="description">{{ description }}</div>
     </div>
-    <Icon :icon="'fa-regular fa-pen-to-square'" class="edit-icon" @click="editmodeStore.toggle" />
+    <Icon :icon="'fa-regular fa-pen-to-square'" class="edit-icon" :class="{ 'edit-icon--active': editmodeStore.editmode }" @click="editmodeStore.toggle" />
   </div>
 </template>
 
@@ -76,5 +76,13 @@ defineProps({
   color: var(--font-color-dark);
   background-color: var(--white-color);
   box-shadow: 0 0 4px var(--shadow-color);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.edit-icon--active {
+  color: var(--white-color);
+  background-color: var(--key-color-dark);
+  box-shadow: inset 0 1px 3px var(--shadow-color);
 }
 </style>
