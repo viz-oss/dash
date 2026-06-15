@@ -88,6 +88,7 @@ body {
 }
 
 .card {
+  position: relative;
   background: var(--white-color);
   border-radius: 10px;
   box-shadow: 0 0 4px var(--shadow-color);
@@ -111,4 +112,22 @@ body {
   font-weight: 500;
   color: var(--font-color-dark);
 }
+
+.card .close {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  font-size: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: var(--font-color-dark);
+  color: var(--white-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+}
+
 </style>

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useEditmodeStore } from '../stores/editmode';
+
+const editmodeStore = useEditmodeStore();
+
 defineProps({
   icon: {
     type: String,
@@ -29,6 +33,7 @@ defineProps({
 
 <template>
   <div class="card">
+    <i v-if="editmodeStore.editmode" class="fa-solid fa-xmark close"></i>
     <div class="icon-container">
       <i :class="[icon, 'user-icon']"></i>
     </div>
