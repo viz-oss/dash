@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import Icon from './Icon.vue';
+import { useEditmodeStore } from '../stores/editmode';
+
+const editmodeStore = useEditmodeStore();
 
 defineProps({
   icon: {
@@ -28,7 +31,7 @@ defineProps({
         <div class="title">{{ title }}, {{ username }}</div>
         <div class="description">{{ description }}</div>
     </div>
-    <Icon :icon="'fa-regular fa-pen-to-square'" class="edit-icon" />
+    <Icon :icon="'fa-regular fa-pen-to-square'" class="edit-icon" @click="editmodeStore.toggle" />
   </div>
 </template>
 
