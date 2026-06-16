@@ -1,7 +1,6 @@
 # TODO
 
-- ikona workspace (plan) nowy komponent z Icon w środku
-  - obramowanie w editmode
+- ikona workspace
   - klik -> sheet
   - wybór emoji, dominujący kolor i na sheet po ludzku też można zmienić nazwe i opis
 - (x) zamyka component

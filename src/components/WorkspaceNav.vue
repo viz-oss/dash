@@ -27,10 +27,12 @@ defineProps({
 
 <template>
   <div class="widget-full workspace-nav">
-    <WorkspaceIcon />
-    <div class="text">
-      <div class="title">{{ title }}, {{ username }}</div>
-      <div class="description">{{ description }}</div>
+    <div class="workspace-info">
+      <WorkspaceIcon />
+      <div class="text">
+        <div class="title">{{ title }}, {{ username }}</div>
+        <div class="description">{{ description }}</div>
+      </div>
     </div>
     <Icon
       icon="fa-regular fa-pen-to-square"
@@ -51,8 +53,20 @@ defineProps({
   height: 35px;
 }
 
+.workspace-info {
+  border: 2px solid transparent;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.editmode .workspace-info {
+  border: 2px solid var(--edit-color);
+}
+
 .text {
-  margin-left: 11px;
+  margin: 0 11px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -88,7 +102,7 @@ defineProps({
 
 .edit-icon--active {
   color: var(--white-color);
-  background-color: var(--key-color-dark);
+  background-color: var(--edit-color);
   box-shadow: inset 0 1px 3px var(--shadow-color);
 }
 </style>

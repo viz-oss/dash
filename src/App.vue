@@ -111,6 +111,7 @@ const layout = ref<Layout>([
     :use-css-transforms="true"
     :responsive="false"
     class="dashboard-grid"
+    :class="editmodeStore.editmode ? 'editmode' : ''"
   >
     <GridItem
       v-for="item in layout"
@@ -144,6 +145,7 @@ const layout = ref<Layout>([
   --white-color: rgb(254, 254, 254);
   --font-color-dark: rgb(20, 36, 62);
   --font-color-light: rgb(137, 149, 169);
+  --edit-color: rgb(112, 65, 250);
 }
 
 body {
@@ -235,7 +237,7 @@ body {
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background-color: var(--font-color-dark);
+  background-color: var(--edit-color);
   color: var(--white-color);
   display: flex;
   align-items: center;
