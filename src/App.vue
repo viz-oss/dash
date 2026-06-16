@@ -153,6 +153,13 @@ body {
   margin: 0;
   -webkit-user-select: none; /* Safari */
   user-select: none;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  overflow-y: scroll;
+}
+
+&::-webkit-scrollbar {
+  display: none;
 }
 
 .allow-select {
@@ -236,5 +243,4 @@ body {
   cursor: pointer;
   z-index: 1;
 }
-
 </style>

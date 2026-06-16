@@ -3,25 +3,23 @@
 - ikona workspace (plan) nowy komponent z Icon w środku
   - obramowanie w editmode
   - klik -> sheet
-  - wybór emoji i dominujący kolor
-- można zmienić nazwe i opis
-- vue-grid-layout
+  - wybór emoji, dominujący kolor i na sheet po ludzku też można zmienić nazwe i opis
+- (x) zamyka component
+- (+) dodanie nowego kafelka:
+  u góry kwadraty z listą kafelków, na dole pole do rozmowy (lub wklejenia endpointu)
+  gdy wybierzemy kafelek to przechodzi dalej (dostępne < wstecz) i wtedy jest plansza z opcjami
 
 ---
 
 DEMO z API/MCP
 
-- wymyśleć ciekawy use-case
-- podłączenie do klasycznego API jakiegoś istniejącego serwisu
+- klasyczne API: kursy kryptowalut (i moze da się stan portfela)
 - podłączenie do klasycznego MCP jakiegoś istniejącego serwisu
 
 ---
 
-- (+) dodanie nowego kafelka:
-  u góry kwadraty z listą kafelków, na dole pole do rozmowy (lub wklejenia endpointu)
-  gdy wybierzemy kafelek to przechodzi dalej (dostępne < wstecz) i wtedy jest plansza z opcjami
 - navbar i przełączanie workspace
-- jakiś persistent zapisujący layout i workspace
+- jakiś persistent zapisujący layout i workspace (na karcie claude na macu opis)
 - persistent do cache
 - prawdziwy plot wykresu 'Overview'
   - na podstawie prawdziwych danych
