@@ -1,7 +1,9 @@
 # TODO
 
-- (x) wszędzie
-- zmienic ikone workspace i wybrać dominujący kolor
+- ikona workspace (plan) nowy komponent z Icon w środku
+  - obramowanie w editmode
+  - klik -> sheet
+  - wybór emoji i dominujący kolor
 - można zmienić nazwe i opis
 - vue-grid-layout
 

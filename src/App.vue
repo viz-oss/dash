@@ -10,7 +10,6 @@ import Landscape from './components/Landscape.vue'
 <template>
   <img src="/public/_concept-mobile.png" />
   <WorkspaceNav
-    icon="fa-regular fa-face-smile"
     title="Project Name"
     username="Tester"
     description="Workspace for testing purposes"

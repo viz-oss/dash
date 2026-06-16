@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import WorkspaceIcon from './WorkspaceIcon.vue'
 import Icon from './Icon.vue'
-import { useEditmodeStore } from '../stores/editmode'
+import { useEditmodeStore } from '../stores/editmode.ts'
 
 const editmodeStore = useEditmodeStore()
 
@@ -26,7 +27,7 @@ defineProps({
 
 <template>
   <div class="widget-full workspace-nav">
-    <Icon :icon="icon" />
+    <WorkspaceIcon />
     <div class="text">
       <div class="title">{{ title }}, {{ username }}</div>
       <div class="description">{{ description }}</div>
