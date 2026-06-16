@@ -130,20 +130,6 @@ function scheduleReturnToCenter(): void {
   }, returnToCenterDelay)
 }
 
-/**
- * Reset one pupil offset to center.
- */
-
-function centerPupil(eye: HTMLElement | null): void {
-  if (!eye) {
-    return
-  }
-
-  pupilState.set(eye, { x: 0, y: 0 })
-  eye.style.setProperty('--pupil-x', '0px')
-  eye.style.setProperty('--pupil-y', '0px')
-}
-
 function animatePupils(): void {
   if (targetCursorX !== null && targetCursorY !== null) {
     lookAt(targetCursorX, targetCursorY)
@@ -206,7 +192,7 @@ const onMouseMove = (event: MouseEvent) => {
   <div
     :class="'card' + (editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
-    @click="sheet = true"
+    @click="sheet = !editmodeStore.editmode ? !sheet : false"
   >
     <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
     <div ref="cactus" class="cactus">
