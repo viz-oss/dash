@@ -29,12 +29,16 @@ defineProps({
     type: String,
     default: 'vs last week',
   },
+  tone: {
+    type: String,
+    default: 'x1',
+  },
 })
 </script>
 
 <template>
   <div
-    :class="'card' + (editmodeStore.editmode ? ' editmode' : '')"
+    :class="['card', `tone-${tone}`, editmodeStore.editmode ? 'editmode' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
@@ -72,31 +76,31 @@ defineProps({
   font-size: 14px;
 }
 
-.row .card:nth-child(1) .icon-container {
+.tone-x1 .icon-container {
   background-color: var(--x1-color-light);
 }
 
-.row .card:nth-child(1) .user-icon,
-.row .card:nth-child(1) .trend-icon,
-.row .card:nth-child(1) .percentage {
+.tone-x1 .user-icon,
+.tone-x1 .trend-icon,
+.tone-x1 .percentage {
   color: var(--x1-color-dark);
 }
 
-.row .card:nth-child(2) .icon-container {
+.tone-x2 .icon-container {
   background-color: var(--x2-color-light);
 }
-.row .card:nth-child(2) .user-icon,
-.row .card:nth-child(2) .trend-icon,
-.row .card:nth-child(2) .percentage {
+.tone-x2 .user-icon,
+.tone-x2 .trend-icon,
+.tone-x2 .percentage {
   color: var(--x2-color-dark);
 }
 
-.row .card:nth-child(3) .icon-container {
+.tone-x3 .icon-container {
   background-color: var(--x3-color-light);
 }
-.row .card:nth-child(3) .user-icon,
-.row .card:nth-child(3) .trend-icon,
-.row .card:nth-child(3) .percentage {
+.tone-x3 .user-icon,
+.tone-x3 .trend-icon,
+.tone-x3 .percentage {
   color: var(--x3-color-dark);
 }
 

@@ -22,15 +22,17 @@ defineProps<{
 <style scoped>
 .card {
   width: 100%;
-  height: auto;
+  height: 100%;
   background-color: transparent;
   box-shadow: none;
   padding: 0;
-  margin-top: 20px;
+  margin-top: 0;
+  overflow: hidden;
 }
 
 .card img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

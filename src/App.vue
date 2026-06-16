@@ -1,48 +1,148 @@
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref, type Component } from 'vue'
+import { GridItem, GridLayout } from 'grid-layout-plus'
+import type { Layout } from 'grid-layout-plus'
 import WorkspaceNav from './components/WorkspaceNav.vue'
 import TrendChart from './components/TrendChart.vue'
 import StatCard from './components/StatCard.vue'
 import RingChart from './components/RingChart.vue'
 import AgentAvatar from './components/AgentAvatar.vue'
 import Landscape from './components/Landscape.vue'
+import { useEditmodeStore } from './stores/editmode'
+
+type TileDefinition = {
+  component: Component
+  props?: Record<string, unknown>
+}
+
+const editmodeStore = useEditmodeStore()
+const isMobile = ref(window.innerWidth < 900)
+
+const tileDefinitions: Record<string, TileDefinition> = {
+  workspace: {
+    component: WorkspaceNav,
+    props: {
+      title: 'Project Name',
+      username: 'Tester',
+      description: 'Workspace for testing purposes',
+    },
+  },
+  trend: {
+    component: TrendChart,
+    props: {
+      title: 'Overview',
+    },
+  },
+  users: {
+    component: StatCard,
+    props: {
+      icon: 'fa-regular fa-user',
+      title: 'Users',
+      value: '1,248',
+      changeValue: '12%',
+      isUp: true,
+      tone: 'x1',
+    },
+  },
+  conversions: {
+    component: StatCard,
+    props: {
+      icon: 'fa-solid fa-filter',
+      title: 'Conversions',
+      value: '320',
+      changeValue: '8%',
+      isUp: true,
+      tone: 'x2',
+    },
+  },
+  avgTime: {
+    component: StatCard,
+    props: {
+      icon: 'fa-regular fa-clock',
+      title: 'Avg. time',
+      value: '4m 32s',
+      changeValue: '5%',
+      isUp: false,
+      tone: 'x3',
+    },
+  },
+  ring: {
+    component: RingChart,
+    props: {
+      title: "Company's wiki",
+      series: { 'finished writing': 81, 'team use': 32 },
+    },
+  },
+  agent: {
+    component: AgentAvatar,
+    props: {
+      hint: '2 new articles',
+    },
+  },
+  landscape: {
+    component: Landscape,
+    props: {
+      theme: 'mountains',
+    },
+  },
+}
+
+const layout = ref<Layout>([
+  { i: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
+  { i: 'trend', x: 0, y: 1, w: 3, h: 3 },
+  { i: 'users', x: 0, y: 4, w: 1, h: 2 },
+  { i: 'conversions', x: 1, y: 4, w: 1, h: 2 },
+  { i: 'avgTime', x: 2, y: 4, w: 1, h: 2 },
+  { i: 'ring', x: 0, y: 6, w: 2, h: 2 },
+  { i: 'agent', x: 2, y: 6, w: 1, h: 2 },
+  { i: 'landscape', x: 0, y: 8, w: 3, h: 5 },
+])
+
+const updateViewport = () => {
+  isMobile.value = window.innerWidth < 900
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateViewport, { passive: true })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateViewport)
+})
 </script>
 
 <template>
-  <img src="/public/_concept-mobile.png" />
-  <WorkspaceNav
-    title="Project Name"
-    username="Tester"
-    description="Workspace for testing purposes"
-  />
-  <TrendChart title="Overview" />
-  <div class="row">
-    <StatCard
-      icon="fa-regular fa-user"
-      title="Users"
-      value="1,248"
-      changeValue="12%"
-      :isUp="true"
-    />
-    <StatCard
-      icon="fa-solid fa-filter"
-      title="Conversions"
-      value="320"
-      changeValue="8%"
-      :isUp="true"
-    />
-    <StatCard
-      icon="fa-regular fa-clock"
-      title="Avg. time"
-      value="4m 32s"
-      changeValue="5%"
-      :isUp="false"
-    />
+  <div class="app-shell">
+    <GridLayout
+      v-model:layout="layout"
+      :col-num="3"
+      :row-height="40"
+      :margin="[12, 12]"
+      :is-draggable="editmodeStore.editmode"
+      :is-resizable="false"
+      :prevent-collision="false"
+      :vertical-compact="false"
+      :use-css-transforms="true"
+      :responsive="isMobile"
+      :breakpoints="{ lg: 1200, md: 996, sm: 768, xs: 560, xxs: 0 }"
+      :cols="{ lg: 3, md: 3, sm: 2, xs: 1, xxs: 1 }"
+      class="dashboard-grid"
+    >
+      <GridItem
+        v-for="item in layout"
+        :key="item.i"
+        v-bind="item"
+        drag-ignore-from=".close, .bottom-sheet, .chat"
+      >
+        <div class="tile-frame" :class="{ 'tile-frame--drag': editmodeStore.editmode }">
+          <component
+            :is="tileDefinitions[String(item.i)]?.component"
+            v-bind="tileDefinitions[String(item.i)]?.props"
+          />
+        </div>
+      </GridItem>
+    </GridLayout>
   </div>
-  <div class="row">
-    <RingChart title="Company's wiki" :series="{ 'finished writing': 81, 'team use': 32 }" />
-    <AgentAvatar hint="2 new articles" />
-  </div>
-  <Landscape theme="mountains" />
 </template>
 
 <style>
@@ -71,20 +171,7 @@ body {
 }
 
 #app {
-  padding: 0px 16px 0px 16px;
-  display: flex;
-  flex-direction: column;
-  /* TODO: REMOVE */
-  /* background: linear-gradient(
-    to bottom,
-    var(--bg-color) 400px,
-    transparent 100px
-  );  */
-}
-
-.row {
-  display: flex;
-  gap: 4px;
+  padding: 0 16px 20px 16px;
 }
 
 .card {
@@ -93,18 +180,36 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 4px var(--shadow-color);
   text-align: left;
-  width: calc(32.33% - 20px);
-  height: 96px;
+  width: 100%;
+  height: 100%;
   padding: 10px 14px;
-  margin-top: 16px;
+  margin-top: 0;
+  box-sizing: border-box;
 }
 
 .card.double {
-  width: calc(64.66% - 8px);
+  width: 100%;
 }
 
 .card.full {
-  width: calc(100% - 32px);
+  width: 100%;
+}
+
+.app-shell {
+  width: 100%;
+}
+
+.dashboard-grid {
+  width: 100%;
+}
+
+.tile-frame {
+  width: 100%;
+  height: 100%;
+}
+
+.tile-frame--drag {
+  cursor: move;
 }
 
 .card .title {
@@ -143,5 +248,11 @@ body {
   justify-content: center;
   cursor: pointer;
   z-index: 1;
+}
+
+@media (max-width: 767px) {
+  #app {
+    padding: 0 10px 18px 10px;
+  }
 }
 </style>
