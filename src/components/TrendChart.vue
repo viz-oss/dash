@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useEditmodeStore } from '../stores/editmode'
+
+const editmodeStore = useEditmodeStore()
+const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 
 defineProps({
   title: {
@@ -28,7 +32,11 @@ const todayName = computed(() => {
 </script>
 
 <template>
-  <div class="card full trend-chart">
+  <div
+    :class="'card full trend-chart' + (editmodeStore.editmode ? ' editmode' : '')"
+    :style="{ '--float-delay': randomFloatDelay }"
+  >
+    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
     <div class="top">
       <div class="title">{{ title }}</div>
     </div>

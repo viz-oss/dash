@@ -2,6 +2,10 @@
 import { ref } from 'vue'
 import type { ApexOptions } from 'apexcharts'
 import apexchart from 'vue3-apexcharts'
+import { useEditmodeStore } from '../stores/editmode'
+
+const editmodeStore = useEditmodeStore()
+const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 
 defineProps({
   title: {
@@ -51,7 +55,11 @@ const chartOptions = ref<ApexOptions>({
 </script>
 
 <template>
-  <div class="card double">
+  <div
+    :class="'card double' + (editmodeStore.editmode ? ' editmode' : '')"
+    :style="{ '--float-delay': randomFloatDelay }"
+  >
+    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
     <apexchart
       type="radialBar"
       width="140"

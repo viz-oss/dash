@@ -4,6 +4,10 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
 import '@douxcode/vue-spring-bottom-sheet/dist/style.css'
 import Chat from './Chat.vue'
+import { useEditmodeStore } from '../stores/editmode'
+
+const editmodeStore = useEditmodeStore()
+const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 
 defineProps({
   hint: {
@@ -199,7 +203,12 @@ const onMouseMove = (event: MouseEvent) => {
 </script>
 
 <template>
-  <div class="card" @click="sheet = true">
+  <div
+    :class="'card' + (editmodeStore.editmode ? ' editmode' : '')"
+    :style="{ '--float-delay': randomFloatDelay }"
+    @click="sheet = true"
+  >
+    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
     <div ref="cactus" class="cactus">
       🌵
       <div ref="eyeLeft" class="eye left"></div>

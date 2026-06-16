@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import Icon from './Icon.vue';
-import { useEditmodeStore } from '../stores/editmode';
+import Icon from './Icon.vue'
+import { useEditmodeStore } from '../stores/editmode'
 
-const editmodeStore = useEditmodeStore();
+const editmodeStore = useEditmodeStore()
 
 defineProps({
   icon: {
     type: String,
-    default: 'fa-regular fa-face-smile'
+    default: 'fa-regular fa-face-smile',
   },
   title: {
     type: String,
-    default: 'Project Name'
+    default: 'Project Name',
   },
   username: {
     type: String,
-    default: 'Tester'
+    default: 'Tester',
   },
   description: {
     type: String,
-    default: 'Workspace for testing purposes'
-  }
+    default: 'Workspace for testing purposes',
+  },
 })
 </script>
 
@@ -28,10 +28,15 @@ defineProps({
   <div class="widget-full workspace-nav">
     <Icon :icon="icon" />
     <div class="text">
-        <div class="title">{{ title }}, {{ username }}</div>
-        <div class="description">{{ description }}</div>
+      <div class="title">{{ title }}, {{ username }}</div>
+      <div class="description">{{ description }}</div>
     </div>
-    <Icon :icon="'fa-regular fa-pen-to-square'" class="edit-icon" :class="{ 'edit-icon--active': editmodeStore.editmode }" @click="editmodeStore.toggle" />
+    <Icon
+      icon="fa-regular fa-pen-to-square"
+      class="edit-icon"
+      :class="{ 'edit-icon--active': editmodeStore.editmode }"
+      @click="editmodeStore.toggle"
+    />
   </div>
 </template>
 

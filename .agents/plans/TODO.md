@@ -1,5 +1,12 @@
 # TODO
 
+- (x) wszędzie
+- zmienic ikone workspace i wybrać dominujący kolor
+- można zmienić nazwe i opis
+- vue-grid-layout
+
+---
+
 DEMO z API/MCP
 
 - wymyśleć ciekawy use-case
@@ -8,10 +15,7 @@ DEMO z API/MCP
 
 ---
 
-- edit: powiawiają się (x) oraz (+) na dole po środku (editmode w pinia)
-  równiez mozna zmienic ikone workspace, nazwe i opis, i theme
 - (+) dodanie nowego kafelka:
-  na początek przetestować zwykłą rozmowę
   u góry kwadraty z listą kafelków, na dole pole do rozmowy (lub wklejenia endpointu)
   gdy wybierzemy kafelek to przechodzi dalej (dostępne < wstecz) i wtedy jest plansza z opcjami
 - navbar i przełączanie workspace

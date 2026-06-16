@@ -115,12 +115,17 @@ body {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-2px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
 }
 
 .card.editmode {
-  animation: float 2s ease-in-out infinite;
+  animation: float 1s ease-in-out infinite;
   animation-delay: var(--float-delay, 0s);
 }
 
@@ -140,5 +145,4 @@ body {
   cursor: pointer;
   z-index: 1;
 }
-
 </style>
