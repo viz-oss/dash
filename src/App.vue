@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import WorkspaceNav from './components/WorkspaceNav.vue'
 import TrendChart from './components/TrendChart.vue'
 import StatCard from './components/StatCard.vue'
 import RingChart from './components/RingChart.vue'
 import AgentAvatar from './components/AgentAvatar.vue'
+import Landscape from './components/Landscape.vue'
 </script>
 
 <template>
@@ -43,7 +43,7 @@ import AgentAvatar from './components/AgentAvatar.vue'
     <RingChart title="Company's wiki" :series="{ 'finished writing': 81, 'team use': 32 }" />
     <AgentAvatar hint="2 new articles" />
   </div>
-  <img src="/public/_landscape-mountains.png" style="margin-top: 20px" />
+  <Landscape theme="mountains" />
 </template>
 
 <style>
