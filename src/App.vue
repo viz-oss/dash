@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, type Component } from 'vue'
+import { ref, type Component } from 'vue'
 import { GridItem, GridLayout } from 'grid-layout-plus'
 import type { Layout } from 'grid-layout-plus'
 import WorkspaceNav from './components/WorkspaceNav.vue'
@@ -16,7 +16,6 @@ type TileDefinition = {
 }
 
 const editmodeStore = useEditmodeStore()
-const isMobile = ref(window.innerWidth < 900)
 
 const tileDefinitions: Record<string, TileDefinition> = {
   workspace: {
@@ -97,18 +96,6 @@ const layout = ref<Layout>([
   { i: 'agent', x: 2, y: 6, w: 1, h: 2 },
   { i: 'landscape', x: 0, y: 8, w: 3, h: 5 },
 ])
-
-const updateViewport = () => {
-  isMobile.value = window.innerWidth < 900
-}
-
-onMounted(() => {
-  window.addEventListener('resize', updateViewport, { passive: true })
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', updateViewport)
-})
 </script>
 
 <template>
@@ -123,9 +110,7 @@ onBeforeUnmount(() => {
       :prevent-collision="false"
       :vertical-compact="false"
       :use-css-transforms="true"
-      :responsive="isMobile"
-      :breakpoints="{ lg: 1200, md: 996, sm: 768, xs: 560, xxs: 0 }"
-      :cols="{ lg: 3, md: 3, sm: 2, xs: 1, xxs: 1 }"
+      :responsive="false"
       class="dashboard-grid"
     >
       <GridItem
