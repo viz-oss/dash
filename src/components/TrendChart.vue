@@ -33,7 +33,7 @@ const todayName = computed(() => {
 
 <template>
   <div
-    :class="'card full trend-chart' + (editmodeStore.editmode ? ' editmode' : '')"
+    :class="'card full' + (editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
@@ -60,10 +60,6 @@ const todayName = computed(() => {
 </template>
 
 <style scoped>
-.trend-chart {
-  /* height: 160px; */
-}
-
 .middle {
   height: 128px;
 }

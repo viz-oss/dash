@@ -151,6 +151,13 @@ body {
   background-color: var(--bg-color);
   min-height: 100vh;
   margin: 0;
+  -webkit-user-select: none; /* Safari */
+  user-select: none;
+}
+
+.allow-select {
+  -webkit-user-select: text; /* Safari */
+  user-select: text;
 }
 
 #app {
