@@ -61,7 +61,7 @@ const todayName = computed(() => {
 
 <style scoped>
 .trend-chart {
-  height: 160px;
+  /* height: 160px; */
 }
 
 .middle {

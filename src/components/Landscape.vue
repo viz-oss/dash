@@ -26,13 +26,12 @@ defineProps<{
   background-color: transparent;
   box-shadow: none;
   padding: 0;
-  margin-top: 0;
-  overflow: hidden;
 }
 
 .card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 0;
 }
 </style>

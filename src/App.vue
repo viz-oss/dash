@@ -99,35 +99,33 @@ const layout = ref<Layout>([
 </script>
 
 <template>
-  <div class="app-shell">
-    <GridLayout
-      v-model:layout="layout"
-      :col-num="3"
-      :row-height="40"
-      :margin="[12, 12]"
-      :is-draggable="editmodeStore.editmode"
-      :is-resizable="false"
-      :prevent-collision="false"
-      :vertical-compact="false"
-      :use-css-transforms="true"
-      :responsive="false"
-      class="dashboard-grid"
+  <GridLayout
+    v-model:layout="layout"
+    :col-num="3"
+    :row-height="50"
+    :margin="[4, 16]"
+    :is-draggable="editmodeStore.editmode"
+    :is-resizable="false"
+    :prevent-collision="false"
+    :vertical-compact="false"
+    :use-css-transforms="true"
+    :responsive="false"
+    class="dashboard-grid"
+  >
+    <GridItem
+      v-for="item in layout"
+      :key="item.i"
+      v-bind="item"
+      drag-ignore-from=".close, .bottom-sheet, .chat"
     >
-      <GridItem
-        v-for="item in layout"
-        :key="item.i"
-        v-bind="item"
-        drag-ignore-from=".close, .bottom-sheet, .chat"
-      >
-        <div class="tile-frame" :class="{ 'tile-frame--drag': editmodeStore.editmode }">
-          <component
-            :is="tileDefinitions[String(item.i)]?.component"
-            v-bind="tileDefinitions[String(item.i)]?.props"
-          />
-        </div>
-      </GridItem>
-    </GridLayout>
-  </div>
+      <div class="tile-frame" :class="{ 'tile-frame--drag': editmodeStore.editmode }">
+        <component
+          :is="tileDefinitions[String(item.i)]?.component"
+          v-bind="tileDefinitions[String(item.i)]?.props"
+        />
+      </div>
+    </GridItem>
+  </GridLayout>
 </template>
 
 <style>
@@ -156,7 +154,8 @@ body {
 }
 
 #app {
-  padding: 0 16px 20px 16px;
+  width: calc(100% - 16px);
+  padding: 0 8px;
 }
 
 .card {
@@ -177,10 +176,6 @@ body {
 }
 
 .card.full {
-  width: 100%;
-}
-
-.app-shell {
   width: 100%;
 }
 
@@ -235,9 +230,4 @@ body {
   z-index: 1;
 }
 
-@media (max-width: 767px) {
-  #app {
-    padding: 0 10px 18px 10px;
-  }
-}
 </style>
