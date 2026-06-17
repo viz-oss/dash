@@ -1,9 +1,9 @@
 # TODO
 
+- jakaś libka formularzy
 - ikona workspace
   - klik -> sheet
   - wybór emoji, dominujący kolor i na sheet po ludzku też można zmienić nazwe i opis
-- (x) zamyka component
 - (+) dodanie nowego kafelka:
   u góry kwadraty z listą kafelków, na dole pole do rozmowy (lub wklejenia endpointu)
   gdy wybierzemy kafelek to przechodzi dalej (dostępne < wstecz) i wtedy jest plansza z opcjami
