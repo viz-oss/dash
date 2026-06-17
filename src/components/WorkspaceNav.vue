@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
 import WorkspaceIcon from './WorkspaceIcon.vue'
-import Icon from './Icon.vue'
+import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '../stores/editmode.ts'
-
-const editmodeStore = useEditmodeStore()
 
 defineProps({
   icon: {
@@ -23,11 +23,15 @@ defineProps({
     default: 'Workspace for testing purposes',
   },
 })
+
+const editmodeStore = useEditmodeStore()
+const sheet = ref(false)
+
 </script>
 
 <template>
   <div class="widget-full workspace-nav">
-    <div class="workspace-info">
+    <div class="workspace-info" @click="sheet = editmodeStore.editmode ? !sheet : false">
       <WorkspaceIcon />
       <div class="text">
         <div class="title">{{ title }}, {{ username }}</div>
@@ -41,6 +45,9 @@ defineProps({
       @click="editmodeStore.toggle"
     />
   </div>
+  <BottomSheet v-model="sheet">
+    HEJ
+  </BottomSheet>
 </template>
 
 <style scoped>

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import type { ApexOptions } from 'apexcharts'
 import apexchart from 'vue3-apexcharts'
-import { useEditmodeStore } from '../stores/editmode'
+import { useEditmodeStore } from '@/stores/editmode'
 
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`

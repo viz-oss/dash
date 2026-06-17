@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { useOS } from '@/composables/useOS'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
 import '@douxcode/vue-spring-bottom-sheet/dist/style.css'
-import Chat from './Chat.vue'
-import { useEditmodeStore } from '../stores/editmode'
-
-const editmodeStore = useEditmodeStore()
-const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
+import { useOS } from '@/composables/useOS'
+import Chat from '@/components/base/Chat.vue'
+import { useEditmodeStore } from '@/stores/editmode'
 
 defineProps({
   hint: {
@@ -16,6 +13,8 @@ defineProps({
   },
 })
 
+const editmodeStore = useEditmodeStore()
+const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const { osName } = useOS()
 const sheet = ref(false)
 
