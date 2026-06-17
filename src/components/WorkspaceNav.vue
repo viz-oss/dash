@@ -6,6 +6,10 @@ import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '../stores/editmode.ts'
 
 defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
   icon: {
     type: String,
     default: 'fa-regular fa-face-smile',
@@ -26,7 +30,7 @@ defineProps({
 
 const editmodeStore = useEditmodeStore()
 const sheet = ref(false)
-
+const emit = defineEmits(['remove'])
 </script>
 
 <template>

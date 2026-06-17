@@ -4,10 +4,11 @@ import type { ApexOptions } from 'apexcharts'
 import apexchart from 'vue3-apexcharts'
 import { useEditmodeStore } from '@/stores/editmode'
 
-const editmodeStore = useEditmodeStore()
-const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
-
 defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -17,6 +18,10 @@ defineProps({
     required: true,
   },
 })
+
+const editmodeStore = useEditmodeStore()
+const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
+const emit = defineEmits(['remove'])
 
 const formatSeries = (series: Record<string, number>) => {
   return Object.values(series)

@@ -7,6 +7,10 @@ import Chat from '@/components/base/Chat.vue'
 import { useEditmodeStore } from '@/stores/editmode'
 
 defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
   hint: {
     type: String,
     default: 'Agent session',
@@ -17,6 +21,7 @@ const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const { osName } = useOS()
 const sheet = ref(false)
+const emit = defineEmits(['remove'])
 
 // Cactus eye positioning
 const cactus = ref<HTMLElement | null>(null)

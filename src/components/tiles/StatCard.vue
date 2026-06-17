@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useEditmodeStore } from '@/stores/editmode'
 
-const editmodeStore = useEditmodeStore()
-const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
-
 defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
   icon: {
     type: String,
     default: 'fas fa-users',
@@ -34,6 +35,10 @@ defineProps({
     default: 'x1',
   },
 })
+
+const editmodeStore = useEditmodeStore()
+const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
+const emit = defineEmits(['remove'])
 </script>
 
 <template>
@@ -41,7 +46,7 @@ defineProps({
     :class="['card', `tone-${tone}`, editmodeStore.editmode ? 'editmode' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
   >
-    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
+    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
     <div class="icon-container">
       <i :class="[icon, 'user-icon']"></i>
     </div>

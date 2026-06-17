@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import { useEditmodeStore } from '@/stores/editmode'
 
+defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+  theme: {
+    type: String,
+    required: true,
+  },
+})
+
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
-
-defineProps<{
-  theme: 'mountains' | 'sea' | 'city'
-}>()
+const emit = defineEmits(['remove'])
 </script>
 
 <template>

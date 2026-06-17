@@ -96,6 +96,10 @@ const layout = ref<Layout>([
   { i: 'agent', x: 2, y: 6, w: 1, h: 2 },
   { i: 'landscape', x: 0, y: 8, w: 3, h: 5 },
 ])
+
+function removeComponent(id: string | number) {
+  layout.value = layout.value.filter((item) => item.i !== id)
+}
 </script>
 
 <template>
@@ -121,8 +125,10 @@ const layout = ref<Layout>([
     >
       <div class="tile-frame" :class="{ 'tile-frame--drag': editmodeStore.editmode }">
         <component
+          :id="item.i"
           :is="tileDefinitions[String(item.i)]?.component"
           v-bind="tileDefinitions[String(item.i)]?.props"
+          @remove="console.log('remove', item.i); removeComponent(item.i)"
         />
       </div>
     </GridItem>
