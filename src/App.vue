@@ -51,6 +51,23 @@ body {
   padding: 0 8px;
 }
 
+/* Grid with tiles */
+
+.dashboard-grid {
+  width: 100%;
+}
+
+.tile-frame {
+  width: 100%;
+  height: 100%;
+}
+
+.tile-frame--drag {
+  cursor: move;
+}
+
+/* Card tile */
+
 .card {
   position: relative;
   background: var(--white-color);
@@ -70,19 +87,6 @@ body {
 
 .card.full {
   width: 100%;
-}
-
-.dashboard-grid {
-  width: 100%;
-}
-
-.tile-frame {
-  width: 100%;
-  height: 100%;
-}
-
-.tile-frame--drag {
-  cursor: move;
 }
 
 .card .title {
@@ -121,5 +125,51 @@ body {
   justify-content: center;
   cursor: pointer;
   z-index: 1;
+}
+
+/* Bottom Sheet */
+
+.sheet-content {
+  width: 100%;
+  height: 75vh; /* Using vh for example, assuming 'whole screen' context */
+}
+
+.sheet-content h2 {
+  font-size: 17px;
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: var(--font-color-dark);
+}
+
+/* Form Fields */
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--font-color-dark);
+}
+
+.field input,
+.field textarea {
+  width: calc(100% - 16px);
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+::placeholder {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--font-color-light);
 }
 </style>

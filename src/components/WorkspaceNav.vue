@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
-import WorkspaceIcon from './WorkspaceIcon.vue'
+import WorkspaceIcon from '@/components/WorkspaceIcon.vue'
 import Icon from '@/components/base/Icon.vue'
-import { useEditmodeStore } from '../stores/editmode.ts'
+import { useEditmodeStore } from '@/stores/editmode.ts'
+import WorkspaceInfoSheet from '@/views/sheets/WorkspaceInfoSheet.vue'
 
 defineProps({
   id: {
@@ -50,7 +51,7 @@ const emit = defineEmits(['remove'])
     />
   </div>
   <BottomSheet v-model="sheet">
-    HEJ
+    <WorkspaceInfoSheet />
   </BottomSheet>
 </template>
 
