@@ -97,8 +97,10 @@ const layout = ref<Layout>([
   { i: 'landscape', x: 0, y: 8, w: 3, h: 5 },
 ])
 
-function removeComponent(id: string | number) {
-  layout.value = layout.value.filter((item) => item.i !== id)
+function removeTile(id: string | number) {
+  if (confirm('Are you sure you want to remove this tile?')) {
+    layout.value = layout.value.filter((item) => item.i !== id)
+  }
 }
 </script>
 
@@ -128,7 +130,7 @@ function removeComponent(id: string | number) {
           :id="item.i"
           :is="tileDefinitions[String(item.i)]?.component"
           v-bind="tileDefinitions[String(item.i)]?.props"
-          @remove="console.log('remove', item.i); removeComponent(item.i)"
+          @remove="removeTile(item.i)"
         />
       </div>
     </GridItem>

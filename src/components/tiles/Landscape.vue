@@ -22,7 +22,7 @@ const emit = defineEmits(['remove'])
     :class="'card full' + (editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
   >
-    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
+    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
     <img v-bind:src="`/public/_landscape-${theme}.png`" />
   </div>
 </template>

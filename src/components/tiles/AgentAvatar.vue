@@ -198,7 +198,7 @@ const onMouseMove = (event: MouseEvent) => {
     :style="{ '--float-delay': randomFloatDelay }"
     @click="sheet = !editmodeStore.editmode ? !sheet : false"
   >
-    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
+    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
     <div ref="cactus" class="cactus">
       🌵
       <div ref="eyeLeft" class="eye left"></div>

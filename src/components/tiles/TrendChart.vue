@@ -41,7 +41,7 @@ const todayName = computed(() => {
     :class="'card full' + (editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
   >
-    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark"></i>
+    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
     <div class="top">
       <div class="title">{{ title }}</div>
     </div>
