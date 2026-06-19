@@ -161,6 +161,8 @@ body {
 .sheet-content {
   width: 100%;
   height: 75vh; /* Using vh for example, assuming 'whole screen' context */
+  display: flex;
+  flex-direction: column;
 }
 
 .sheet-header {
@@ -238,10 +240,10 @@ body {
 .field textarea {
   resize: vertical;
   min-height: 60px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 ::placeholder {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: var(--font-color-light);
   font-size: 0.7rem;
 }
@@ -250,7 +252,8 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 30px;
+  margin-top: auto;
+  margin-bottom: 8px;
   border-top: var(--field-border);
   padding-top: 16px;
 }

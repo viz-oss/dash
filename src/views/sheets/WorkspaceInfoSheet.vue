@@ -1,5 +1,19 @@
 <script setup lang="ts">
 import IconPicker from '@/components/base/IconPicker.vue'
+import { ref } from 'vue'
+import { useWorkspaceStore } from '@/stores/workspace'
+
+const workspace = useWorkspaceStore()
+
+const form = ref({
+  title: workspace.title,
+  description: workspace.description,
+})
+
+function save() {
+  console.log('Saving workspace settings:', form.value)
+  workspace.update(form.value)
+}
 </script>
 
 <template>
@@ -13,11 +27,20 @@ import IconPicker from '@/components/base/IconPicker.vue'
     </div>
     <div class="field">
       <label for="workspace-name">Workspace Name</label>
-      <input id="workspace-name" type="text" placeholder="Enter workspace name" />
+      <input
+        id="workspace-name"
+        type="text"
+        v-model="form.title"
+        placeholder="Enter workspace name"
+      />
     </div>
     <div class="field">
       <label for="workspace-description">Description</label>
-      <textarea id="workspace-description" placeholder="Enter workspace description"></textarea>
+      <textarea
+        id="workspace-description"
+        v-model="form.description"
+        placeholder="Enter workspace description"
+      ></textarea>
     </div>
     <div class="field">
       <label>Workspace Icon</label>
@@ -51,8 +74,8 @@ import IconPicker from '@/components/base/IconPicker.vue'
       />
     </div>
     <div class="sheet-footer">
-      <button class="btn btn-secondary">Cancel</button>
-      <button class="btn btn-primary">Save Changes</button>
+      <button class="btn btn-secondary" @click="">Cancel</button>
+      <button class="btn btn-primary" @click="save">Save Changes</button>
     </div>
   </div>
 </template>

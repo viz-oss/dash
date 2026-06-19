@@ -17,15 +17,9 @@ defineProps({
   },
   title: {
     type: String,
-    default: 'Project Name',
-  },
-  username: {
-    type: String,
-    default: 'Tester',
   },
   description: {
     type: String,
-    default: 'Workspace for testing purposes',
   },
 })
 
@@ -39,7 +33,7 @@ const emit = defineEmits(['remove'])
     <div class="workspace-info" @click="sheet = editmodeStore.editmode ? !sheet : false">
       <WorkspaceIcon />
       <div class="text">
-        <div class="title">{{ title }}, {{ username }}</div>
+        <div class="title">{{ title }}</div>
         <div class="description">{{ description }}</div>
       </div>
     </div>

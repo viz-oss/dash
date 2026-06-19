@@ -1,12 +1,13 @@
 # TODO
 
-- jakaś libka formularzy
-- ikona workspace
-  - klik -> sheet
-  - wybór emoji, dominujący kolor i na sheet po ludzku też można zmienić nazwe i opis
-- (+) dodanie nowego kafelka:
-  u góry kwadraty z listą kafelków, na dole pole do rozmowy (lub wklejenia endpointu)
-  gdy wybierzemy kafelek to przechodzi dalej (dostępne < wstecz) i wtedy jest plansza z opcjami
+- workspace settings
+  - prefill
+  - aktywowanie
+  - cancel
+
+- (+) dodanie nowego kafelka: na razie zwykła lista kafelków do wyboru -> sheet znika i pojawia się nowy sheet z ustawieniami
+- konfiguracja per kafelek na sheet w trybie eydcji
+- navbar i przełączanie workspace
 
 ---
 
@@ -17,8 +18,8 @@ DEMO z API/MCP
 
 ---
 
-- navbar i przełączanie workspace
-- jakiś persistent zapisujący layout i workspace (na karcie claude na macu opis)
+- persistent zapisujący layout:
+  persist: true, w stores/
 - persistent do cache
 - prawdziwy plot wykresu 'Overview'
   - na podstawie prawdziwych danych
@@ -34,7 +35,3 @@ DEMO z WIKI
 - wykres w jakich dniach była uzupełniana
 
 ---
-
-- w opencode.json (chyba w głownym katalogu repo?) ustawić agentów, builder jest, ale dać mu prompt, "tester", "code-reviewer",
-  "pen-tester" itp.
-  nie narzucać wybranych LLM-ów

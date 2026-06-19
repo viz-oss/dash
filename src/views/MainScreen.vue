@@ -9,6 +9,7 @@ import RingChart from '@/components/tiles/RingChart.vue'
 import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
 import Landscape from '@/components/tiles/Landscape.vue'
 import { useEditmodeStore } from '@/stores/editmode'
+import { useWorkspaceStore } from '@/stores/workspace'
 
 type TileDefinition = {
   component: Component
@@ -16,14 +17,13 @@ type TileDefinition = {
 }
 
 const editmodeStore = useEditmodeStore()
-
+const workspaceStore = useWorkspaceStore()
 const tileDefinitions: Record<string, TileDefinition> = {
   workspace: {
     component: WorkspaceNav,
     props: {
-      title: 'Project Name',
-      username: 'Tester',
-      description: 'Workspace for testing purposes',
+      title: workspaceStore.title,
+      description: workspaceStore.description,
     },
   },
   trend: {
