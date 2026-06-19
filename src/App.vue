@@ -23,19 +23,7 @@ import MainScreen from '@/views/MainScreen.vue'
   --font-color-dark: rgb(20, 36, 62);
   --font-color-light: rgb(137, 149, 169);
   --edit-color: rgb(112, 65, 250);
-
-  --surface: rgba(255, 255, 255, 0.85);
-  --border: rgba(120, 130, 170, 0.12);
-  --primary-start: #8b5cf6;
-  --primary-end: #2563ff;
-  --shadow-lg:
-      0 20px 60px rgba(15, 23, 42, 0.08),
-      0 8px 20px rgba(15, 23, 42, 0.04);
-  --shadow-md:
-      0 8px 24px rgba(15, 23, 42, 0.06);
-  --radius-xl: 32px;
-  --radius-lg: 24px;
-  --radius-md: 18px;  
+  --sheet-color: rgba(255, 255, 255, 0.85);
 }
 
 body {
@@ -145,9 +133,9 @@ body {
 [data-vsbs-sheet] {
   font-family: Inter, system-ui, sans-serif;
   color: var(--text);
-  background: var(--surface);
+  background: var(--sheet-color);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.8);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow-lg);
 }
 
@@ -224,7 +212,6 @@ body {
   box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.02),
     0 4px 12px rgba(15, 23, 42, 0.03);
-
 }
 
 .field input:focus,
@@ -246,55 +233,4 @@ body {
   color: var(--font-color-light);
   font-size: 0.7rem;
 }
-
-
-/*
-.field input,
-.field textarea {
-    width: 100%;
-    box-sizing: border-box;
-
-    border: 1px solid rgba(132, 145, 186, 0.15);
-
-    background: rgba(255,255,255,.9);
-
-    border-radius: 20px;
-
-    padding: 20px 24px;
-
-    font-size: 18px;
-    color: var(--text);
-
-    transition: all .25s ease;
-
-    box-shadow:
-        inset 0 1px 2px rgba(0,0,0,.02),
-        0 4px 12px rgba(15,23,42,.03);
-}
-
-.field input {
-    height: 72px;
-}
-
-.field textarea {
-    min-height: 220px;
-    resize: vertical;
-}
-
-.field input::placeholder,
-.field textarea::placeholder {
-    color: #98a2b8;
-}
-
-.field input:focus,
-.field textarea:focus {
-    outline: none;
-
-    border-color: rgba(139,92,246,.4);
-
-    box-shadow:
-        0 0 0 4px rgba(139,92,246,.08),
-        0 12px 30px rgba(139,92,246,.12);
-}
-        */
 </style>
