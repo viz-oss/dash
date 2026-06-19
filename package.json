@@ -19,7 +19,7 @@
     "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
-    "@douxcode/vue-spring-bottom-sheet": "^3.2.0",
+    "@webzlodimir/vue-bottom-sheet": "^3.0.5",
     "apexcharts": "^5.15.0",
     "grid-layout-plus": "^1.1.1",
     "pinia": "^3.0.4",

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
+import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import WorkspaceIcon from '@/components/WorkspaceIcon.vue'
 import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode.ts'
@@ -24,13 +25,14 @@ defineProps({
 })
 
 const editmodeStore = useEditmodeStore()
-const sheet = ref(false)
 const emit = defineEmits(['remove'])
+
+const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 </script>
 
 <template>
   <div class="widget-full workspace-nav">
-    <div class="workspace-info" @click="sheet = editmodeStore.editmode ? !sheet : false">
+    <div class="workspace-info" @click="editmodeStore.editmode ? sheet?.open() : sheet?.close()">
       <WorkspaceIcon />
       <div class="text">
         <div class="title">{{ title }}</div>
@@ -44,9 +46,9 @@ const emit = defineEmits(['remove'])
       @click="editmodeStore.toggle"
     />
   </div>
-  <BottomSheet v-model="sheet">
-    <WorkspaceInfoSheet />
-  </BottomSheet>
+  <VueBottomSheet ref="sheet">
+    <WorkspaceInfoSheet @close="sheet?.close()" />
+  </VueBottomSheet>
 </template>
 
 <style scoped>

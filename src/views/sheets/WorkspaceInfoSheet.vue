@@ -10,9 +10,15 @@ const form = ref({
   description: workspace.description,
 })
 
+const emit = defineEmits(['close'])
+
 function save() {
-  console.log('Saving workspace settings:', form.value)
   workspace.update(form.value)
+  close()
+}
+
+function close() {
+  emit('close')
 }
 </script>
 
@@ -74,7 +80,7 @@ function save() {
       />
     </div>
     <div class="sheet-footer">
-      <button class="btn btn-secondary" @click="">Cancel</button>
+      <button class="btn btn-secondary" @click="close">Cancel</button>
       <button class="btn btn-primary" @click="save">Save Changes</button>
     </div>
   </div>

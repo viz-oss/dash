@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import BottomSheet from '@douxcode/vue-spring-bottom-sheet'
-import '@douxcode/vue-spring-bottom-sheet/dist/style.css'
+import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import { useOS } from '@/composables/useOS'
 import Chat from '@/components/base/Chat.vue'
 import { useEditmodeStore } from '@/stores/editmode'
@@ -20,8 +20,9 @@ defineProps({
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const { osName } = useOS()
-const sheet = ref(false)
 const emit = defineEmits(['remove'])
+
+const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 
 // Cactus eye positioning
 const cactus = ref<HTMLElement | null>(null)
@@ -196,7 +197,7 @@ const onMouseMove = (event: MouseEvent) => {
   <div
     :class="'card' + (editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
-    @click="sheet = !editmodeStore.editmode ? !sheet : false"
+    @click="!editmodeStore.editmode ? sheet?.open() : sheet?.close()"
   >
     <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
     <div ref="cactus" class="cactus">
@@ -206,9 +207,9 @@ const onMouseMove = (event: MouseEvent) => {
       <div class="cloud">{{ hint }}</div>
     </div>
   </div>
-  <BottomSheet v-model="sheet">
+  <VueBottomSheet ref="sheet">
     <Chat url="https://ai.grindwallet.com/ask?q=%message%&ssid=%ssid%}" />
-  </BottomSheet>
+  </VueBottomSheet>
 </template>
 
 <style scoped>
