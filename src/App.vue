@@ -23,6 +23,19 @@ import MainScreen from '@/views/MainScreen.vue'
   --font-color-dark: rgb(20, 36, 62);
   --font-color-light: rgb(137, 149, 169);
   --edit-color: rgb(112, 65, 250);
+
+  --surface: rgba(255, 255, 255, 0.85);
+  --border: rgba(120, 130, 170, 0.12);
+  --primary-start: #8b5cf6;
+  --primary-end: #2563ff;
+  --shadow-lg:
+      0 20px 60px rgba(15, 23, 42, 0.08),
+      0 8px 20px rgba(15, 23, 42, 0.04);
+  --shadow-md:
+      0 8px 24px rgba(15, 23, 42, 0.06);
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 18px;  
 }
 
 body {
@@ -129,16 +142,63 @@ body {
 
 /* Bottom Sheet */
 
+[data-vsbs-sheet] {
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--text);
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: var(--shadow-lg);
+}
+
+[data-vsbs-header]:before {
+  background-color: var(--key-color-light) !important;
+  border-radius: 4px !important;
+  height: 4px !important;
+  width: 32px !important;
+  top: 12px !important;
+}
+
 .sheet-content {
   width: 100%;
   height: 75vh; /* Using vh for example, assuming 'whole screen' context */
 }
 
-.sheet-content h2 {
-  font-size: 17px;
-  margin-top: 0;
-  margin-bottom: 24px;
+.sheet-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 50px;
+}
+
+.sheet-header .icon {
+  width: 42px;
+  height: 46px;
+  border-radius: 14px;
+  font-size: 23px;
+  color: var(--key-color-dark);
+  background: linear-gradient(135deg, rgb(166 233 246 / 25%), rgb(183 132 255 / 25%));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 4px 10px rgba(139, 92, 246, 0.2);
+  border: 1px solid rgb(79 81 255 / 10%);
+  opacity: 0.9;
+}
+
+.sheet-header .title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
   color: var(--font-color-dark);
+}
+
+.sheet-header .subtitle {
+  margin-top: 10px;
+  color: var(--font-color-light);
+  font-size: 12px;
 }
 
 /* Form Fields */

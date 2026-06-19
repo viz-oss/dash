@@ -4,7 +4,13 @@ import IconPicker from '@/components/base/IconPicker.vue'
 
 <template>
   <div class="sheet-content">
-    <h2>Workspace Settings</h2>
+    <div class="sheet-header">
+      <i class="icon fa-solid fa-building"></i>
+      <div class="about">
+        <div class="title">Workspace Settings</div>
+        <div class="subtitle">Customize your workspace preferences</div>
+      </div>
+    </div>
     <div class="field">
         <label for="workspace-name">Workspace Name</label>
         <input id="workspace-name" type="text" placeholder="Enter workspace name" />
