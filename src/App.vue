@@ -168,14 +168,14 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 50px;
+  margin-bottom: 34px;
 }
 
 .sheet-header .icon {
-  width: 42px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   border-radius: 14px;
-  font-size: 23px;
+  font-size: 20px;
   color: var(--key-color-dark);
   background: linear-gradient(135deg, rgb(166 233 246 / 25%), rgb(183 132 255 / 25%));
   display: flex;
@@ -183,22 +183,22 @@ body {
   justify-content: center;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 4px 10px rgba(139, 92, 246, 0.2);
+    0 2px 8px rgba(139, 92, 246, 0.2);
   border: 1px solid rgb(79 81 255 / 10%);
   opacity: 0.9;
 }
 
 .sheet-header .title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   line-height: 1;
   color: var(--font-color-dark);
 }
 
 .sheet-header .subtitle {
-  margin-top: 10px;
+  margin-top: 8px;
   color: var(--font-color-light);
-  font-size: 12px;
+  font-size: 10px;
 }
 
 /* Form Fields */
@@ -209,18 +209,31 @@ body {
 
 .field label {
   display: block;
-  margin-bottom: 5px;
-  font-size: 13px;
+  margin-bottom: 14px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--font-color-dark);
 }
 
 .field input,
 .field textarea {
-  width: calc(100% - 16px);
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: calc(100% - 30px);
+  padding: 13px 15px;
+  border: 1px solid rgba(132, 145, 186, 0.2);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.02),
+    0 4px 12px rgba(15, 23, 42, 0.03);
+
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow:
+    0 0 0 2px rgba(139, 92, 246, 0.08),
+    0 10px 16px rgba(139, 92, 246, 0.12);
 }
 
 .field textarea {
@@ -231,5 +244,57 @@ body {
 ::placeholder {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: var(--font-color-light);
+  font-size: 0.7rem;
 }
+
+
+/*
+.field input,
+.field textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    border: 1px solid rgba(132, 145, 186, 0.15);
+
+    background: rgba(255,255,255,.9);
+
+    border-radius: 20px;
+
+    padding: 20px 24px;
+
+    font-size: 18px;
+    color: var(--text);
+
+    transition: all .25s ease;
+
+    box-shadow:
+        inset 0 1px 2px rgba(0,0,0,.02),
+        0 4px 12px rgba(15,23,42,.03);
+}
+
+.field input {
+    height: 72px;
+}
+
+.field textarea {
+    min-height: 220px;
+    resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+    color: #98a2b8;
+}
+
+.field input:focus,
+.field textarea:focus {
+    outline: none;
+
+    border-color: rgba(139,92,246,.4);
+
+    box-shadow:
+        0 0 0 4px rgba(139,92,246,.08),
+        0 12px 30px rgba(139,92,246,.12);
+}
+        */
 </style>
