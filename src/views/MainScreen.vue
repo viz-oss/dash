@@ -8,6 +8,7 @@ import StatCard from '@/components/tiles/StatCard.vue'
 import RingChart from '@/components/tiles/RingChart.vue'
 import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
 import Landscape from '@/components/tiles/Landscape.vue'
+import AddNewTileButton from '@/components/tiles/AddNewTileButton.vue'
 import { useEditmodeStore } from '@/stores/editmode'
 
 type TileDefinition = {
@@ -129,6 +130,7 @@ function removeTile(id: string | number) {
       </div>
     </GridItem>
   </GridLayout>
+  <AddNewTileButton v-if="editmodeStore.editmode" />
 </template>
 
 <style>

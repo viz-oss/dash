@@ -5,5 +5,3 @@ import Icon from '@/components/base/Icon.vue'
 <template>
   <Icon icon="fa-regular fa-face-smile" />
 </template>
-
-<style scoped></style>

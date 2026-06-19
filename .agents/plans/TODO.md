@@ -1,10 +1,5 @@
 # TODO
 
-- workspace settings
-  - prefill
-  - aktywowanie
-  - cancel
-
 - (+) dodanie nowego kafelka: na razie zwykła lista kafelków do wyboru -> sheet znika i pojawia się nowy sheet z ustawieniami
 - konfiguracja per kafelek na sheet w trybie eydcji
 - navbar i przełączanie workspace

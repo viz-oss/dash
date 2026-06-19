@@ -8,9 +8,9 @@ defineProps({
 </script>
 
 <template>
-    <div class="icon">
-        <i :class="[icon, 'user-icon']"></i>
-    </div>
+  <div class="icon">
+    <i :class="[icon, 'user-icon']"></i>
+  </div>
 </template>
 
 <style scoped>
