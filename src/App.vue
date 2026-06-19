@@ -133,29 +133,25 @@ body {
 
 /* Bottom Sheet */
 
-[data-vsbs-sheet] {
-  font-family: Inter, system-ui, sans-serif;
-  color: var(--text);
+.bottom-sheet__content {
   background: var(--sheet-color);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: var(--shadow-lg);
+  padding: 0 16px;
+  scrollbar-width: none;
 }
 
-[data-vsbs-header]:before {
+.bottom-sheet__content::-webkit-scrollbar {
+  display: none;
+}
+
+.bottom-sheet__draggable-thumb {
   background-color: var(--key-color-light) !important;
   border-radius: 4px !important;
   height: 4px !important;
   width: 32px !important;
   top: 12px !important;
-}
-
-[data-vsbs-scroll] {
-  scrollbar-width: none;
-}
-
-[data-vsbs-scroll]::-webkit-scrollbar {
-  display: none;
 }
 
 .sheet-content {
@@ -219,7 +215,7 @@ body {
 
 .field input,
 .field textarea {
-  width: calc(100% - 30px);
+  width: calc(100% - 32px);
   padding: 13px 15px;
   border: var(--field-border);
   border-radius: 10px;
@@ -271,7 +267,6 @@ body {
 .btn-secondary {
   border: var(--field-border);
   background: var(--white-color);
-  color: var(--text);
   box-shadow: var(--shadow-md);
 }
 

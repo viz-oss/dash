@@ -120,12 +120,13 @@ const send = async (text: string) => {
 <style scoped>
 /* The component should have full width and 75% height of the whole window */
 .chat-container {
-  width: 100%;
+  width: calc(100% - 2px);
   height: 75vh; /* Using vh for example, assuming 'whole screen' context */
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
+  border: var(--field-border);
   border-radius: 14px;
+  margin-bottom: 8px;
 }
 
 .message-list {
@@ -196,10 +197,22 @@ const send = async (text: string) => {
 }
 
 .chat-actions input {
-  width: calc(100% - 30px);
-  padding: 10px 15px;
+  width: calc(100% - 32px);
+  padding: 13px 15px;
+  border: var(--field-border);
   border-radius: 20px;
-  border: 1px solid #ccc;
   font-size: 14px;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.02),
+    0 4px 12px rgba(15, 23, 42, 0.03);
 }
+
+.chat-actions input:focus {
+  outline: none;
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow:
+    0 0 0 2px rgba(139, 92, 246, 0.08),
+    0 10px 16px rgba(139, 92, 246, 0.12);
+}
+
 </style>
