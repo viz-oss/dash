@@ -6,6 +6,7 @@ import { useWorkspaceStore } from '@/stores/workspace'
 const workspace = useWorkspaceStore()
 
 const form = ref({
+  icon: workspace.icon,
   title: workspace.title,
   description: workspace.description,
 })
@@ -18,6 +19,8 @@ function save() {
 }
 
 function close() {
+  // Remove focus to prevent aria-hidden warning when sheet closes
+  ;(document.activeElement as HTMLElement)?.blur()
   emit('close')
 }
 </script>
@@ -77,6 +80,7 @@ function close() {
           'fa-solid fa-golf-ball-tee',
           'fa-solid fa-heart',
         ]"
+        v-model="form.icon"
       />
     </div>
     <div class="sheet-footer">

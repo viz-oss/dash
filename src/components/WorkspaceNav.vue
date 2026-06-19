@@ -6,37 +6,28 @@ import WorkspaceIcon from '@/components/WorkspaceIcon.vue'
 import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode.ts'
 import WorkspaceInfoSheet from '@/views/sheets/WorkspaceInfoSheet.vue'
+import { useWorkspaceStore } from '@/stores/workspace'
 
 defineProps({
   id: {
     type: String,
     required: true,
   },
-  icon: {
-    type: String,
-    default: 'fa-regular fa-face-smile',
-  },
-  title: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
 })
 
 const editmodeStore = useEditmodeStore()
 const emit = defineEmits(['remove'])
-
+const workspace = useWorkspaceStore()
 const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 </script>
 
 <template>
   <div class="widget-full workspace-nav">
     <div class="workspace-info" @click="editmodeStore.editmode ? sheet?.open() : sheet?.close()">
-      <WorkspaceIcon />
+      <WorkspaceIcon :icon="workspace.icon" />
       <div class="text">
-        <div class="title">{{ title }}</div>
-        <div class="description">{{ description }}</div>
+        <div class="title">{{ workspace.title }}</div>
+        <div class="description">{{ workspace.description }}</div>
       </div>
     </div>
     <Icon

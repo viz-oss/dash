@@ -6,13 +6,17 @@ defineProps({
     type: Array as () => string[],
     default: () => [],
   },
+  modelValue: {
+    type: String,
+    default: '',
+  },
 })
 </script>
 
 <template>
   <div class="icon-picker">
     <div v-for="(icon, index) in icons" :key="index" class="icon-option">
-      <Icon :icon="icon" />
+      <Icon :icon="icon" @click="$emit('update:modelValue', icon)" :class="{ 'icon--selected': icon === modelValue }" />
     </div>
   </div>
 </template>
@@ -34,5 +38,10 @@ defineProps({
 
 .icon {
   cursor: pointer;
+}
+
+.icon--selected {
+  background-color: var(--key-color-dark);
+  color: var(--white-color);
 }
 </style>
