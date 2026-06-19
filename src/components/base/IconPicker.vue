@@ -20,8 +20,9 @@ defineProps({
 <style scoped>
 .icon-picker {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 10px 6px;
   width: calc(100% - 30px);
   padding: 13px 15px;
   border: 1px solid rgba(132, 145, 186, 0.2);

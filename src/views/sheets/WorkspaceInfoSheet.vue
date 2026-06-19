@@ -29,26 +29,30 @@ import IconPicker from '@/components/base/IconPicker.vue'
           'fa-solid fa-timeline',
           'fa-regular fa-calendar',
           'fa-solid fa-ticket-simple',
-          'fa-solid fa-address-card',
+          'fa-solid fa-chart-line',
+          'fa-solid fa-chart-pie',
           'fa-regular fa-building',
-          'fa-solid fa-magnifying-glass',
+          'fa-solid fa-building-columns',
           'fa-solid fa-tree',
-          'fa-solid fa-gem',
+          'fa-solid fa-leaf',
+          'fa-solid fa-feather',
           'fa-solid fa-cubes',
+          'fa-solid fa-bitcoin-sign',
+          'fa-solid fa-gem',
           'fa-solid fa-plane',
           'fa-solid fa-rocket',
           'fa-solid fa-ship',
           'fa-solid fa-car',
           'fa-solid fa-bicycle',
-          'fa-solid fa-couch',
           'fa-solid fa-dumbbell',
-          'fa-solid fa-feather',
           'fa-solid fa-golf-ball-tee',
-          'fa-solid fa-headphones',
           'fa-solid fa-heart',
-          'fa-solid fa-leaf',
         ]"
       />
+    </div>
+    <div class="sheet-footer">
+      <button class="btn btn-secondary">Cancel</button>
+      <button class="btn btn-primary">Save Changes</button>
     </div>
   </div>
 </template>
