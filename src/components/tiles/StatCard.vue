@@ -34,6 +34,10 @@ defineProps({
     type: String,
     default: 'x1',
   },
+  fake: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const editmodeStore = useEditmodeStore()
@@ -43,10 +47,14 @@ const emit = defineEmits(['remove'])
 
 <template>
   <div
-    :class="['card', `tone-${tone}`, editmodeStore.editmode ? 'editmode' : '']"
+    :class="['card', `tone-${tone}`, !fake && editmodeStore.editmode ? 'editmode' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
   >
-    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
+    <i
+      v-if="!fake && editmodeStore.editmode"
+      class="close fa-solid fa-xmark"
+      @click="emit('remove')"
+    ></i>
     <div class="icon-container">
       <i :class="[icon, 'user-icon']"></i>
     </div>

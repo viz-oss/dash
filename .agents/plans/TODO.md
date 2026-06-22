@@ -1,6 +1,8 @@
 # TODO
 
-- (+) dodanie nowego kafelka: na razie zwykła lista kafelków do wyboru -> sheet znika i pojawia się nowy sheet z ustawieniami
+- (+) dodanie nowego kafelka
+  - wszystkie kafle z parametrami w i h kompatybilne z gridem - pokazują się w różnych zakresach w tym kwadracie
+  - chyba rozwijana lista edycja parametrów
 - konfiguracja per kafelek na sheet w trybie eydcji
 - navbar i przełączanie workspace
 
@@ -13,8 +15,7 @@ DEMO z API/MCP
 
 ---
 
-- persistent zapisujący layout:
-  persist: true, w stores/
+- persistent zapisujący layout: persist: true, w stores/
 - persistent do cache
 - prawdziwy plot wykresu 'Overview'
   - na podstawie prawdziwych danych

@@ -199,6 +199,13 @@ body {
   font-size: 10px;
 }
 
+.sheet-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px 5px;
+}
+
 /* Form Fields */
 
 .field {
