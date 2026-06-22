@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import StatCard from '@/components/tiles/StatCard.vue'
+import RingChart from '@/components/tiles/RingChart.vue'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const workspace = useWorkspaceStore()
@@ -48,15 +49,11 @@ function close() {
         />
       </div>
       <div class="slot">
-        <StatCard
+        <RingChart
           :fake="true"
-          id="example-stat-card"
-          title="Example"
-          icon="fa-solid fa-chart-bar"
-          value="Stat Card"
-          change-value="5%"
-          :is-up="true"
-          tone="x1"
+          id="example-ring-chart"
+          title="Ring Chart"
+          :series="{ 'Example 1': 70, 'Example 2': 30 }"
         />
       </div>
       <div class="slot">

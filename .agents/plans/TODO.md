@@ -1,8 +1,10 @@
 # TODO
 
+- kafle responsywne wewnętrznie
+- pozostawić moliwość resize ale dać ograniczenia
 - (+) dodanie nowego kafelka
-  - wszystkie kafle z parametrami w i h kompatybilne z gridem - pokazują się w różnych zakresach w tym kwadracie
-  - chyba rozwijana lista edycja parametrów
+  - wymusić mały styl na duych kaflach
+  - edycja parametrów: harmonijka pomiędzy wierszami
 - konfiguracja per kafelek na sheet w trybie eydcji
 - navbar i przełączanie workspace
 

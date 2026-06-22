@@ -17,6 +17,10 @@ defineProps({
     type: Object as () => Record<string, number>,
     required: true,
   },
+  fake: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const editmodeStore = useEditmodeStore()
@@ -61,10 +65,10 @@ const chartOptions = ref<ApexOptions>({
 
 <template>
   <div
-    :class="'card double' + (editmodeStore.editmode ? ' editmode' : '')"
+    :class="'card double' + (!fake && editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
   >
-    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
+    <i v-if="!fake && editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
     <apexchart
       type="radialBar"
       width="140"
@@ -105,5 +109,24 @@ const chartOptions = ref<ApexOptions>({
   margin-top: 0px;
   font-size: 10px;
   color: var(--key-color-dark);
+}
+
+/* Three slots (> 360px) */
+@container card-individual (min-width: 360px) {
+  .title {
+    color: blue;
+  }
+}
+
+@container card-individual (min-width: 240px) and (max-width: 250px) {
+  .title {
+    color: green;
+  }
+}
+
+@container card-individual (min-width: 100px) and (max-width: 150px) {
+  .title {
+    color: red;
+  }
 }
 </style>

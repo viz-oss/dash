@@ -83,6 +83,8 @@ body {
   padding: 10px 14px;
   margin-top: 0;
   box-sizing: border-box;
+  container-type: inline-size;
+  container-name: card-individual;
 }
 
 .card.double {
@@ -129,6 +131,13 @@ body {
   justify-content: center;
   cursor: pointer;
   z-index: 1;
+}
+
+/* Card placeholder */
+
+.vgl-item--placeholder {
+  background: var(--key-color-light);
+  border-radius: 10px;
 }
 
 /* Bottom Sheet */

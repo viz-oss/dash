@@ -89,7 +89,7 @@ const layout = ref<Layout>([
   { i: 'avgTime', x: 2, y: 4, w: 1, h: 2 },
   { i: 'ring', x: 0, y: 6, w: 2, h: 2 },
   { i: 'agent', x: 2, y: 6, w: 1, h: 2 },
-  { i: 'landscape', x: 0, y: 8, w: 3, h: 5 },
+  { i: 'landscape', x: 0, y: 8, w: 3, h: 3 },
 ])
 
 function removeTile(id: string | number) {
@@ -106,7 +106,7 @@ function removeTile(id: string | number) {
     :row-height="50"
     :margin="[4, 16]"
     :is-draggable="editmodeStore.editmode"
-    :is-resizable="false"
+    :is-resizable="editmodeStore.editmode"
     :prevent-collision="false"
     :vertical-compact="false"
     :use-css-transforms="true"
