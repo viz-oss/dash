@@ -89,5 +89,3 @@ function close() {
     </div>
   </div>
 </template>
-
-<style scoped></style>

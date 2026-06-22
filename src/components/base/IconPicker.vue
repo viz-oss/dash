@@ -16,7 +16,11 @@ defineProps({
 <template>
   <div class="icon-picker">
     <div v-for="(icon, index) in icons" :key="index" class="icon-option">
-      <Icon :icon="icon" @click="$emit('update:modelValue', icon)" :class="{ 'icon--selected': icon === modelValue }" />
+      <Icon
+        :icon="icon"
+        @click="$emit('update:modelValue', icon)"
+        :class="{ 'icon--selected': icon === modelValue }"
+      />
     </div>
   </div>
 </template>
@@ -26,8 +30,8 @@ defineProps({
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px 6px;
-  width: calc(100% - 30px);
+  gap: 10px 5px;
+  width: calc(100% - 32px);
   padding: 13px 15px;
   border: 1px solid rgba(132, 145, 186, 0.2);
   border-radius: 10px;
