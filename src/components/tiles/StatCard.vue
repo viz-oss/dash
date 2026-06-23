@@ -34,7 +34,7 @@ defineProps({
     type: String,
     default: 'x1',
   },
-  fake: {
+  thumb: {
     type: Boolean,
     default: false,
   },
@@ -47,11 +47,11 @@ const emit = defineEmits(['remove'])
 
 <template>
   <div
-    :class="['card', `tone-${tone}`, !fake && editmodeStore.editmode ? 'editmode' : '']"
+    :class="['card', `tone-${tone}`, !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i
-      v-if="!fake && editmodeStore.editmode"
+      v-if="!thumb && editmodeStore.editmode"
       class="close fa-solid fa-xmark"
       @click="emit('remove')"
     ></i>
@@ -127,12 +127,20 @@ const emit = defineEmits(['remove'])
   letter-spacing: -0.8px;
 }
 
+.thumb .metric-title {
+  font-size: 10px;
+}
+
 /* Large Value (e.g., "1,248") */
 .metric-value {
   font-size: 19px;
   color: var(--font-color-dark);
   font-weight: 700;
   margin-top: 2px;
+}
+
+.thumb .metric-value {
+  font-size: 16px;
 }
 
 /* Change Indicator Container */
@@ -158,5 +166,10 @@ const emit = defineEmits(['remove'])
 .vs-text {
   font-size: 9px;
   color: var(--font-color-light);
+}
+
+.thumb .percentage,
+.thumb .vs-text {
+  font-size: 8px;
 }
 </style>

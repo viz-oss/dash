@@ -41,32 +41,32 @@ function close() {
     <div class="sheet-body">
       <div class="slot">
         <StatCard
-          :fake="true"
+          :thumb="true"
           id="example-stat-card"
           title="Stat Card"
           icon="fa-solid fa-chart-bar"
           value="1.23"
-          change-value="5%"
+          change-value="4%"
           :is-up="true"
           tone="x1"
         />
       </div>
       <div class="slot">
         <RingChart
-          :fake="true"
+          :thumb="true"
           id="example-ring-chart"
           title="Ring Chart"
           :series="{ 'Example 1': 70, 'Example 2': 30 }"
         />
       </div>
       <div class="slot">
-        <TrendChart :fake="true" id="example-trend-chart" title="Trend Chart" />
+        <TrendChart :thumb="true" id="example-trend-chart" title="Trend Chart" />
       </div>
       <div class="slot">
-        <AgentAvatar :fake="true" id="example-agent-avatar" hint="Agent" />
+        <AgentAvatar :thumb="true" id="example-agent-avatar" hint="Agent" />
       </div>
       <div class="slot">
-        <Landscape :fake="true" id="example-landscape" theme="mountains" />
+        <Landscape :thumb="true" id="example-landscape" theme="mountains" />
       </div>
     </div>
     <div class="sheet-footer">

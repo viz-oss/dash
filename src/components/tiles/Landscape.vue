@@ -10,7 +10,7 @@ defineProps({
     type: String,
     required: true,
   },
-  fake: {
+  thumb: {
     type: Boolean,
     default: false,
   },
@@ -23,11 +23,11 @@ const emit = defineEmits(['remove'])
 
 <template>
   <div
-    :class="'card full' + (!fake && editmodeStore.editmode ? ' editmode' : '')"
+    :class="['card', 'full', !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i
-      v-if="!fake && editmodeStore.editmode"
+      v-if="!thumb && editmodeStore.editmode"
       class="close fa-solid fa-xmark"
       @click="emit('remove')"
     ></i>

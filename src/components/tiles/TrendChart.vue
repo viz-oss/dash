@@ -11,7 +11,7 @@ defineProps({
     type: String,
     default: 'Overview',
   },
-  fake: {
+  thumb: {
     type: Boolean,
     default: false,
   },
@@ -42,11 +42,11 @@ const todayName = computed(() => {
 
 <template>
   <div
-    :class="'card full' + (!fake && editmodeStore.editmode ? ' editmode' : '')"
+    :class="['card', 'full', !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i
-      v-if="!fake && editmodeStore.editmode"
+      v-if="!thumb && editmodeStore.editmode"
       class="close fa-solid fa-xmark"
       @click="emit('remove')"
     ></i>
@@ -127,4 +127,10 @@ const todayName = computed(() => {
     display: none;
   }
 }
+
+.thumb .middle {
+  background-size: 300px !important;
+  background-position: center 10% !important;
+}
+
 </style>

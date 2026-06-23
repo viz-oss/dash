@@ -17,7 +17,7 @@ defineProps({
     type: Object as () => Record<string, number>,
     required: true,
   },
-  fake: {
+  thumb: {
     type: Boolean,
     default: false,
   },
@@ -65,11 +65,11 @@ const chartOptions = ref<ApexOptions>({
 
 <template>
   <div
-    :class="'card double' + (!fake && editmodeStore.editmode ? ' editmode' : '')"
+    :class="['card', 'double', !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i
-      v-if="!fake && editmodeStore.editmode"
+      v-if="!thumb && editmodeStore.editmode"
       class="close fa-solid fa-xmark"
       @click="emit('remove')"
     ></i>
@@ -127,5 +127,11 @@ const chartOptions = ref<ApexOptions>({
   .card .right {
     display: block;
   }
+}
+
+.apexcharts-svg {
+  scale: 0.9;
+  margin-top: -4px;
+  margin-left: -4px;
 }
 </style>
