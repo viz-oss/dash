@@ -88,4 +88,35 @@ const todayName = computed(() => {
   color: var(--white-color);
   background-color: var(--key-color-dark);
 }
+
+/* One slot horizontal */
+@container card-individual (max-width: 180px) {
+  .card .top,
+  .card .bottom {
+    display: none;
+  }
+}
+
+/* Two slots horizontal */
+@container card-individual (min-width: 181px) and (max-width: 300px) {
+  .card .top,
+  .card .bottom {
+    display: block;
+  }
+}
+
+/* Three slots horizontal */
+@container card-individual (min-width: 301px) {
+  .card .top,
+  .card .bottom {
+    display: block;
+  }
+}
+
+/* One slot vertical */
+@container card-individual (max-height: 300px) {
+  .card .bottom {
+    display: none;
+  }
+}
 </style>

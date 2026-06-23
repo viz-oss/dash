@@ -83,7 +83,7 @@ body {
   padding: 10px 14px;
   margin-top: 0;
   box-sizing: border-box;
-  container-type: inline-size;
+  container-type: size;
   container-name: card-individual;
 }
 

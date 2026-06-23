@@ -68,7 +68,11 @@ const chartOptions = ref<ApexOptions>({
     :class="'card double' + (!fake && editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
   >
-    <i v-if="!fake && editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
+    <i
+      v-if="!fake && editmodeStore.editmode"
+      class="close fa-solid fa-xmark"
+      @click="emit('remove')"
+    ></i>
     <apexchart
       type="radialBar"
       width="140"
@@ -111,22 +115,17 @@ const chartOptions = ref<ApexOptions>({
   color: var(--key-color-dark);
 }
 
-/* Three slots (> 360px) */
-@container card-individual (min-width: 360px) {
-  .title {
-    color: blue;
+/* One slot horizontal */
+@container card-individual (max-width: 180px) {
+  .card .right {
+    display: none;
   }
 }
 
-@container card-individual (min-width: 240px) and (max-width: 250px) {
-  .title {
-    color: green;
-  }
-}
-
-@container card-individual (min-width: 100px) and (max-width: 150px) {
-  .title {
-    color: red;
+/* Two slots horizontal */
+@container card-individual (min-width: 181px) and (max-width: 300px) {
+  .card .right {
+    display: block;
   }
 }
 </style>
