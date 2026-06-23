@@ -10,6 +10,10 @@ defineProps({
     type: String,
     required: true,
   },
+  fake: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const editmodeStore = useEditmodeStore()
@@ -19,10 +23,14 @@ const emit = defineEmits(['remove'])
 
 <template>
   <div
-    :class="'card full' + (editmodeStore.editmode ? ' editmode' : '')"
+    :class="'card full' + (!fake && editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
   >
-    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
+    <i
+      v-if="!fake && editmodeStore.editmode"
+      class="close fa-solid fa-xmark"
+      @click="emit('remove')"
+    ></i>
     <img v-bind:src="`/public/_landscape-${theme}.png`" />
   </div>
 </template>

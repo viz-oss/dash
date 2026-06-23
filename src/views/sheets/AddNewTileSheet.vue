@@ -2,6 +2,9 @@
 import { ref } from 'vue'
 import StatCard from '@/components/tiles/StatCard.vue'
 import RingChart from '@/components/tiles/RingChart.vue'
+import TrendChart from '@/components/tiles/TrendChart.vue'
+import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
+import Landscape from '@/components/tiles/Landscape.vue'
 import { useWorkspaceStore } from '@/stores/workspace'
 
 const workspace = useWorkspaceStore()
@@ -40,9 +43,9 @@ function close() {
         <StatCard
           :fake="true"
           id="example-stat-card"
-          title="Example"
+          title="Stat Card"
           icon="fa-solid fa-chart-bar"
-          value="Stat Card"
+          value="1.23"
           change-value="5%"
           :is-up="true"
           tone="x1"
@@ -57,16 +60,13 @@ function close() {
         />
       </div>
       <div class="slot">
-        <StatCard
-          :fake="true"
-          id="example-stat-card"
-          title="Example"
-          icon="fa-solid fa-chart-bar"
-          value="Stat Card"
-          change-value="5%"
-          :is-up="true"
-          tone="x1"
-        />
+        <TrendChart :fake="true" id="example-trend-chart" title="Trend Chart" />
+      </div>
+      <div class="slot">
+        <AgentAvatar :fake="true" id="example-agent-avatar" hint="Agent" />
+      </div>
+      <div class="slot">
+        <Landscape :fake="true" id="example-landscape" theme="mountains" />
       </div>
     </div>
     <div class="sheet-footer">
@@ -77,6 +77,11 @@ function close() {
 </template>
 
 <style scoped>
+.slot {
+  width: calc(33.33% - 10px);
+  aspect-ratio: 1 / 1;
+}
+
 .slot .card {
   transition:
     transform 0.2s ease,
@@ -89,6 +94,8 @@ function close() {
   cursor: pointer;
 }
 
-.slot .card.selected:after {
+.slot .card .metric-value {
+  font-size: 17px;
+  font-weight: 600;
 }
 </style>

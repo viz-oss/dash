@@ -15,6 +15,10 @@ defineProps({
     type: String,
     default: 'Agent session',
   },
+  fake: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const editmodeStore = useEditmodeStore()
@@ -195,11 +199,15 @@ const onMouseMove = (event: MouseEvent) => {
 
 <template>
   <div
-    :class="'card' + (editmodeStore.editmode ? ' editmode' : '')"
+    :class="'card' + (!fake && editmodeStore.editmode ? ' editmode' : '')"
     :style="{ '--float-delay': randomFloatDelay }"
     @click="!editmodeStore.editmode ? sheet?.open() : sheet?.close()"
   >
-    <i v-if="editmodeStore.editmode" class="close fa-solid fa-xmark" @click="emit('remove')"></i>
+    <i
+      v-if="!fake && editmodeStore.editmode"
+      class="close fa-solid fa-xmark"
+      @click="emit('remove')"
+    ></i>
     <div ref="cactus" class="cactus">
       🌵
       <div ref="eyeLeft" class="eye left"></div>
