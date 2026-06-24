@@ -14,7 +14,7 @@ const form = ref({
 const emit = defineEmits(['close'])
 
 function save() {
-  workspace.update(form.value)
+//  workspace.update(form.value)
   close()
 }
 
@@ -28,31 +28,14 @@ function close() {
 <template>
   <div class="sheet-content">
     <div class="sheet-header">
-      <i class="icon fa-solid fa-building"></i>
+      <i class="icon fa-solid fa-chart-pie"></i>
       <div class="about">
-        <div class="title">Workspace Settings</div>
-        <div class="subtitle">Customize your workspace preferences</div>
+        <div class="title">Stat Card Settings</div>
+        <div class="subtitle">Customize your stat card preferences</div>
       </div>
     </div>
     <div class="field">
-      <label for="workspace-name">Workspace Name</label>
-      <input
-        id="workspace-name"
-        type="text"
-        v-model="form.title"
-        placeholder="Enter workspace name"
-      />
-    </div>
-    <div class="field">
-      <label for="workspace-description">Description</label>
-      <textarea
-        id="workspace-description"
-        v-model="form.description"
-        placeholder="Enter workspace description"
-      ></textarea>
-    </div>
-    <div class="field">
-      <label>Workspace Icon</label>
+      <label>Stat Card Icon</label>
       <IconPicker
         :icons="[
           'fa-regular fa-face-smile',
@@ -81,6 +64,23 @@ function close() {
           'fa-solid fa-heart',
         ]"
         v-model="form.icon"
+      />
+    </div>
+    <div class="field">
+      <label for="stat-name">Stat Name</label>
+      <input
+        id="stat-name"
+        type="text"
+        v-model="form.title"
+        placeholder="Enter stat name"
+      />
+    </div>
+    <div class="field">
+      <label for="stat-url">API URL</label>
+      <input
+        id="stat-url"
+        type="text"
+        placeholder="Enter API URL"
       />
     </div>
     <div class="sheet-footer">

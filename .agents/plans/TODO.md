@@ -1,9 +1,12 @@
 # TODO
 
-- (+) dodanie nowego kafelka
-  - edycja parametrów: harmonijka pomiędzy wierszami
 - konfiguracja per kafelek na sheet w trybie eydcji
+- (+) dodanie nowego kafelka
+  * zaznaczenie i dodanie / zamknięcie
+  * otwarcie nowego sheet
 - navbar i przełączanie workspace
+- modele dla konfiguracji poszczególnych kafelków / persistent
+- persistent zapisujący layout: persist: true, w stores/
 
 ---
 
@@ -14,7 +17,6 @@ DEMO z API/MCP
 
 ---
 
-- persistent zapisujący layout: persist: true, w stores/
 - persistent do cache
 - prawdziwy plot wykresu 'Overview'
   - na podstawie prawdziwych danych
