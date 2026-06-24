@@ -5,6 +5,7 @@ import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import { useOS } from '@/composables/useOS'
 import Chat from '@/components/base/Chat.vue'
 import { useEditmodeStore } from '@/stores/editmode'
+import AgentSettings from '@/views/sheets/AgentSettings.vue'
 
 defineProps({
   id: {
@@ -25,7 +26,6 @@ const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const { osName } = useOS()
 const emit = defineEmits(['remove'])
-
 const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 
 // Cactus eye positioning
@@ -214,8 +214,11 @@ const onMouseMove = (event: MouseEvent) => {
       <div ref="eyeRight" class="eye right"></div>
       <div class="cloud">{{ hint }}</div>
     </div>
-    <VueBottomSheet v-if="!thumb" ref="sheet">
+    <VueBottomSheet v-if="!thumb && !editmodeStore.editmode" ref="sheet">
       <Chat url="https://ai.grindwallet.com/ask?q=%message%&ssid=%ssid%}" />
+    </VueBottomSheet>
+    <VueBottomSheet v-if="!thumb && editmodeStore.editmode" ref="sheet">
+      <AgentSettings />
     </VueBottomSheet>
   </div>
 </template>

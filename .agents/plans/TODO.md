@@ -1,10 +1,9 @@
 # TODO
 
-- konfiguracja per kafelek na sheet w trybie eydcji
+- navbar i przełączanie workspace
 - (+) dodanie nowego kafelka
   * zaznaczenie i dodanie / zamknięcie
   * otwarcie nowego sheet
-- navbar i przełączanie workspace
 - modele dla konfiguracji poszczególnych kafelków / persistent
 - persistent zapisujący layout: persist: true, w stores/
 

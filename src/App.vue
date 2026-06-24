@@ -133,11 +133,15 @@ body {
   z-index: 1;
 }
 
-/* Card placeholder */
+/* Grid native elements */
 
 .vgl-item--placeholder {
   background: var(--key-color-light);
   border-radius: 10px;
+}
+
+.vgl-item__resizer:before {
+  border-color: var(--key-color-dark);
 }
 
 /* Bottom Sheet */

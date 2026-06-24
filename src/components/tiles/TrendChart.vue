@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useEditmodeStore } from '@/stores/editmode'
+import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import '@webzlodimir/vue-bottom-sheet/dist/style.css'
+import TrendChartSettings from '@/views/sheets/TrendChartSettings.vue'
 
 defineProps({
   id: {
@@ -20,6 +23,7 @@ defineProps({
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
+const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 
 // type TimeUnit = 'hour' | 'day' | 'week' | 'month' | 'year';
 // const selectedTimeUnit = ref<TimeUnit>('day');
@@ -44,6 +48,7 @@ const todayName = computed(() => {
   <div
     :class="['card', 'full', !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
+    @click="!thumb && editmodeStore.editmode ? sheet?.open() : null"
   >
     <i
       v-if="!thumb && editmodeStore.editmode"
@@ -69,6 +74,9 @@ const todayName = computed(() => {
         </div>
       </div>
     </div>
+    <VueBottomSheet ref="sheet">
+      <TrendChartSettings />
+    </VueBottomSheet>
   </div>
 </template>
 

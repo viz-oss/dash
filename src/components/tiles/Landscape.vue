@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useEditmodeStore } from '@/stores/editmode'
+import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import '@webzlodimir/vue-bottom-sheet/dist/style.css'
+import LandscapeSettings from '@/views/sheets/LandscapeSettings.vue'
 
 defineProps({
   id: {
@@ -19,6 +23,8 @@ defineProps({
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
+const sheet = ref<{ open: () => void; close: () => void } | null>(null)
+
 </script>
 
 <template>
@@ -30,6 +36,7 @@ const emit = defineEmits(['remove'])
       thumb ? 'thumb' : '',
     ]"
     :style="{ '--float-delay': randomFloatDelay }"
+    @click="!thumb && editmodeStore.editmode ? sheet?.open() : null"
   >
     <i
       v-if="!thumb && editmodeStore.editmode"
@@ -37,6 +44,9 @@ const emit = defineEmits(['remove'])
       @click="emit('remove')"
     ></i>
     <img v-bind:src="`/public/_landscape-${theme}.png`" />
+    <VueBottomSheet ref="sheet">
+      <LandscapeSettings />
+    </VueBottomSheet>
   </div>
 </template>
 

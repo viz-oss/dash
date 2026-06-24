@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import type { ApexOptions } from 'apexcharts'
 import apexchart from 'vue3-apexcharts'
 import { useEditmodeStore } from '@/stores/editmode'
+import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import '@webzlodimir/vue-bottom-sheet/dist/style.css'
+import RingChartSettings from '@/views/sheets/RingChartSettings.vue'
 
 defineProps({
   id: {
@@ -26,6 +29,7 @@ defineProps({
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
+const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 
 const formatSeries = (series: Record<string, number>) => {
   return Object.values(series)
@@ -72,6 +76,7 @@ const chartOptions = ref<ApexOptions>({
       thumb ? 'thumb' : '',
     ]"
     :style="{ '--float-delay': randomFloatDelay }"
+    @click="!thumb && editmodeStore.editmode ? sheet?.open() : null"
   >
     <i
       v-if="!thumb && editmodeStore.editmode"
@@ -93,6 +98,9 @@ const chartOptions = ref<ApexOptions>({
       <div class="percent">{{ formatSeries(series)[1] }}%</div>
       <div class="description">{{ Object.keys(series)[1] }}</div>
     </div>
+    <VueBottomSheet ref="sheet">
+      <RingChartSettings />
+    </VueBottomSheet>
   </div>
 </template>
 
