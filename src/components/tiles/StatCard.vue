@@ -47,7 +47,12 @@ const emit = defineEmits(['remove'])
 
 <template>
   <div
-    :class="['card', `tone-${tone}`, !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
+    :class="[
+      'card',
+      `tone-${tone}`,
+      !thumb && editmodeStore.editmode ? 'editmode' : '',
+      thumb ? 'thumb' : '',
+    ]"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i
@@ -129,6 +134,7 @@ const emit = defineEmits(['remove'])
 
 .thumb .metric-title {
   font-size: 10px;
+  margin-top: 8px;
 }
 
 /* Large Value (e.g., "1,248") */
@@ -141,6 +147,7 @@ const emit = defineEmits(['remove'])
 
 .thumb .metric-value {
   font-size: 16px;
+  margin-top: 0px;
 }
 
 /* Change Indicator Container */

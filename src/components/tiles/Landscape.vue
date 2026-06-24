@@ -23,7 +23,12 @@ const emit = defineEmits(['remove'])
 
 <template>
   <div
-    :class="['card', 'full', !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
+    :class="[
+      'card',
+      'full',
+      !thumb && editmodeStore.editmode ? 'editmode' : '',
+      thumb ? 'thumb' : '',
+    ]"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i
@@ -49,5 +54,14 @@ const emit = defineEmits(['remove'])
   height: 100%;
   object-fit: cover;
   z-index: 0;
+}
+
+.thumb.card {
+  background-color: var(--white-color);
+  box-shadow: 0 0 4px var(--shadow-color);
+}
+
+.thumb.card img {
+  object-fit: contain;
 }
 </style>

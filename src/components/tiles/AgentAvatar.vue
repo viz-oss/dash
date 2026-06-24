@@ -201,7 +201,7 @@ const onMouseMove = (event: MouseEvent) => {
   <div
     :class="['card', !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
-    @click="!editmodeStore.editmode ? sheet?.open() : sheet?.close()"
+    @click="!thumb && !editmodeStore.editmode ? sheet?.open() : sheet?.close()"
   >
     <i
       v-if="!thumb && editmodeStore.editmode"
@@ -214,15 +214,14 @@ const onMouseMove = (event: MouseEvent) => {
       <div ref="eyeRight" class="eye right"></div>
       <div class="cloud">{{ hint }}</div>
     </div>
+    <VueBottomSheet v-if="!thumb" ref="sheet">
+      <Chat url="https://ai.grindwallet.com/ask?q=%message%&ssid=%ssid%}" />
+    </VueBottomSheet>
   </div>
-  <VueBottomSheet ref="sheet">
-    <Chat url="https://ai.grindwallet.com/ask?q=%message%&ssid=%ssid%}" />
-  </VueBottomSheet>
 </template>
 
 <style scoped>
 .card {
-  position: relative;
   background: transparent;
   box-shadow: none;
 }
@@ -327,5 +326,22 @@ const onMouseMove = (event: MouseEvent) => {
   74.3% {
     transform: scaleY(0.16);
   }
+}
+
+.thumb.card {
+  background-color: var(--white-color);
+  box-shadow: 0 0 4px var(--shadow-color);
+}
+
+.thumb.card .cloud {
+  left: -6px;
+  top: -22px;
+  width: 60px;
+  font-size: 10px;
+  padding: 2px 4px 3px 4px;
+}
+
+.thumb.card .cloud::after {
+  right: 13px;
 }
 </style>

@@ -65,7 +65,12 @@ const chartOptions = ref<ApexOptions>({
 
 <template>
   <div
-    :class="['card', 'double', !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
+    :class="[
+      'card',
+      'double',
+      !thumb && editmodeStore.editmode ? 'editmode' : '',
+      thumb ? 'thumb' : '',
+    ]"
     :style="{ '--float-delay': randomFloatDelay }"
   >
     <i
@@ -129,9 +134,7 @@ const chartOptions = ref<ApexOptions>({
   }
 }
 
-.apexcharts-svg {
-  scale: 0.9;
-  margin-top: -4px;
-  margin-left: -4px;
+.thumb.card {
+  padding: 6px 10px;
 }
 </style>

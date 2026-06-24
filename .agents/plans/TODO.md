@@ -1,9 +1,6 @@
 # TODO
 
-- kafle responsywne wewnętrznie
-- pozostawić moliwość resize ale dać ograniczenia
 - (+) dodanie nowego kafelka
-  - wymusić mały styl na duych kaflach
   - edycja parametrów: harmonijka pomiędzy wierszami
 - konfiguracja per kafelek na sheet w trybie eydcji
 - navbar i przełączanie workspace

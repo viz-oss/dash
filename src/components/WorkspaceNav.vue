@@ -36,10 +36,10 @@ const sheet = ref<{ open: () => void; close: () => void } | null>(null)
       :class="{ 'edit-icon--active': editmodeStore.editmode }"
       @click="editmodeStore.toggle"
     />
+    <VueBottomSheet ref="sheet">
+      <WorkspaceInfoSheet @close="sheet?.close()" />
+    </VueBottomSheet>
   </div>
-  <VueBottomSheet ref="sheet">
-    <WorkspaceInfoSheet @close="sheet?.close()" />
-  </VueBottomSheet>
 </template>
 
 <style scoped>

@@ -74,8 +74,8 @@ body {
 
 .card {
   position: relative;
-  background: var(--white-color);
   border-radius: 10px;
+  background-color: var(--white-color);
   box-shadow: 0 0 4px var(--shadow-color);
   text-align: left;
   width: 100%;
