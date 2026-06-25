@@ -22,6 +22,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  z-index: 100;
 }
 
 .dot {
