@@ -34,13 +34,16 @@ function close() {
       </div>
     </div>
     <div class="field">
-      <label for="landscape-name">Select picture</label>
+      <label for="landscape-name">Select the picture</label>
       <div class="landscape-options">
         <div class="card">
           <img src="/public/_landscape-mountains.png" title="Mountains" />
         </div>
         <div class="card">
           <img src="/public/_landscape-school.png" title="School" />
+        </div>
+        <div class="card">
+          <img src="/public/_landscape-library.png" title="Library" />
         </div>
       </div>
     </div>

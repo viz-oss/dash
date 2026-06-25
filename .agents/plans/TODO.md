@@ -1,5 +1,6 @@
 # TODO
 
+- naprawić settings dla Agenta
 - navbar i przełączanie workspace
 - (+) dodanie nowego kafelka
   * zaznaczenie i dodanie / zamknięcie
