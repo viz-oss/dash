@@ -13,7 +13,7 @@ const form = ref({
 const emit = defineEmits(['close'])
 
 function save() {
-//  workspace.update(form.value)
+  //  workspace.update(form.value)
   close()
 }
 
@@ -37,13 +37,16 @@ function close() {
       <label for="landscape-name">Select the picture</label>
       <div class="landscape-options">
         <div class="card">
-          <img src="/public/_landscape-mountains.png" title="Mountains" />
+          <img src="/public/_landscape-library.png" title="Library" />
         </div>
         <div class="card">
           <img src="/public/_landscape-school.png" title="School" />
         </div>
         <div class="card">
-          <img src="/public/_landscape-library.png" title="Library" />
+          <img src="/public/_landscape-mountains.png" title="Mountains" />
+        </div>
+        <div class="card">
+          <img src="/public/_landscape-ocean.png" title="Ocean" />
         </div>
       </div>
     </div>
@@ -63,9 +66,11 @@ function close() {
 }
 
 .card {
-  width: 33.33%;
+  width: calc(33.33% - 4px);
   height: 110px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .card img {
@@ -79,6 +84,4 @@ function close() {
   box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
   cursor: pointer;
 }
-
 </style>
-    
