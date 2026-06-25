@@ -1,12 +1,15 @@
 # TODO
 
-- naprawić settings dla Agenta
-- navbar i przełączanie workspace
+- przełączanie workspace (klik w kropkę, potem swipe)
 - (+) dodanie nowego kafelka
-  * zaznaczenie i dodanie / zamknięcie
-  * otwarcie nowego sheet
+  - zaznaczenie i dodanie / zamknięcie
+  - otwarcie nowego sheet
 - modele dla konfiguracji poszczególnych kafelków / persistent
 - persistent zapisujący layout: persist: true, w stores/
+- naprawić settings dla Agenta
+- żeby settings nie włączały się po drag
+- plus przenieść obok edit i zrobić równe ikony wielkością do ikony po lewej, a właściwie tą jedną wiekszą z napisem "add"
+- i jeszcze obok plus - ikona śmietnika która kasuje cały panel
 
 ---
 

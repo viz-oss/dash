@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import MainScreen from '@/views/MainScreen.vue'
+import NavBar from '@/components/base/NavBar.vue'
 </script>
 
 <template>
   <MainScreen />
+  <NavBar />
 </template>
 
 <style>
