@@ -40,6 +40,9 @@ function close() {
           <img src="/public/_landscape-library.png" title="Library" />
         </div>
         <div class="card">
+          <img src="/public/_landscape-townsquare.png" title="Town Square" />
+        </div>
+        <div class="card">
           <img src="/public/_landscape-school.png" title="School" />
         </div>
         <div class="card">
