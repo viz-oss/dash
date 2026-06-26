@@ -79,20 +79,24 @@ const tiles: Record<string, TileDefinition> = {
   },
 }
 
-const layout = ref<Layout>([
-  { i: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
-  { i: 'trend', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
-  { i: 'users', x: 0, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-  { i: 'conversions', x: 1, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-  { i: 'avgTime', x: 2, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-  { i: 'ring', x: 0, y: 6, w: 2, h: 2, minW: 1, minH: 2, maxW: 2, maxH: 2 },
-  { i: 'agent', x: 2, y: 6, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-  { i: 'landscape', x: 0, y: 8, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+const currentDesktop = ref(0)
+
+const desktops = ref([
+  <Layout>[
+    { i: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
+    { i: 'trend', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    { i: 'users', x: 0, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'conversions', x: 1, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'avgTime', x: 2, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'ring', x: 0, y: 6, w: 2, h: 2, minW: 1, minH: 2, maxW: 2, maxH: 2 },
+    { i: 'agent', x: 2, y: 6, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'landscape', x: 0, y: 8, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+  ],
 ])
 </script>
 
 <template>
-  <MainScreen :tiles="tiles" :layout="layout" />
+  <MainScreen :tiles="tiles" :layout="desktops[currentDesktop] ?? []" />
   <NavBar />
 </template>
 
