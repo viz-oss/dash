@@ -1,12 +1,34 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  // Total desktops in the switcher
+  total: {
+    type: Number,
+    required: true,
+  },
+  // Current desktop index (0-based)
+  current: {
+    type: Number,
+    required: true,
+  },
+  // Minimal swipe distance (px) to change desktop
+  // swipeThreshold: {
+  //   type: Number,
+  //   default: 20,
+  // },
+})
+
+const emit = defineEmits(['go-to'])
+
+function onClick(index: number) {
+  // Ignore click if it was a swipe (pointerup after swipe)
+  // if (swipeMoved) return
+  emit('go-to', index)
+}
+</script>
 
 <template>
   <nav class="card navbar">
-    <span class="dot fill"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
+    <span v-for="i in total" :key="i" :class="['dot', { fill: i - 1 === current }]" @click.stop="onClick(i - 1)"></span>
   </nav>
 </template>
 

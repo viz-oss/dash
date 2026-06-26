@@ -2,7 +2,6 @@
 import { ref, type Component } from 'vue'
 import DesktopSwitcher from '@/components/base/DesktopSwitcher.vue'
 import MainScreen from '@/views/MainScreen.vue'
-import NavBar from '@/components/base/NavBar.vue'
 import type { Layout } from 'grid-layout-plus'
 import WorkspaceNav from '@/components/WorkspaceNav.vue'
 import TrendChart from '@/components/tiles/TrendChart.vue'
@@ -97,6 +96,10 @@ const desktops = ref<Layout[]>([
     { i: 'conversions', x: 1, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
     { i: 'avgTime', x: 2, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
   ],
+  [
+    { i: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
+    { i: 'landscape', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+  ],
 ])
 </script>
 
@@ -106,7 +109,6 @@ const desktops = ref<Layout[]>([
       <MainScreen :layout="desktop" :tiles="tiles" />
     </template>
   </DesktopSwitcher>
-  <NavBar />
 </template>
 
 <style>
