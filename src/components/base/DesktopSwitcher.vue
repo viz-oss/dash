@@ -61,6 +61,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   observer?.disconnect()
 })
+
 </script>
 
 <template>
@@ -69,7 +70,7 @@ onBeforeUnmount(() => {
       <slot :desktop="desktop" :index="index" />
     </div>
   </div>
-  <NavBar :total="desktops.length" :current="current" @go-to="goTo" />
+  <NavBar :total="desktops.length" :current="current" :swipe-threshold="20" @go-to="goTo" />
 </template>
 
 <style scoped>

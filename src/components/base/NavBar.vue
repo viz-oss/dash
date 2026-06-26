@@ -11,24 +11,63 @@ const props = defineProps({
     required: true,
   },
   // Minimal swipe distance (px) to change desktop
-  // swipeThreshold: {
-  //   type: Number,
-  //   default: 20,
-  // },
+  swipeThreshold: {
+    type: Number,
+    default: 20,
+  },
 })
 
 const emit = defineEmits(['go-to'])
 
 function onClick(index: number) {
   // Ignore click if it was a swipe (pointerup after swipe)
-  // if (swipeMoved) return
+  if (swipeMoved) return
   emit('go-to', index)
+}
+
+// --- Pointer swipe ---
+
+let startX = 0
+let isDragging = false
+let swipeMoved = false
+
+function onPointerDown(e: PointerEvent) {
+  startX = e.clientX
+  isDragging = true
+  swipeMoved = false
+}
+ 
+function onPointerMove(e: PointerEvent) {
+  if (!isDragging) return
+  const dx = Math.abs(e.clientX - startX)
+  if (dx > 6) swipeMoved = true
+}
+ 
+function onPointerUp(e: PointerEvent) {
+  if (!isDragging) return
+  isDragging = false
+  const dx = e.clientX - startX
+  if (Math.abs(dx) >= props.swipeThreshold) {
+    if (dx < 0) emit('go-to', props.current + 1)
+    else emit('go-to', props.current - 1)
+  }
 }
 </script>
 
 <template>
-  <nav class="card navbar">
-    <span v-for="i in total" :key="i" :class="['dot', { fill: i - 1 === current }]" @click.stop="onClick(i - 1)"></span>
+  <nav
+    class="card navbar" 
+    @pointerdown="onPointerDown"
+    @pointermove="onPointerMove"
+    @pointerup="onPointerUp"
+    @pointercancel="onPointerUp"
+  >
+    <span
+      v-for="i in total"
+      :key="i"
+      :class="['dot', { fill: i - 1 === current }]"
+      @click.stop="onClick(i - 1)"
+    ></span>
   </nav>
 </template>
 
@@ -43,24 +82,36 @@ function onClick(index: number) {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  background: var(--color-dots-bg, rgba(0, 0, 0, 0.06));
+  backdrop-filter: blur(20px);
+  transition: background 0.25s ease;
+  touch-action: pan-y;
+  cursor: pointer;
+  user-select: none;
   z-index: 100;
 }
 
 .dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  border: 1px solid var(--font-color-light);
-  background: transparent;
-  cursor: pointer;
+  border: none;
   padding: 0;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
-  outline: none;
+  background: var(--color-dot, rgba(120, 120, 120, 0.25));
+  cursor: pointer;
+  transition:
+    width 0.25s ease,
+    border-radius 0.25s ease,
+    background 0.25s ease;
+  flex-shrink: 0;  
 }
 
 .dot.fill {
-  background: var(--font-color-light);
+  width: 20px;
+  border-radius: 4px;
+  background: var(--color-dot, rgba(120, 120, 120, 0.25));
 }
 </style>
