@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import type { Layout } from 'grid-layout-plus'
 import NavBar from '@/components/base/NavBar.vue'
 
@@ -9,6 +9,8 @@ const props = defineProps<{
 
 const emit = defineEmits(['change'])
 const current = ref(0)
+
+// --- Navigation ---
 
 function goTo(index: number) {
   const total = props.desktops.length
@@ -30,6 +32,35 @@ function scrollToDesktop(index: number, smooth = true) {
   })
 }
 
+// --- IntersectionObserver: sync current ---
+ 
+let observer: IntersectionObserver | null = null
+ 
+onMounted(() => {
+  const container = document.querySelector('.desktops-container') as HTMLElement | null
+  if (!container) return
+ 
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = Number((entry.target as HTMLElement).dataset.index)
+          if (!isNaN(index) && index !== current.value) {
+            current.value = index
+            emit('change', index)
+          }
+        }
+      })
+    },
+    { root: container, threshold: 0.6 }
+  )
+ 
+  container.querySelectorAll('.desktop').forEach((el) => observer?.observe(el))
+})
+
+onBeforeUnmount(() => {
+  observer?.disconnect()
+})
 </script>
 
 <template>

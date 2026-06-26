@@ -1,6 +1,7 @@
 # TODO
 
-- przełączanie workspace (klik w kropkę, potem swipe)
+- lepszy styl kropek NavBar
+- swipe pulpitu palcem w całości
 - (+) dodanie nowego kafelka
   - zaznaczenie i dodanie / zamknięcie
   - otwarcie nowego sheet
@@ -9,7 +10,7 @@
 - naprawić settings dla Agenta
 - żeby settings nie włączały się po drag
 - plus przenieść obok edit i zrobić równe ikony wielkością do ikony po lewej, a właściwie tą jedną wiekszą z napisem "add"
-- i jeszcze obok plus - ikona śmietnika która kasuje cały panel
+- podczas edit mode obok kropek pojawiają się 4 ikony (-)(<)[......](>)(+) kasowanie pulpitu, przesunięcie w lewo, w prawo, dodanie pulpitu
 
 ---
 
