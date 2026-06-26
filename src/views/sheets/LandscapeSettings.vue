@@ -48,6 +48,9 @@ function close() {
         <div class="card">
           <img src="/public/_landscape-ocean.png" title="Ocean" />
         </div>
+        <div class="card">
+          <img src="/public/_landscape-countryside.png" title="Countryside" />
+        </div>
       </div>
     </div>
     <div class="sheet-footer">
