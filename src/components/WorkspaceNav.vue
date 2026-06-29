@@ -5,6 +5,7 @@ import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import WorkspaceIcon from '@/components/WorkspaceIcon.vue'
 import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode.ts'
+import AddNewTileSheet from '@/views/sheets/AddNewTileSheet.vue'
 import WorkspaceInfoSheet from '@/views/sheets/WorkspaceInfoSheet.vue'
 import { useWorkspaceStore } from '@/stores/workspace'
 
@@ -18,26 +19,42 @@ defineProps({
 const editmodeStore = useEditmodeStore()
 const emit = defineEmits(['remove'])
 const workspace = useWorkspaceStore()
-const sheet = ref<{ open: () => void; close: () => void } | null>(null)
+const sheetAddNewTile = ref<{ open: () => void; close: () => void } | null>(null)
+const sheetWorkspaceInfo = ref<{ open: () => void; close: () => void } | null>(null)
 </script>
 
 <template>
   <div class="widget-full workspace-nav">
-    <div class="workspace-info" @click="editmodeStore.editmode ? sheet?.open() : sheet?.close()">
+    <div
+      class="workspace-info"
+      @click="editmodeStore.editmode ? sheetWorkspaceInfo?.open() : sheetWorkspaceInfo?.close()"
+    >
       <WorkspaceIcon :icon="workspace.icon" />
       <div class="text">
         <div class="title">{{ workspace.title }}</div>
         <div class="description">{{ workspace.description }}</div>
       </div>
     </div>
-    <Icon
-      icon="fa-regular fa-pen-to-square"
-      class="edit-icon"
-      :class="{ 'edit-icon--active': editmodeStore.editmode }"
-      @click="editmodeStore.toggle"
-    />
-    <VueBottomSheet ref="sheet">
-      <WorkspaceInfoSheet @close="sheet?.close()" />
+    <div class="right-icons">
+      <Icon
+        v-if="editmodeStore.editmode"
+        icon="fa-solid fa-plus"
+        text="Add"
+        class="add-icon"
+        @click="sheetAddNewTile?.open()"
+      />
+      <Icon
+        icon="fa-regular fa-pen-to-square"
+        class="edit-icon"
+        :class="{ 'edit-icon--active': editmodeStore.editmode }"
+        @click="editmodeStore.toggle"
+      />
+    </div>
+    <VueBottomSheet ref="sheetAddNewTile">
+      <AddNewTileSheet @close="sheetAddNewTile?.close()" />
+    </VueBottomSheet>
+    <VueBottomSheet ref="sheetWorkspaceInfo">
+      <WorkspaceInfoSheet @close="sheetWorkspaceInfo?.close()" />
     </VueBottomSheet>
   </div>
 </template>
@@ -50,6 +67,7 @@ const sheet = ref<{ open: () => void; close: () => void } | null>(null)
   border-radius: 10px;
   width: 100%;
   height: 35px;
+  cursor: default;
 }
 
 .workspace-info {
@@ -87,15 +105,16 @@ const sheet = ref<{ open: () => void; close: () => void } | null>(null)
   margin-bottom: 2px;
 }
 
-.edit-icon {
+.right-icons {
   margin-left: auto;
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  color: var(--font-color-dark);
-  background-color: var(--white-color);
-  box-shadow: 0 0 4px var(--shadow-color);
-  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.editmode .workspace-info,
+.editmode .add-icon,
+.edit-icon {
   cursor: pointer;
 }
 

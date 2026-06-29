@@ -2,7 +2,6 @@
 import { ref, type Component } from 'vue'
 import { GridItem, GridLayout } from 'grid-layout-plus'
 import type { Layout } from 'grid-layout-plus'
-import AddNewTileButton from '@/components/tiles/AddNewTileButton.vue'
 import { useEditmodeStore } from '@/stores/editmode'
 
 type TileDefinition = {
@@ -56,7 +55,6 @@ function removeTile(id: string | number) {
       </div>
     </GridItem>
   </GridLayout>
-  <AddNewTileButton v-if="editmodeStore.editmode" />
 </template>
 
 <style>

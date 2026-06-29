@@ -33,13 +33,13 @@ function scrollToDesktop(index: number, smooth = true) {
 }
 
 // --- IntersectionObserver: sync current ---
- 
+
 let observer: IntersectionObserver | null = null
- 
+
 onMounted(() => {
   const container = document.querySelector('.desktops-container') as HTMLElement | null
   if (!container) return
- 
+
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -52,16 +52,15 @@ onMounted(() => {
         }
       })
     },
-    { root: container, threshold: 0.6 }
+    { root: container, threshold: 0.6 },
   )
- 
+
   container.querySelectorAll('.desktop').forEach((el) => observer?.observe(el))
 })
 
 onBeforeUnmount(() => {
   observer?.disconnect()
 })
-
 </script>
 
 <template>
@@ -78,6 +77,10 @@ onBeforeUnmount(() => {
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  scrollbar-width: none;
 }
 
 .desktop {
