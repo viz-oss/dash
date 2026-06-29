@@ -1,10 +1,11 @@
 # TODO
 
-- (+) dodanie nowego kafelka
-  - dodanie / zamknięcie
-  - otwarcie nowego sheet z settingsami
-- modele dla konfiguracji poszczególnych kafelków / persistent
+- unified DesktopLayout
 - persistent zapisujący layout: persist: true, w stores/
+- modele dla konfiguracji poszczególnych kafelków / persistent
+- (+) dodanie nowego kafelka
+  - dodanie (do store)
+  - otwarcie nowego sheet z settingsami
 - podczas edit mode obok kropek pojawiają się 4 ikony (-)(<)[......](>)(+) kasowanie pulpitu, przesunięcie w lewo, w prawo, dodanie pulpitu
 
 ---
@@ -20,6 +21,7 @@ DEMO z API/MCP
 - prawdziwy plot wykresu 'Overview'
   - na podstawie prawdziwych danych
   - przełączanie zakresu (tydzień/miesiąc) - przyda się Dropdown
+- być może home jeszcze po lewej stronie kropek jako wall
 
 ---
 

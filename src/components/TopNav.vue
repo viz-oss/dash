@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
-import WorkspaceIcon from '@/components/WorkspaceIcon.vue'
 import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode.ts'
 import AddNewTileSheet from '@/views/sheets/AddNewTileSheet.vue'
@@ -33,7 +32,6 @@ const handleOK = (tile: string | null) => {
 }
 
 const handleCancel = () => {
-  console.log('Cancelled')
   sheetAddNewTile?.value?.close()
 }
 </script>
@@ -44,7 +42,7 @@ const handleCancel = () => {
       class="workspace-info"
       @click="editmodeStore.editmode ? sheetWorkspaceInfo?.open() : sheetWorkspaceInfo?.close()"
     >
-      <WorkspaceIcon :icon="workspace.icon" />
+      <Icon :icon="workspace.icon" />
       <div class="text">
         <div class="title">{{ workspace.title }}</div>
         <div class="description">{{ workspace.description }}</div>

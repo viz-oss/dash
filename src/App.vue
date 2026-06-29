@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, type Component } from 'vue'
 import DesktopSwitcher from '@/components/base/DesktopSwitcher.vue'
-import MainScreen from '@/views/MainScreen.vue'
+import Desktop from '@/views/Desktop.vue'
 import type { Layout } from 'grid-layout-plus'
-import WorkspaceNav from '@/components/WorkspaceNav.vue'
+import TopNav from '@/components/TopNav.vue'
 import TrendChart from '@/components/tiles/TrendChart.vue'
 import StatCard from '@/components/tiles/StatCard.vue'
 import RingChart from '@/components/tiles/RingChart.vue'
@@ -17,7 +17,7 @@ type TileDefinition = {
 
 const tiles: Record<string, TileDefinition> = {
   workspace: {
-    component: WorkspaceNav,
+    component: TopNav,
   },
   trend: {
     component: TrendChart,
@@ -106,7 +106,7 @@ const desktops = ref<Layout[]>([
 <template>
   <DesktopSwitcher :desktops="desktops">
     <template #default="{ desktop, index }">
-      <MainScreen :layout="desktop" :tiles="tiles" />
+      <Desktop :layout="desktop" :tiles="tiles" />
     </template>
   </DesktopSwitcher>
 </template>
