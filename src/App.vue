@@ -1,21 +1,17 @@
 <script setup lang="ts">
-import { ref, type Component } from 'vue'
+import { ref } from 'vue'
 import DesktopSwitcher from '@/components/nav/DesktopSwitcher.vue'
 import Desktop from '@/views/Desktop.vue'
-import type { Layout } from 'grid-layout-plus'
 import TopNav from '@/components/nav/TopNav.vue'
 import TrendChart from '@/components/tiles/TrendChart.vue'
 import StatCard from '@/components/tiles/StatCard.vue'
 import RingChart from '@/components/tiles/RingChart.vue'
 import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
 import Landscape from '@/components/tiles/Landscape.vue'
+import type { DesktopLayout, DesktopTileDefinition } from '@/types/desktop'
 
-type TileDefinition = {
-  component: Component
-  props?: Record<string, unknown>
-}
 
-const tiles: Record<string, TileDefinition> = {
+const tiles: Record<string, DesktopTileDefinition> = {
   workspace: {
     component: TopNav,
   },
@@ -79,26 +75,26 @@ const tiles: Record<string, TileDefinition> = {
   },
 }
 
-const desktops = ref<Layout[]>([
+const desktops = ref<DesktopLayout[]>([
   [
-    { i: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'trend', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
-    { i: 'users', x: 0, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'conversions', x: 1, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'avgTime', x: 2, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'ring', x: 0, y: 6, w: 2, h: 2, minW: 1, minH: 2, maxW: 2, maxH: 2 },
-    { i: 'agent', x: 2, y: 6, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'landscape', x: 0, y: 8, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    { i: 'workspace', tile: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
+    { i: 'trend', tile: 'trend', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    { i: 'users', tile: 'users', x: 0, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'conversions', tile: 'conversions', x: 1, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'avgTime', tile: 'avgTime', x: 2, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'ring', tile: 'ring', x: 0, y: 6, w: 2, h: 2, minW: 1, minH: 2, maxW: 2, maxH: 2 },
+    { i: 'agent', tile: 'agent', x: 2, y: 6, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'landscape', tile: 'landscape', x: 0, y: 8, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
   ],
   [
-    { i: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'users', x: 0, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'conversions', x: 1, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'avgTime', x: 2, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'workspace', tile: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
+    { i: 'users', tile: 'users', x: 0, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'conversions', tile: 'conversions', x: 1, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'avgTime', tile: 'avgTime', x: 2, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
   ],
   [
-    { i: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'landscape', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    { i: 'workspace', tile: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
+    { i: 'landscape', tile: 'landscape', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
   ],
 ])
 </script>

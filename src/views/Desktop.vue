@@ -1,20 +1,15 @@
 <script setup lang="ts">
-import { ref, type Component } from 'vue'
+import { ref } from 'vue'
 import { GridItem, GridLayout } from 'grid-layout-plus'
-import type { Layout } from 'grid-layout-plus'
 import { useEditmodeStore } from '@/stores/editmode'
-
-type TileDefinition = {
-  component: Component
-  props?: Record<string, unknown>
-}
+import type { DesktopLayout, DesktopTileDefinition } from '@/types/desktop'
 
 const props = defineProps<{
-  tiles: Record<string, TileDefinition>
-  layout: Layout
+  tiles: Record<string, DesktopTileDefinition>
+  layout: DesktopLayout
 }>()
 
-const layoutModel = ref<Layout>([...props.layout])
+const layoutModel = ref<DesktopLayout>([...props.layout])
 const editmodeStore = useEditmodeStore()
 const isTileDragging = ref(false)
 const suppressTileClickUntil = ref(0)
@@ -72,8 +67,8 @@ function removeTile(id: string | number) {
       >
         <component
           :id="item.i"
-          :is="tiles[String(item.i)]?.component"
-          v-bind="tiles[String(item.i)]?.props"
+          :is="tiles[item.tile]?.component"
+          v-bind="tiles[item.tile]?.props"
           @remove="removeTile(item.i)"
         />
       </div>

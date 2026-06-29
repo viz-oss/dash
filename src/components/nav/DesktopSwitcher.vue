@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import type { Layout } from 'grid-layout-plus'
 import NavBar from '@/components/nav/NavBar.vue'
+import type { DesktopLayout } from '@/types/desktop'
 
 const props = defineProps<{
-  desktops: Layout[]
+  desktops: DesktopLayout[]
 }>()
 
 const emit = defineEmits(['change'])
