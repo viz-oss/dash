@@ -11,14 +11,17 @@ defineProps({
   id: {
     type: String,
     required: true,
+    default: () => `ring-chart-${Math.random().toString(36).substr(2, 9)}`,
   },
   title: {
     type: String,
     required: true,
+    default: 'Ring Chart',
   },
   series: {
     type: Object as () => Record<string, number>,
     required: true,
+    default: () => ({ A: 70, B: 30 }),
   },
   thumb: {
     type: Boolean,

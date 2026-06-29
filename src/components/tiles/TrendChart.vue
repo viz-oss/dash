@@ -9,6 +9,7 @@ defineProps({
   id: {
     type: String,
     required: true,
+    default: () => `trend-chart-${Math.random().toString(36).substr(2, 9)}`,
   },
   title: {
     type: String,

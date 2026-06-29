@@ -9,10 +9,12 @@ defineProps({
   id: {
     type: String,
     required: true,
+    default: () => `landscape-${Math.random().toString(36).substr(2, 9)}`,
   },
   theme: {
     type: String,
     required: true,
+    default: 'mountains',
   },
   thumb: {
     type: Boolean,

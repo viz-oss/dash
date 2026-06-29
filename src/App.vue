@@ -2,99 +2,28 @@
 import { ref } from 'vue'
 import DesktopSwitcher from '@/components/nav/DesktopSwitcher.vue'
 import Desktop from '@/views/Desktop.vue'
-import TopNav from '@/components/nav/TopNav.vue'
-import TrendChart from '@/components/tiles/TrendChart.vue'
-import StatCard from '@/components/tiles/StatCard.vue'
-import RingChart from '@/components/tiles/RingChart.vue'
-import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
-import Landscape from '@/components/tiles/Landscape.vue'
-import type { DesktopLayout, DesktopTileDefinition } from '@/types/desktop'
-
-
-const tiles: Record<string, DesktopTileDefinition> = {
-  workspace: {
-    component: TopNav,
-  },
-  trend: {
-    component: TrendChart,
-    props: {
-      title: 'Overview',
-    },
-  },
-  users: {
-    component: StatCard,
-    props: {
-      icon: 'fa-regular fa-user',
-      title: 'Users',
-      value: '1,248',
-      changeValue: '12%',
-      isUp: true,
-      tone: 'x1',
-    },
-  },
-  conversions: {
-    component: StatCard,
-    props: {
-      icon: 'fa-solid fa-filter',
-      title: 'Conversions',
-      value: '320',
-      changeValue: '8%',
-      isUp: true,
-      tone: 'x2',
-    },
-  },
-  avgTime: {
-    component: StatCard,
-    props: {
-      icon: 'fa-regular fa-clock',
-      title: 'Avg. time',
-      value: '4m 32s',
-      changeValue: '5%',
-      isUp: false,
-      tone: 'x3',
-    },
-  },
-  ring: {
-    component: RingChart,
-    props: {
-      title: "Company's wiki",
-      series: { 'finished writing': 81, 'team use': 32 },
-    },
-  },
-  agent: {
-    component: AgentAvatar,
-    props: {
-      hint: '2 new articles',
-    },
-  },
-  landscape: {
-    component: Landscape,
-    props: {
-      theme: 'mountains',
-    },
-  },
-}
+import type { DesktopLayout } from '@/types/desktop'
 
 const desktops = ref<DesktopLayout[]>([
   [
-    { i: 'workspace', tile: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'trend', tile: 'trend', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
-    { i: 'users', tile: 'users', x: 0, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'conversions', tile: 'conversions', x: 1, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'avgTime', tile: 'avgTime', x: 2, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'ring', tile: 'ring', x: 0, y: 6, w: 2, h: 2, minW: 1, minH: 2, maxW: 2, maxH: 2 },
-    { i: 'agent', tile: 'agent', x: 2, y: 6, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'landscape', tile: 'landscape', x: 0, y: 8, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    { i: 'workspace-1', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
+    { i: 'trend-1', tile: 'trend', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    { i: 'users-1', tile: 'stat', x: 0, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'conversions-1', tile: 'stat', x: 1, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'avgTime-1', tile: 'stat', x: 2, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'ring-1', tile: 'ring', x: 0, y: 6, w: 2, h: 2, minW: 1, minH: 2, maxW: 2, maxH: 2 },
+    { i: 'agent-1', tile: 'agent', x: 2, y: 6, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'landscape-1', tile: 'landscape', x: 0, y: 8, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
   ],
   [
-    { i: 'workspace', tile: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'users', tile: 'users', x: 0, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'conversions', tile: 'conversions', x: 1, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'avgTime', tile: 'avgTime', x: 2, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'workspace-2', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
+    { i: 'users-2', tile: 'stat', x: 0, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'conversions-2', tile: 'stat', x: 1, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    { i: 'avgTime-2', tile: 'stat', x: 2, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
   ],
   [
-    { i: 'workspace', tile: 'workspace', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'landscape', tile: 'landscape', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    { i: 'workspace-3', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
+    { i: 'landscape-3', tile: 'landscape', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
   ],
 ])
 </script>
@@ -102,7 +31,7 @@ const desktops = ref<DesktopLayout[]>([
 <template>
   <DesktopSwitcher :desktops="desktops">
     <template #default="{ desktop, index }">
-      <Desktop :layout="desktop" :tiles="tiles" />
+      <Desktop :layout="desktop" />
     </template>
   </DesktopSwitcher>
 </template>

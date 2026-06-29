@@ -9,6 +9,7 @@ defineProps({
   id: {
     type: String,
     required: true,
+    default: () => `stat-card-${Math.random().toString(36).substr(2, 9)}`,
   },
   icon: {
     type: String,
@@ -17,14 +18,17 @@ defineProps({
   title: {
     type: String,
     required: true,
+    default: 'Title',
   },
   value: {
     type: [String, Number],
     required: true,
+    default: '0',
   },
   changeValue: {
     type: String,
     required: true,
+    default: '0',
   },
   isUp: {
     type: Boolean,

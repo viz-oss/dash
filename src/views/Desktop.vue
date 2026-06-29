@@ -2,10 +2,9 @@
 import { ref } from 'vue'
 import { GridItem, GridLayout } from 'grid-layout-plus'
 import { useEditmodeStore } from '@/stores/editmode'
-import type { DesktopLayout, DesktopTileDefinition } from '@/types/desktop'
+import { tileDefinitions, type DesktopLayout } from '@/types/desktop'
 
 const props = defineProps<{
-  tiles: Record<string, DesktopTileDefinition>
   layout: DesktopLayout
 }>()
 
@@ -67,10 +66,10 @@ function removeTile(id: string | number) {
       >
         <component
           :id="item.i"
-          :is="tiles[item.tile]?.component"
-          v-bind="tiles[item.tile]?.props"
+          :is="tileDefinitions[item.tile]"
           @remove="removeTile(item.i)"
         />
+        <!-- dodać v-bind="item.i -> props" -->
       </div>
     </GridItem>
   </GridLayout>

@@ -11,6 +11,7 @@ defineProps({
   id: {
     type: String,
     required: true,
+    default: () => `agent-avatar-${Math.random().toString(36).substr(2, 9)}`,
   },
   hint: {
     type: String,
