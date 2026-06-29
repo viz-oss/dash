@@ -33,9 +33,6 @@ defineProps({
   padding: 0 10px;
 }
 
-.icon i {
-}
-
 .icon .text {
   font-size: 14px;
   font-weight: 500;

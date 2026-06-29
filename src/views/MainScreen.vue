@@ -16,6 +16,24 @@ const props = defineProps<{
 
 const layoutModel = ref<Layout>([...props.layout])
 const editmodeStore = useEditmodeStore()
+const isTileDragging = ref(false)
+const suppressTileClickUntil = ref(0)
+
+function onTileMove() {
+  isTileDragging.value = true
+}
+
+function onTileMoved() {
+  isTileDragging.value = false
+  suppressTileClickUntil.value = Date.now() + 180
+}
+
+function preventClickAfterDrag(event: MouseEvent) {
+  if (isTileDragging.value || Date.now() < suppressTileClickUntil.value) {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+}
 
 function removeTile(id: string | number) {
   if (confirm('Are you sure you want to remove this tile?')) {
@@ -44,8 +62,14 @@ function removeTile(id: string | number) {
       :key="item.i"
       v-bind="item"
       drag-ignore-from=".close, .bottom-sheet, .chat"
+      @move="onTileMove"
+      @moved="onTileMoved"
     >
-      <div class="tile-frame" :class="{ 'tile-frame--drag': editmodeStore.editmode }">
+      <div
+        class="tile-frame"
+        :class="{ 'tile-frame--drag': editmodeStore.editmode }"
+        @click.capture="preventClickAfterDrag"
+      >
         <component
           :id="item.i"
           :is="tiles[String(item.i)]?.component"

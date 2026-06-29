@@ -1,8 +1,9 @@
+<!-- Not used anymore, consider removing -->
 <script setup lang="ts">
 defineProps({
   icon: {
     type: String,
-    default: 'fa-solid fa-plus'
+    default: 'fa-solid fa-plus',
   },
 })
 </script>

@@ -1,7 +1,5 @@
 # TODO
 
-- plus przenieść obok edit i zrobić równe ikony wielkością do ikony po lewej, a właściwie tą jedną wiekszą z napisem "add"
-- żeby settings nie włączały się po drag
 - naprawić settings dla Agenta
 - (+) dodanie nowego kafelka
   - zaznaczenie i dodanie / zamknięcie
