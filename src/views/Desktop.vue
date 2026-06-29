@@ -29,6 +29,22 @@ function preventClickAfterDrag(event: MouseEvent) {
   }
 }
 
+function addTile(tileType: string) {
+  const newTile = {
+    i: `${tileType}-${crypto.randomUUID()}`,
+    tile: tileType,
+    x: 0,
+    y: 0,
+    w: 1,
+    h: 1,
+    minW: 1,
+    minH: 1,
+    maxW: 3,
+    maxH: 4,
+  }
+  layoutModel.value.push(newTile)
+}
+
 function removeTile(id: string | number) {
   if (confirm('Are you sure you want to remove this tile?')) {
     layoutModel.value = layoutModel.value.filter((item) => item.i !== id)
