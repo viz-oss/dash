@@ -21,6 +21,21 @@ const emit = defineEmits(['remove'])
 const workspace = useWorkspaceStore()
 const sheetAddNewTile = ref<{ open: () => void; close: () => void } | null>(null)
 const sheetWorkspaceInfo = ref<{ open: () => void; close: () => void } | null>(null)
+const addNewTileSheet = ref<{ onOpened: () => void } | null>(null)
+
+const handleAddNewTileOpened = () => {
+  addNewTileSheet.value?.onOpened()
+}
+
+const handleOK = (tile: string | null) => {
+  console.log(`Picked tile: ${tile}`)
+  sheetAddNewTile?.value?.close()
+}
+
+const handleCancel = () => {
+  console.log('Cancelled')
+  sheetAddNewTile?.value?.close()
+}
 </script>
 
 <template>
@@ -50,8 +65,8 @@ const sheetWorkspaceInfo = ref<{ open: () => void; close: () => void } | null>(n
         @click="editmodeStore.toggle"
       />
     </div>
-    <VueBottomSheet ref="sheetAddNewTile">
-      <AddNewTileSheet @close="sheetAddNewTile?.close()" />
+    <VueBottomSheet ref="sheetAddNewTile" @opened="handleAddNewTileOpened">
+      <AddNewTileSheet ref="addNewTileSheet" @ok="handleOK" @cancel="handleCancel" />
     </VueBottomSheet>
     <VueBottomSheet ref="sheetWorkspaceInfo">
       <WorkspaceInfoSheet @close="sheetWorkspaceInfo?.close()" />

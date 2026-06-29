@@ -1,7 +1,7 @@
 # TODO
 
 - (+) dodanie nowego kafelka
-  - zaznaczenie i dodanie / zamknięcie
+  - dodanie / zamknięcie
   - otwarcie nowego sheet z settingsami
 - modele dla konfiguracji poszczególnych kafelków / persistent
 - persistent zapisujący layout: persist: true, w stores/

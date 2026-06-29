@@ -1,32 +1,58 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import StatCard from '@/components/tiles/StatCard.vue'
 import RingChart from '@/components/tiles/RingChart.vue'
 import TrendChart from '@/components/tiles/TrendChart.vue'
 import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
 import Landscape from '@/components/tiles/Landscape.vue'
-import { useWorkspaceStore } from '@/stores/workspace'
+// import { useWorkspaceStore } from '@/stores/workspace'
 
-const workspace = useWorkspaceStore()
+// const workspace = useWorkspaceStore()
 
-const form = ref({
-  icon: workspace.icon,
-  title: workspace.title,
-  description: workspace.description,
+// const form = ref({
+//   icon: workspace.icon,
+//   title: workspace.title,
+//   description: workspace.description,
+// })
+
+let sheetBody = ref<HTMLElement | null>(null)
+const emit = defineEmits(['ok', 'cancel'])
+let selected: string | null = null
+
+function onOpened() {
+  selected = null
+  const slots = sheetBody.value?.querySelectorAll('.slot') || []
+  slots.forEach((slot) => slot.classList.remove('selected'))
+}
+
+defineExpose({
+  onOpened,
 })
 
-const emit = defineEmits(['close'])
+onMounted(() => {
+  const slots = sheetBody.value?.querySelectorAll('.slot') || []
+  slots.forEach((slot) => {
+    ;(slot as HTMLElement).addEventListener('click', () => {
+      slots.forEach((s) => s.classList.remove('selected'))
+      ;(slot as HTMLElement).classList.add('selected')
+      selected = (slot as HTMLElement).dataset.tile || null
+    })
+  })
+})
 
-function save() {
-  workspace.update(form.value)
-  close()
-}
-
-function close() {
+function ok() {
+  // workspace.update(form.value)
   // Remove focus to prevent aria-hidden warning when sheet closes
   ;(document.activeElement as HTMLElement)?.blur()
-  emit('close')
+  emit('ok', selected)
 }
+
+function cancel() {
+  // Remove focus to prevent aria-hidden warning when sheet closes
+  ;(document.activeElement as HTMLElement)?.blur()
+  emit('cancel')
+}
+
 </script>
 
 <template>
@@ -38,8 +64,8 @@ function close() {
         <div class="subtitle">Select the new tile you want to add to your dashboard</div>
       </div>
     </div>
-    <div class="sheet-body">
-      <div class="slot">
+    <div class="sheet-body" ref="sheetBody">
+      <div class="slot" data-tile="workspace">
         <StatCard
           :thumb="true"
           id="example-stat-card"
@@ -51,7 +77,7 @@ function close() {
           tone="x1"
         />
       </div>
-      <div class="slot">
+      <div class="slot" data-tile="ring-chart">
         <RingChart
           :thumb="true"
           id="example-ring-chart"
@@ -59,19 +85,19 @@ function close() {
           :series="{ 'Example 1': 70, 'Example 2': 30 }"
         />
       </div>
-      <div class="slot">
+      <div class="slot" data-tile="trend-chart">
         <TrendChart :thumb="true" id="example-trend-chart" title="Trend Chart" />
       </div>
-      <div class="slot">
+      <div class="slot" data-tile="agent-avatar">
         <AgentAvatar :thumb="true" id="example-agent-avatar" hint="Agent" />
       </div>
-      <div class="slot">
+      <div class="slot" data-tile="landscape">
         <Landscape :thumb="true" id="example-landscape" theme="mountains" />
       </div>
     </div>
     <div class="sheet-footer">
-      <button class="btn btn-secondary" @click="close">Cancel</button>
-      <button class="btn btn-primary" @click="save">Save Changes</button>
+      <button class="btn btn-secondary" @click="cancel">Cancel</button>
+      <button class="btn btn-primary" @click="ok">Save Changes</button>
     </div>
   </div>
 </template>
@@ -80,6 +106,14 @@ function close() {
 .slot {
   width: calc(33.33% - 10px);
   aspect-ratio: 1 / 1;
+}
+
+.slot .card {
+  border: 2px solid transparent;
+}
+
+.slot.selected .card {
+  border: 2px solid var(--key-color-dark);
 }
 
 .slot .card {
