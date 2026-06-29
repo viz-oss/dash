@@ -1,6 +1,5 @@
 # TODO
 
-- unified DesktopLayout
 - persistent zapisujący layout: persist: true, w stores/
 - modele dla konfiguracji poszczególnych kafelków / persistent
 - (+) dodanie nowego kafelka

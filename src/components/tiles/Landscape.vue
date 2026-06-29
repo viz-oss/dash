@@ -8,16 +8,17 @@ import LandscapeSettings from '@/views/sheets/LandscapeSettings.vue'
 defineProps({
   id: {
     type: String,
-    required: true,
-    default: () => `landscape-${Math.random().toString(36).substr(2, 9)}`,
+    required: false,
+    default: () => `landscape-${crypto.randomUUID()}`,
   },
   theme: {
     type: String,
-    required: true,
+    required: false,
     default: 'mountains',
   },
   thumb: {
     type: Boolean,
+    required: false,
     default: false,
   },
 })

@@ -10,15 +10,17 @@ import AgentSettings from '@/views/sheets/AgentSettings.vue'
 defineProps({
   id: {
     type: String,
-    required: true,
-    default: () => `agent-avatar-${Math.random().toString(36).substr(2, 9)}`,
+    required: false,
+    default: () => `agent-avatar-${crypto.randomUUID()}`,
   },
   hint: {
     type: String,
+    required: false,
     default: 'Agent session',
   },
   thumb: {
     type: Boolean,
+    required: false,
     default: false,
   },
 })

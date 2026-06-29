@@ -6,25 +6,25 @@ import type { DesktopLayout } from '@/types/desktop'
 
 const desktops = ref<DesktopLayout[]>([
   [
-    { i: 'workspace-1', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'trend-1', tile: 'trend', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
-    { i: 'users-1', tile: 'stat', x: 0, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'conversions-1', tile: 'stat', x: 1, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'avgTime-1', tile: 'stat', x: 2, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'ring-1', tile: 'ring', x: 0, y: 6, w: 2, h: 2, minW: 1, minH: 2, maxW: 2, maxH: 2 },
-    { i: 'agent-1', tile: 'agent', x: 2, y: 6, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'landscape-1', tile: 'landscape', x: 0, y: 8, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    { i: 'topnav-1', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
+    // { i: 'trend-1', tile: 'trend', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+    // { i: 'users-1', tile: 'stat', x: 0, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    // { i: 'conversions-1', tile: 'stat', x: 1, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    // { i: 'avgTime-1', tile: 'stat', x: 2, y: 4, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    // { i: 'ring-1', tile: 'ring', x: 0, y: 6, w: 2, h: 2, minW: 1, minH: 2, maxW: 2, maxH: 2 },
+    // { i: 'agent-1', tile: 'agent', x: 2, y: 6, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+    // { i: 'landscape-1', tile: 'landscape', x: 0, y: 8, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
   ],
-  [
-    { i: 'workspace-2', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'users-2', tile: 'stat', x: 0, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'conversions-2', tile: 'stat', x: 1, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-    { i: 'avgTime-2', tile: 'stat', x: 2, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
-  ],
-  [
-    { i: 'workspace-3', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
-    { i: 'landscape-3', tile: 'landscape', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
-  ],
+  // [
+  //   { i: 'workspace-2', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
+  //   { i: 'users-2', tile: 'stat', x: 0, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+  //   { i: 'conversions-2', tile: 'stat', x: 1, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+  //   { i: 'avgTime-2', tile: 'stat', x: 2, y: 1, w: 1, h: 2, minW: 1, minH: 2, maxW: 1, maxH: 2 },
+  // ],
+  // [
+  //   { i: 'workspace-3', tile: 'topnav', x: 0, y: 0, w: 3, h: 1, static: true },
+  //   { i: 'landscape-3', tile: 'landscape', x: 0, y: 1, w: 3, h: 3, minW: 1, minH: 2, maxW: 3, maxH: 4 },
+  // ],
 ])
 </script>
 

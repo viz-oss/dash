@@ -8,11 +8,12 @@ import TrendChartSettings from '@/views/sheets/TrendChartSettings.vue'
 defineProps({
   id: {
     type: String,
-    required: true,
-    default: () => `trend-chart-${Math.random().toString(36).substr(2, 9)}`,
+    required: false,
+    default: () => `trend-chart-${crypto.randomUUID()}`,
   },
   title: {
     type: String,
+    required: false,
     default: 'Overview',
   },
   thumb: {

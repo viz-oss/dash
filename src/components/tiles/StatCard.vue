@@ -8,42 +8,47 @@ import StatCardSettings from '@/views/sheets/StatCardSettings.vue'
 defineProps({
   id: {
     type: String,
-    required: true,
-    default: () => `stat-card-${Math.random().toString(36).substr(2, 9)}`,
+    required: false,
+    default: () => `stat-card-${crypto.randomUUID()}`,
   },
   icon: {
     type: String,
+    required: false,
     default: 'fas fa-users',
   },
   title: {
     type: String,
-    required: true,
+    required: false,
     default: 'Title',
   },
   value: {
     type: [String, Number],
-    required: true,
+    required: false,
     default: '0',
   },
   changeValue: {
     type: String,
-    required: true,
+    required: false,
     default: '0',
   },
   isUp: {
     type: Boolean,
+    required: false,
     default: true,
   },
   periodText: {
     type: String,
+    required: false,
     default: 'vs last week',
   },
   tone: {
     type: String,
+    required: false,
     default: 'x1',
   },
   thumb: {
     type: Boolean,
+    required: false,
     default: false,
   },
 })
