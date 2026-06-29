@@ -118,6 +118,13 @@ const sheetWorkspaceInfo = ref<{ open: () => void; close: () => void } | null>(n
   cursor: pointer;
 }
 
+.edit-icon {
+  color: var(--font-color-dark);
+  background-color: var(--white-color);
+  box-shadow: 0 0 4px var(--shadow-color);
+  transition: all 0.15s ease;
+}
+
 .edit-icon--active {
   color: var(--white-color);
   background-color: var(--edit-color);

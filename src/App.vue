@@ -237,7 +237,7 @@ body {
 /* Grid native elements */
 
 .vgl-item--placeholder {
-  background: var(--key-color-light);
+  background: var(--key-color-light) !important;
   border-radius: 10px;
 }
 
