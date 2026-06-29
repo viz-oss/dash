@@ -1,6 +1,5 @@
 # TODO
 
-- naprawić settings dla Agenta
 - (+) dodanie nowego kafelka
   - zaznaczenie i dodanie / zamknięcie
   - otwarcie nowego sheet z settingsami
