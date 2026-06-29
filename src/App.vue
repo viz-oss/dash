@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, type Component } from 'vue'
-import DesktopSwitcher from '@/components/base/DesktopSwitcher.vue'
+import DesktopSwitcher from '@/components/nav/DesktopSwitcher.vue'
 import Desktop from '@/views/Desktop.vue'
 import type { Layout } from 'grid-layout-plus'
-import TopNav from '@/components/TopNav.vue'
+import TopNav from '@/components/nav/TopNav.vue'
 import TrendChart from '@/components/tiles/TrendChart.vue'
 import StatCard from '@/components/tiles/StatCard.vue'
 import RingChart from '@/components/tiles/RingChart.vue'

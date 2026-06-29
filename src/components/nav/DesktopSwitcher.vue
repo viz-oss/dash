@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import type { Layout } from 'grid-layout-plus'
-import NavBar from '@/components/base/NavBar.vue'
+import NavBar from '@/components/nav/NavBar.vue'
 
 const props = defineProps<{
   desktops: Layout[]
