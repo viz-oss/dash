@@ -50,6 +50,16 @@ function close() {
   ;(document.activeElement as HTMLElement)?.blur()
   emit('close')
 }
+
+const landscapes = [
+  'library',
+  'townsquare',
+  'school',
+  'mountains',
+  'ocean',
+  'countryside',
+  'treasure',
+]
 </script>
 
 <template>
@@ -64,23 +74,8 @@ function close() {
     <div class="field">
       <label for="landscape-name">Select the picture</label>
       <div class="landscape-options" ref="sheetCards">
-        <div class="card" :class="{ selected: form.theme === 'library' }" data-theme="library">
-          <img src="/public/_landscape-library.png" title="Library" />
-        </div>
-        <div class="card" :class="{ selected: form.theme === 'townsquare' }" data-theme="townsquare">
-          <img src="/public/_landscape-townsquare.png" title="Town Square" />
-        </div>
-        <div class="card" :class="{ selected: form.theme === 'school' }" data-theme="school">
-          <img src="/public/_landscape-school.png" title="School" />
-        </div>
-        <div class="card" :class="{ selected: form.theme === 'mountains' }" data-theme="mountains">
-          <img src="/public/_landscape-mountains.png" title="Mountains" />
-        </div>
-        <div class="card" :class="{ selected: form.theme === 'ocean' }" data-theme="ocean">
-          <img src="/public/_landscape-ocean.png" title="Ocean" />
-        </div>
-        <div class="card" :class="{ selected: form.theme === 'countryside' }" data-theme="countryside">
-          <img src="/public/_landscape-countryside.png" title="Countryside" />
+        <div v-for="landscape in landscapes" :key="landscape" class="card" :class="{ selected: form.theme === landscape }" :data-theme="landscape">
+          <img :src="`/public/_landscape-${landscape}.png`" />
         </div>
       </div>
     </div>
