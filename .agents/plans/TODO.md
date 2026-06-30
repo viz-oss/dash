@@ -1,6 +1,8 @@
 # TODO
 
 - konfiguracja poszczególnych kafelków
+- konfiguracja tytułu desktopu
+- edycja kafla po dodaniu
 - podczas edit mode obok kropek pojawiają się 4 ikony (-)(<)[......](>)(+) kasowanie pulpitu, przesunięcie w lewo, w prawo, dodanie pulpitu
 
 ---

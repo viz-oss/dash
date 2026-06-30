@@ -1,19 +1,37 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useWorkspaceStore } from '@/stores/workspace'
+import { useDesktopStore } from '@/stores/desktopStore'
 
-const workspace = useWorkspaceStore()
+const props = defineProps({
+  widgetId: {
+    type: String,
+    required: true,
+  },
+})
+
+const desktopStore = useDesktopStore()
+const { updateWidget } = desktopStore
+const desktopIndex = ref(
+  desktopStore.desktops.findIndex((desktop) =>
+    desktop.some((item) => item.i === props.widgetId)
+  )
+)
+const widget = ref(
+  desktopStore.desktops.flat().find((item) => item.i === props.widgetId)
+)
 
 const form = ref({
-  icon: workspace.icon,
-  title: workspace.title,
-  description: workspace.description,
+  title: widget.value?.props?.title || '',
+  name1: widget.value?.props?.name1 || 'A',
+  url1: widget.value?.props?.url1 || '',
+  name2: widget.value?.props?.name2 || 'B',
+  url2: widget.value?.props?.url2 || '',
 })
 
 const emit = defineEmits(['close'])
 
 function save() {
-//  workspace.update(form.value)
+  updateWidget(desktopIndex.value, props.widgetId, form.value)
   close()
 }
 
@@ -47,7 +65,7 @@ function close() {
       <input
         id="stat-name"
         type="text"
-        v-model="form.title"
+        v-model="form.name1"
         placeholder="Enter stat #1 name"
       />
     </div>
@@ -56,6 +74,7 @@ function close() {
       <input
         id="stat-url"
         type="text"
+        v-model="form.url1"
         placeholder="Enter Stat #1 API URL"
       />
     </div>
@@ -64,7 +83,7 @@ function close() {
       <input
         id="stat-name"
         type="text"
-        v-model="form.title"
+        v-model="form.name2"
         placeholder="Enter stat #2 name"
       />
     </div>
@@ -73,6 +92,7 @@ function close() {
       <input
         id="stat-url"
         type="text"
+        v-model="form.url2"
         placeholder="Enter Stat #2 API URL"
       />
     </div>

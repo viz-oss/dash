@@ -18,10 +18,15 @@ defineProps({
     required: false,
     default: 'Ring Chart',
   },
-  series: {
-    type: Object as () => Record<string, number>,
+  name1: {
+    type: String,
     required: false,
-    default: () => ({ A: 70, B: 30 }),
+    default: 'A',
+  },
+  name2: {
+    type: String,
+    required: false,
+    default: 'B',
   },
   thumb: {
     type: Boolean,
@@ -33,10 +38,6 @@ const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
 const sheet = ref<{ open: () => void; close: () => void } | null>(null)
-
-const formatSeries = (series: Record<string, number>) => {
-  return Object.values(series)
-}
 
 const chartOptions = ref<ApexOptions>({
   chart: {
@@ -91,18 +92,18 @@ const chartOptions = ref<ApexOptions>({
       width="140"
       height="140"
       :options="chartOptions"
-      :series="formatSeries(series)"
+      :series="[70, 30]"
       style="width: 134px; margin-left: -26px; margin-top: -22px"
     />
     <div class="right">
       <div class="title">{{ title }}</div>
-      <div class="percent">{{ formatSeries(series)[0] }}%</div>
-      <div class="description">{{ Object.keys(series)[0] }}</div>
-      <div class="percent">{{ formatSeries(series)[1] }}%</div>
-      <div class="description">{{ Object.keys(series)[1] }}</div>
+      <div class="percent">70%</div>
+      <div class="description">{{ name1 }}</div>
+      <div class="percent">30%</div>
+      <div class="description">{{ name2 }}</div>
     </div>
     <VueBottomSheet ref="sheet">
-      <RingChartSettings />
+      <RingChartSettings :widgetId="id" @close="sheet?.close()" />
     </VueBottomSheet>
   </div>
 </template>
