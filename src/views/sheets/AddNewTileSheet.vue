@@ -5,15 +5,6 @@ import RingChart from '@/components/tiles/RingChart.vue'
 import TrendChart from '@/components/tiles/TrendChart.vue'
 import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
 import Landscape from '@/components/tiles/Landscape.vue'
-// import { useWorkspaceStore } from '@/stores/workspace'
-
-// const workspace = useWorkspaceStore()
-
-// const form = ref({
-//   icon: workspace.icon,
-//   title: workspace.title,
-//   description: workspace.description,
-// })
 
 let sheetBody = ref<HTMLElement | null>(null)
 const emit = defineEmits(['ok', 'cancel'])
@@ -41,7 +32,6 @@ onMounted(() => {
 })
 
 function ok() {
-  // workspace.update(form.value)
   // Remove focus to prevent aria-hidden warning when sheet closes
   ;(document.activeElement as HTMLElement)?.blur()
   emit('ok', selected)

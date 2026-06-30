@@ -48,7 +48,7 @@ const sheet = ref<{ open: () => void; close: () => void } | null>(null)
     ></i>
     <img v-bind:src="`/public/_landscape-${theme}.png`" />
     <VueBottomSheet ref="sheet">
-      <LandscapeSettings />
+      <LandscapeSettings :widgetId="id" @close="sheet?.close()" />
     </VueBottomSheet>
   </div>
 </template>
