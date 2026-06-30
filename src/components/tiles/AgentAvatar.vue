@@ -222,7 +222,7 @@ const onMouseMove = (event: MouseEvent) => {
       <Chat url="https://ai.grindwallet.com/ask?q=%message%&ssid=%ssid%}" />
     </VueBottomSheet>
     <VueBottomSheet v-if="!thumb && editmodeStore.editmode" ref="sheetSettings">
-      <AgentSettings />
+      <AgentSettings :widgetId="id" @close="sheetSettings?.close()" />
     </VueBottomSheet>
   </div>
 </template>

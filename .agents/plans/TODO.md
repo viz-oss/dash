@@ -2,8 +2,9 @@
 
 - konfiguracja poszczególnych kafelków
 - konfiguracja tytułu desktopu
-- edycja kafla po dodaniu
+- edycja kafla zaraz po dodaniu
 - podczas edit mode obok kropek pojawiają się 4 ikony (-)(<)[......](>)(+) kasowanie pulpitu, przesunięcie w lewo, w prawo, dodanie pulpitu
+- zapewne jeden kafel to powinien być jeden endpoint a rózne parametry to JSON path
 
 ---
 
