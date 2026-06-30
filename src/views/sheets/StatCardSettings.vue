@@ -1,20 +1,36 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useWorkspaceStore } from '@/stores/workspace'
+import { useDesktopStore } from '@/stores/desktopStore'
 import IconPicker from '@/components/base/IconPicker.vue'
 
-const workspace = useWorkspaceStore()
+const props = defineProps({
+  widgetId: {
+    type: String,
+    required: true,
+  },
+})
+
+const desktopStore = useDesktopStore()
+const { updateWidget } = desktopStore
+const desktopIndex = ref(
+  desktopStore.desktops.findIndex((desktop) =>
+    desktop.some((item) => item.i === props.widgetId)
+  )
+)
+const widget = ref(
+  desktopStore.desktops.flat().find((item) => item.i === props.widgetId)
+)
 
 const form = ref({
-  icon: workspace.icon,
-  title: workspace.title,
-  description: workspace.description,
+  icon: widget.value?.props?.icon || 'fas fa-users',
+  title: widget.value?.props?.title || '',
+  url: widget.value?.props?.url || ''
 })
 
 const emit = defineEmits(['close'])
 
 function save() {
-//  workspace.update(form.value)
+  updateWidget(desktopIndex.value, props.widgetId, form.value)
   close()
 }
 
@@ -80,6 +96,7 @@ function close() {
       <input
         id="stat-url"
         type="text"
+        v-model="form.url"
         placeholder="Enter API URL"
       />
     </div>

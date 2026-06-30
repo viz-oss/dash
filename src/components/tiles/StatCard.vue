@@ -91,7 +91,7 @@ const sheet = ref<{ open: () => void; close: () => void } | null>(null)
       <span class="vs-text">{{ periodText }}</span>
     </div>
     <VueBottomSheet ref="sheet">
-      <StatCardSettings @close="sheet?.close()" />
+      <StatCardSettings :widgetId="id" @close="sheet?.close()" />
     </VueBottomSheet>
   </div>
 </template>
