@@ -3,9 +3,11 @@ import { ref } from 'vue'
 import { GridItem, GridLayout } from 'grid-layout-plus'
 import { useEditmodeStore } from '@/stores/editmode'
 import { tileDefinitions, type DesktopLayout } from '@/types/desktop'
+import TopNav from '@/components/nav/TopNav.vue';
 
 const props = defineProps<{
   layout: DesktopLayout
+  index: number
 }>()
 
 const layoutModel = ref<DesktopLayout>([...props.layout])
@@ -35,14 +37,15 @@ function addTile(tileType: string) {
     tile: tileType,
     x: 0,
     y: 0,
-    w: 1,
-    h: 1,
-    minW: 1,
-    minH: 1,
-    maxW: 3,
-    maxH: 4,
+    w: tileDefinitions[tileType]?.w || 1,
+    h: tileDefinitions[tileType]?.h || 1,
+    minW: tileDefinitions[tileType]?.minW || 1,
+    minH: tileDefinitions[tileType]?.minH || 1,
+    maxW: tileDefinitions[tileType]?.maxW || 1,
+    maxH: tileDefinitions[tileType]?.maxH || 1,
   }
   layoutModel.value.push(newTile)
+  console.log(`Added tile: ${tileType}`, newTile, layoutModel.value)
 }
 
 function removeTile(id: string | number) {
@@ -53,6 +56,7 @@ function removeTile(id: string | number) {
 </script>
 
 <template>
+  <TopNav :id="`topnav-${props.index}`" @add="addTile" />
   <GridLayout
     v-model:layout="layoutModel"
     :col-num="3"
@@ -82,7 +86,7 @@ function removeTile(id: string | number) {
       >
         <component
           :id="item.i"
-          :is="tileDefinitions[item.tile]"
+          :is="tileDefinitions[item.tile]?.component"
           @remove="removeTile(item.i)"
         />
         <!-- dodać v-bind="item.i -> props" -->

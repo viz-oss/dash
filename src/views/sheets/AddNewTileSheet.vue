@@ -65,7 +65,7 @@ function cancel() {
       </div>
     </div>
     <div class="sheet-body" ref="sheetBody">
-      <div class="slot" data-tile="workspace">
+      <div class="slot" data-tile="stat">
         <StatCard
           :thumb="true"
           id="example-stat-card"
@@ -77,7 +77,7 @@ function cancel() {
           tone="x1"
         />
       </div>
-      <div class="slot" data-tile="ring-chart">
+      <div class="slot" data-tile="ring">
         <RingChart
           :thumb="true"
           id="example-ring-chart"
@@ -85,10 +85,10 @@ function cancel() {
           :series="{ 'Example 1': 70, 'Example 2': 30 }"
         />
       </div>
-      <div class="slot" data-tile="trend-chart">
+      <div class="slot" data-tile="trend">
         <TrendChart :thumb="true" id="example-trend-chart" title="Trend Chart" />
       </div>
-      <div class="slot" data-tile="agent-avatar">
+      <div class="slot" data-tile="agent">
         <AgentAvatar :thumb="true" id="example-agent-avatar" hint="Agent" />
       </div>
       <div class="slot" data-tile="landscape">

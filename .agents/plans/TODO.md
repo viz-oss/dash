@@ -2,9 +2,6 @@
 
 - persistent zapisujący layout: persist: true, w stores/
 - modele dla konfiguracji poszczególnych kafelków / persistent
-- (+) dodanie nowego kafelka
-  - dodanie (do store)
-  - otwarcie nowego sheet z settingsami
 - podczas edit mode obok kropek pojawiają się 4 ikony (-)(<)[......](>)(+) kasowanie pulpitu, przesunięcie w lewo, w prawo, dodanie pulpitu
 
 ---

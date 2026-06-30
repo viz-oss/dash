@@ -11,12 +11,13 @@ import { useWorkspaceStore } from '@/stores/workspace'
 defineProps({
   id: {
     type: String,
-    required: true,
+    required: false,
+    default: () => `topnav-${crypto.randomUUID()}`,
   },
 })
 
 const editmodeStore = useEditmodeStore()
-const emit = defineEmits(['remove'])
+const emit = defineEmits(['remove', 'add'])
 const workspace = useWorkspaceStore()
 const sheetAddNewTile = ref<{ open: () => void; close: () => void } | null>(null)
 const sheetWorkspaceInfo = ref<{ open: () => void; close: () => void } | null>(null)
@@ -27,7 +28,7 @@ const handleAddNewTileOpened = () => {
 }
 
 const handleOK = (tile: string | null) => {
-  console.log(`Picked tile: ${tile}`)
+  emit('add', tile)
   sheetAddNewTile?.value?.close()
 }
 
@@ -37,9 +38,9 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div class="widget-full workspace-nav">
+  <div class="widget-full top-nav">
     <div
-      class="workspace-info"
+      class="desktop-info"
       @click="editmodeStore.editmode ? sheetWorkspaceInfo?.open() : sheetWorkspaceInfo?.close()"
     >
       <Icon :icon="workspace.icon" />
@@ -73,17 +74,18 @@ const handleCancel = () => {
 </template>
 
 <style scoped>
-.workspace-nav {
+.top-nav {
   display: flex;
   flex-direction: row;
   align-items: center;
   border-radius: 10px;
-  width: 100%;
+  width: calc(100% - 30px);
   height: 35px;
   cursor: default;
+  padding: 15px 15px 5px 15px;
 }
 
-.workspace-info {
+.desktop-info {
   border: 2px solid transparent;
   border-radius: 10px;
   display: flex;
@@ -91,7 +93,7 @@ const handleCancel = () => {
   align-items: center;
 }
 
-.editmode .workspace-info {
+.editmode .desktop-info {
   border: 2px solid var(--edit-color);
 }
 
@@ -125,7 +127,7 @@ const handleCancel = () => {
   gap: 5px;
 }
 
-.editmode .workspace-info,
+.editmode .desktop-info,
 .editmode .add-icon,
 .edit-icon {
   cursor: pointer;
