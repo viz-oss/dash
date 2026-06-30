@@ -77,7 +77,7 @@ const todayName = computed(() => {
       </div>
     </div>
     <VueBottomSheet ref="sheet">
-      <TrendChartSettings />
+      <TrendChartSettings :widgetId="id" @close="sheet?.close()" />
     </VueBottomSheet>
   </div>
 </template>
