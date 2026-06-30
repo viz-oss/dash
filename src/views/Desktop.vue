@@ -2,8 +2,9 @@
 import { ref } from 'vue'
 import { GridItem, GridLayout } from 'grid-layout-plus'
 import { useEditmodeStore } from '@/stores/editmode'
+import { useDesktopStore } from '@/stores/desktopStore'
 import { tileDefinitions, type DesktopLayout } from '@/types/desktop'
-import TopNav from '@/components/nav/TopNav.vue';
+import TopNav from '@/components/nav/TopNav.vue'
 
 const props = defineProps<{
   layout: DesktopLayout
@@ -12,6 +13,8 @@ const props = defineProps<{
 
 const layoutModel = ref<DesktopLayout>([...props.layout])
 const editmodeStore = useEditmodeStore()
+const desktopStore = useDesktopStore()
+const { updateDesktop } = desktopStore
 const isTileDragging = ref(false)
 const suppressTileClickUntil = ref(0)
 
@@ -45,12 +48,13 @@ function addTile(tileType: string) {
     maxH: tileDefinitions[tileType]?.maxH || 1,
   }
   layoutModel.value.push(newTile)
-  console.log(`Added tile: ${tileType}`, newTile, layoutModel.value)
+  updateDesktop(props.index, layoutModel.value)
 }
 
 function removeTile(id: string | number) {
   if (confirm('Are you sure you want to remove this tile?')) {
     layoutModel.value = layoutModel.value.filter((item) => item.i !== id)
+    updateDesktop(props.index, layoutModel.value)
   }
 }
 </script>

@@ -2,11 +2,12 @@
 import { ref } from 'vue'
 import DesktopSwitcher from '@/components/nav/DesktopSwitcher.vue'
 import Desktop from '@/views/Desktop.vue'
-import type { DesktopLayout } from '@/types/desktop'
+import { storeToRefs } from 'pinia'
+import { useDesktopStore } from '@/stores/desktopStore'
 
-const desktops = ref<DesktopLayout[]>([
-  [],
-])
+const desktopStore = useDesktopStore()
+const { desktops } = storeToRefs(desktopStore)
+
 </script>
 
 <template>
