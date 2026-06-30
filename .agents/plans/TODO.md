@@ -1,7 +1,6 @@
 # TODO
 
-- persistent zapisujący layout: persist: true, w stores/
-- modele dla konfiguracji poszczególnych kafelków / persistent
+- konfiguracja poszczególnych kafelków
 - podczas edit mode obok kropek pojawiają się 4 ikony (-)(<)[......](>)(+) kasowanie pulpitu, przesunięcie w lewo, w prawo, dodanie pulpitu
 
 ---

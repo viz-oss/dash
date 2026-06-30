@@ -7,8 +7,11 @@ import RingChart from '@/components/tiles/RingChart.vue'
 import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
 import Landscape from '@/components/tiles/Landscape.vue'
 
+export type WidgetProps = Record<string, any>
+
 export type DesktopLayoutItem = LayoutItem & {
   tile: string
+  props?: WidgetProps
 }
 
 export type DesktopLayout = DesktopLayoutItem[]

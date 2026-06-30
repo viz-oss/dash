@@ -91,9 +91,9 @@ function removeTile(id: string | number) {
         <component
           :id="item.i"
           :is="tileDefinitions[item.tile]?.component"
+          v-bind="item.props"
           @remove="removeTile(item.i)"
         />
-        <!-- dodać v-bind="item.i -> props" -->
       </div>
     </GridItem>
   </GridLayout>
