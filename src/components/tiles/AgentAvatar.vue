@@ -18,6 +18,11 @@ defineProps({
     required: false,
     default: 'Agent session',
   },
+  url: {
+    type: String,
+    required: false,
+    default: '',
+  },
   thumb: {
     type: Boolean,
     required: false,
@@ -30,7 +35,6 @@ const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const { osName } = useOS()
 const emit = defineEmits(['remove'])
 const sheetChat = ref<{ open: () => void; close: () => void } | null>(null)
-const sheetSettings = ref<{ open: () => void; close: () => void } | null>(null)
 
 // Cactus eye positioning
 const cactus = ref<HTMLElement | null>(null)
@@ -205,7 +209,7 @@ const onMouseMove = (event: MouseEvent) => {
   <div
     :class="['card', !thumb && editmodeStore.editmode ? 'editmode' : '', thumb ? 'thumb' : '']"
     :style="{ '--float-delay': randomFloatDelay }"
-    @click="!thumb && !editmodeStore.editmode ? sheetChat?.open() : sheetSettings?.open()"
+    @click="!thumb ? sheetChat?.open() : null"
   >
     <i
       v-if="!thumb && editmodeStore.editmode"
@@ -218,11 +222,16 @@ const onMouseMove = (event: MouseEvent) => {
       <div ref="eyeRight" class="eye right"></div>
       <div class="cloud">{{ hint }}</div>
     </div>
-    <VueBottomSheet v-if="!thumb && !editmodeStore.editmode" ref="sheetChat">
-      <Chat url="https://ai.grindwallet.com/ask?q=%message%&ssid=%ssid%}" />
-    </VueBottomSheet>
-    <VueBottomSheet v-if="!thumb && editmodeStore.editmode" ref="sheetSettings">
-      <AgentSettings :widgetId="id" @close="sheetSettings?.close()" />
+    <VueBottomSheet v-if="!thumb" ref="sheetChat">
+      <Chat
+        v-if="!editmodeStore.editmode"
+        :url="url"
+      />
+      <AgentSettings
+        v-else
+        :widgetId="id"
+        @close="sheetChat?.close()"
+      />
     </VueBottomSheet>
   </div>
 </template>

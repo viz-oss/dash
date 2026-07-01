@@ -61,7 +61,15 @@ const send = async (text: string) => {
   typing(true, 'left')
   try {
     const response = await fetch(
-      props.url.replace('%message%', encodeURIComponent(text)).replace('%ssid%', ssid),
+      props.url.replace('%PROMPT%', encodeURIComponent(text)).replace('%THREAD%', ssid),
+      {
+        method: 'GET',
+        headers: {
+          'X-API-Key': 'da5e1038-cc7a-4ad6-a196-882c241524f1', // Developer API Key for testing
+          'Content-Type': 'application/json',
+          'Origin': window.location.origin, // Ensure CORS compliance
+        },
+      }
     )
 
     if (!response.ok) {
@@ -70,10 +78,9 @@ const send = async (text: string) => {
 
     const data = await response.json()
     // Assuming the API returns a structure with the reply content
-    const botResponseText = data.reply || 'Nie udało się odebrać odpowiedzi.'
+    const botResponseText = data?.payload?.text || 'Nie udało się odebrać odpowiedzi.'
 
-    // 3. Wait for reception and display response on the right
-    await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate network delay
+    // 3. Display response on the left
     msg(botResponseText, 'left')
   } catch (error: any) {
     console.error('Error sending message:', error)
