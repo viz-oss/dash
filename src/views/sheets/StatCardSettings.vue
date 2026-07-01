@@ -78,6 +78,9 @@ function close() {
           'fa-solid fa-dumbbell',
           'fa-solid fa-golf-ball-tee',
           'fa-solid fa-heart',
+          'fa-regular fa-money-bill-1',
+          'fa-solid fa-circle-check',
+          'fa-solid fa-circle-xmark',
         ]"
         v-model="form.icon"
       />

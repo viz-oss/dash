@@ -95,6 +95,7 @@ function close() {
           'fa-solid fa-dumbbell',
           'fa-solid fa-golf-ball-tee',
           'fa-solid fa-heart',
+          'fa-solid fa-cat',
         ]"
         v-model="form.icon"
       />

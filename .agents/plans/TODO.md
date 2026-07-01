@@ -25,3 +25,12 @@ DEMO z WIKI
 - wykres w jakich dniach była uzupełniana
 
 ---
+
+Tiles:
+
+- Header (nagłówek z description do wizualnego odcięcia przestrzeni)
+- Messenger (odbiór/wysyłka maile, messagy z róznych źródeł, akceptacja lub edycja automatycznej odpowiedzi)
+- rozwijany 2-3 kafel StatCard z kilkoma statami
+- Rozwijany na 3x2 agent z rozmową bezpośrednią na pulpicie zamiasy bottom sheet
+- Kilka linii parametrów na trend chart
+- Słupki 3d z odbiciami (tak jak na koncepcie)
