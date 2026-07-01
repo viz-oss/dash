@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 import NavBar from '@/components/nav/NavBar.vue'
 import type { DesktopLayout } from '@/types/desktop'
 import { useEditmodeStore } from '@/stores/editmode'
@@ -12,17 +12,23 @@ const emit = defineEmits(['change'])
 const editmodeStore = useEditmodeStore()
 const current = ref(0)
 const pendingProgrammaticIndex = ref<number | null>(null)
-const desktopKeys = new WeakMap<DesktopLayout, number>()
+const desktopKeys = ref<number[]>([])
 let nextDesktopKey = 0
 
-function getDesktopKey(desktop: DesktopLayout) {
-  let key = desktopKeys.get(desktop)
-  if (key === undefined) {
-    key = nextDesktopKey++
-    desktopKeys.set(desktop, key)
+function syncDesktopKeys(length: number) {
+  while (desktopKeys.value.length < length) {
+    desktopKeys.value.push(nextDesktopKey++)
   }
-  return key
+  if (desktopKeys.value.length > length) {
+    desktopKeys.value.splice(length)
+  }
 }
+
+watch(
+  () => props.desktops.length,
+  (length) => syncDesktopKeys(length),
+  { immediate: true },
+)
 
 // --- Navigation ---
 
@@ -52,9 +58,15 @@ function scrollTo(index: number, smooth = true) {
 // Switch places with desktop on the left side
 function moveLeft() {
   if (current.value > 0) {
+    const index = current.value
     const temp = props.desktops[current.value - 1]!
     props.desktops[current.value - 1] = props.desktops[current.value]!
     props.desktops[current.value] = temp
+
+    const keyTemp = desktopKeys.value[index - 1]!
+    desktopKeys.value[index - 1] = desktopKeys.value[index]!
+    desktopKeys.value[index] = keyTemp
+
     goTo(current.value - 1)
   }
 }
@@ -62,9 +74,15 @@ function moveLeft() {
 // Switch places with desktop on the right side
 function moveRight() {
   if (current.value < props.desktops.length - 1) {
+    const index = current.value
     const temp = props.desktops[current.value + 1]!
     props.desktops[current.value + 1] = props.desktops[current.value]!
     props.desktops[current.value] = temp
+
+    const keyTemp = desktopKeys.value[index + 1]!
+    desktopKeys.value[index + 1] = desktopKeys.value[index]!
+    desktopKeys.value[index] = keyTemp
+
     goTo(current.value + 1)
   }
 }
@@ -72,6 +90,7 @@ function moveRight() {
 // Add a new desktop with an empty layout
 async function addNew() {
   props.desktops.push([])
+  desktopKeys.value.push(nextDesktopKey++)
   await nextTick()
   goTo(props.desktops.length - 1)
 }
@@ -79,6 +98,7 @@ async function addNew() {
 // Delete the current desktop
 function deleteCurrent() {
   if (confirm('Are you sure you want to delete this desktop?')) {
+    desktopKeys.value.splice(current.value, 1)
     props.desktops.splice(current.value, 1)
     if (current.value >= props.desktops.length) {
       current.value = props.desktops.length - 1
@@ -86,6 +106,7 @@ function deleteCurrent() {
     }
     if (props.desktops.length === 0) {
       props.desktops.push([])
+      desktopKeys.value.push(nextDesktopKey++)
       current.value = 0
       goTo(current.value)
     }
@@ -134,7 +155,7 @@ onBeforeUnmount(() => {
     <div
       class="desktop"
       v-for="(desktop, index) in desktops"
-      :key="getDesktopKey(desktop)"
+      :key="desktopKeys[index]"
       :data-index="index"
     >
       <slot :desktop="desktop" :index="index" />
