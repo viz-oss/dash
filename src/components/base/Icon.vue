@@ -33,6 +33,13 @@ defineProps({
   padding: 0 10px;
 }
 
+.icon {
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
 .icon .text {
   font-size: 14px;
   font-weight: 500;

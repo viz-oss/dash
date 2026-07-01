@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import Icon from '@/components/base/Icon.vue'
+import { useEditmodeStore } from '@/stores/editmode'
+
 const props = defineProps({
   // Total desktops in the switcher
   total: {
@@ -17,7 +20,8 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['go-to'])
+const emit = defineEmits(['go-to', 'move-left', 'move-right', 'add-next', 'delete-current'])
+const editmodeStore = useEditmodeStore()
 
 function onClick(index: number) {
   // Ignore click if it was a swipe (pointerup after swipe)
@@ -36,13 +40,13 @@ function onPointerDown(e: PointerEvent) {
   isDragging = true
   swipeMoved = false
 }
- 
+
 function onPointerMove(e: PointerEvent) {
   if (!isDragging) return
   const dx = Math.abs(e.clientX - startX)
   if (dx > 6) swipeMoved = true
 }
- 
+
 function onPointerUp(e: PointerEvent) {
   if (!isDragging) return
   isDragging = false
@@ -55,29 +59,52 @@ function onPointerUp(e: PointerEvent) {
 </script>
 
 <template>
-  <nav
-    class="card navbar" 
-    @pointerdown="onPointerDown"
-    @pointermove="onPointerMove"
-    @pointerup="onPointerUp"
-    @pointercancel="onPointerUp"
-  >
-    <span
-      v-for="i in total"
-      :key="i"
-      :class="['dot', { fill: i - 1 === current }]"
-      @click.stop="onClick(i - 1)"
-    ></span>
-  </nav>
+  <div class="nav-wrapper">
+    <Icon v-if="editmodeStore.editmode" icon="fa-solid fa-trash" @click="emit('delete-current')" />
+    <Icon
+      v-if="editmodeStore.editmode"
+      icon="fa-solid fa-chevron-left"
+      :class="{ disabled: current === 0 }"
+      @click="emit('move-left')"
+    />
+    <nav
+      class="card navbar"
+      @pointerdown="onPointerDown"
+      @pointermove="onPointerMove"
+      @pointerup="onPointerUp"
+      @pointercancel="onPointerUp"
+    >
+      <span
+        v-for="i in total"
+        :key="i"
+        :class="['dot', { fill: i - 1 === current }]"
+        @click.stop="onClick(i - 1)"
+      ></span>
+    </nav>
+    <Icon
+      v-if="editmodeStore.editmode"
+      icon="fa-solid fa-chevron-right"
+      :class="{ disabled: current === total - 1 }"
+      @click="emit('move-right')"
+    />
+    <Icon v-if="editmodeStore.editmode" icon="fa-solid fa-plus" @click="emit('add-next')" />
+  </div>
 </template>
 
 <style scoped>
-.navbar {
+.nav-wrapper {
   position: fixed;
   bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.navbar {
+  width: 55%;
   height: 42px;
   display: flex;
   align-items: center;
@@ -85,13 +112,12 @@ function onPointerUp(e: PointerEvent) {
   gap: 8px;
   padding: 8px 14px;
   border-radius: 20px;
-  background: var(--color-dots-bg, rgba(0, 0, 0, 0.06));
+  background-color: var(--color-dots-bg, rgba(0, 0, 0, 0.06));
   backdrop-filter: blur(20px);
-  transition: background 0.25s ease;
+  transition: background-color 0.25s ease;
   touch-action: pan-y;
   cursor: pointer;
   user-select: none;
-  z-index: 100;
 }
 
 .dot {
@@ -100,18 +126,22 @@ function onPointerUp(e: PointerEvent) {
   border-radius: 50%;
   border: none;
   padding: 0;
-  background: var(--color-dot, rgba(120, 120, 120, 0.25));
+  background-color: var(--color-dot, rgba(120, 120, 120, 0.25));
   cursor: pointer;
   transition:
     width 0.25s ease,
     border-radius 0.25s ease,
-    background 0.25s ease;
-  flex-shrink: 0;  
+    background-color 0.25s ease;
+  flex-shrink: 0;
 }
 
 .dot.fill {
   width: 20px;
   border-radius: 4px;
-  background: var(--color-dot, rgba(120, 120, 120, 0.25));
+  background-color: var(--color-dot, rgba(120, 120, 120, 0.25));
+}
+
+.icon {
+  cursor: pointer;
 }
 </style>
