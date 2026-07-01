@@ -9,6 +9,18 @@ import Landscape from '@/components/tiles/Landscape.vue'
 
 export type WidgetProps = Record<string, any>
 
+export type DesktopInfo = {
+  icon: string
+  title: string
+  description: string
+}
+
+export const defaultDesktopInfo: DesktopInfo = {
+  icon: 'fa-regular fa-face-smile',
+  title: 'Workspace name',
+  description: 'More detailed project description',
+}
+
 export type DesktopLayoutItem = LayoutItem & {
   tile: string
   props?: WidgetProps

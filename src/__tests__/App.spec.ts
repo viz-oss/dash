@@ -15,6 +15,6 @@ describe('App', () => {
       },
     })
 
-    expect(wrapper.text()).toContain('Project Name')
+    expect(wrapper.text()).toContain('Workspace name')
   })
 })

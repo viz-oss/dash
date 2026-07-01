@@ -60,7 +60,7 @@ function removeTile(id: string | number) {
 </script>
 
 <template>
-  <TopNav :id="`topnav-${props.index}`" @add="addTile" />
+  <TopNav :id="`topnav-${props.index}`" :desktop-index="props.index" @add="addTile" />
   <GridLayout
     v-model:layout="layoutModel"
     :col-num="3"

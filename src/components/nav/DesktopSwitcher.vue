@@ -3,6 +3,7 @@ import { ref, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 import NavBar from '@/components/nav/NavBar.vue'
 import type { DesktopLayout } from '@/types/desktop'
 import { useEditmodeStore } from '@/stores/editmode'
+import { useDesktopStore } from '@/stores/desktopStore'
 
 const props = defineProps<{
   desktops: DesktopLayout[]
@@ -10,6 +11,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['change'])
 const editmodeStore = useEditmodeStore()
+const desktopStore = useDesktopStore()
 const current = ref(0)
 const pendingProgrammaticIndex = ref<number | null>(null)
 const desktopKeys = ref<number[]>([])
@@ -59,9 +61,7 @@ function scrollTo(index: number, smooth = true) {
 function moveLeft() {
   if (current.value > 0) {
     const index = current.value
-    const temp = props.desktops[current.value - 1]!
-    props.desktops[current.value - 1] = props.desktops[current.value]!
-    props.desktops[current.value] = temp
+    desktopStore.moveDesktopLeft(index)
 
     const keyTemp = desktopKeys.value[index - 1]!
     desktopKeys.value[index - 1] = desktopKeys.value[index]!
@@ -75,9 +75,7 @@ function moveLeft() {
 function moveRight() {
   if (current.value < props.desktops.length - 1) {
     const index = current.value
-    const temp = props.desktops[current.value + 1]!
-    props.desktops[current.value + 1] = props.desktops[current.value]!
-    props.desktops[current.value] = temp
+    desktopStore.moveDesktopRight(index)
 
     const keyTemp = desktopKeys.value[index + 1]!
     desktopKeys.value[index + 1] = desktopKeys.value[index]!
@@ -89,7 +87,7 @@ function moveRight() {
 
 // Add a new desktop with an empty layout
 async function addNew() {
-  props.desktops.push([])
+  desktopStore.addDesktop([])
   desktopKeys.value.push(nextDesktopKey++)
   await nextTick()
   goTo(props.desktops.length - 1)
@@ -98,18 +96,16 @@ async function addNew() {
 // Delete the current desktop
 function deleteCurrent() {
   if (confirm('Are you sure you want to delete this desktop?')) {
-    desktopKeys.value.splice(current.value, 1)
-    props.desktops.splice(current.value, 1)
+    const deletingIndex = current.value
+    desktopKeys.value.splice(deletingIndex, 1)
+    desktopStore.removeDesktop(deletingIndex)
+    syncDesktopKeys(props.desktops.length)
+
     if (current.value >= props.desktops.length) {
-      current.value = props.desktops.length - 1
-      goTo(current.value)
+      current.value = Math.max(0, props.desktops.length - 1)
     }
-    if (props.desktops.length === 0) {
-      props.desktops.push([])
-      desktopKeys.value.push(nextDesktopKey++)
-      current.value = 0
-      goTo(current.value)
-    }
+
+    goTo(current.value)
   }
 }
 

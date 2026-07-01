@@ -8,6 +8,7 @@ import { useDesktopStore } from '@/stores/desktopStore'
 const desktopStore = useDesktopStore()
 const { desktops } = storeToRefs(desktopStore)
 
+desktopStore.ensureInfoLength()
 </script>
 
 <template>

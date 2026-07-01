@@ -1,27 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode.ts'
+import { useDesktopStore } from '@/stores/desktopStore'
+import { defaultDesktopInfo } from '@/types/desktop'
 import AddNewTileSheet from '@/views/sheets/AddNewTileSheet.vue'
 import WorkspaceInfoSheet from '@/views/sheets/WorkspaceInfoSheet.vue'
-import { useWorkspaceStore } from '@/stores/workspace'
 
-defineProps({
+const props = defineProps({
   id: {
     type: String,
     required: false,
     default: () => `topnav-${crypto.randomUUID()}`,
   },
+  desktopIndex: {
+    type: Number,
+    required: true,
+  },
 })
 
 const editmodeStore = useEditmodeStore()
+const desktopStore = useDesktopStore()
 const emit = defineEmits(['remove', 'add'])
-const workspace = useWorkspaceStore()
 const sheetAddNewTile = ref<{ open: () => void; close: () => void } | null>(null)
 const sheetWorkspaceInfo = ref<{ open: () => void; close: () => void } | null>(null)
 const addNewTileSheet = ref<{ onOpened: () => void } | null>(null)
+const desktopInfo = computed(() => desktopStore.info[props.desktopIndex] ?? defaultDesktopInfo)
 
 const handleAddNewTileOpened = () => {
   addNewTileSheet.value?.onOpened()
@@ -43,10 +49,10 @@ const handleCancel = () => {
       class="desktop-info"
       @click="editmodeStore.editmode ? sheetWorkspaceInfo?.open() : sheetWorkspaceInfo?.close()"
     >
-      <Icon :icon="workspace.icon" />
+      <Icon :icon="desktopInfo.icon" />
       <div class="text">
-        <div class="title">{{ workspace.title }}</div>
-        <div class="description">{{ workspace.description }}</div>
+        <div class="title">{{ desktopInfo.title }}</div>
+        <div class="description">{{ desktopInfo.description }}</div>
       </div>
     </div>
     <div class="right-icons">
@@ -68,7 +74,10 @@ const handleCancel = () => {
       <AddNewTileSheet ref="addNewTileSheet" @ok="handleOK" @cancel="handleCancel" />
     </VueBottomSheet>
     <VueBottomSheet ref="sheetWorkspaceInfo">
-      <WorkspaceInfoSheet @close="sheetWorkspaceInfo?.close()" />
+      <WorkspaceInfoSheet
+        :desktop-index="props.desktopIndex"
+        @close="sheetWorkspaceInfo?.close()"
+      />
     </VueBottomSheet>
   </div>
 </template>
