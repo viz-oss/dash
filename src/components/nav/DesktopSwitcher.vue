@@ -2,12 +2,14 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import NavBar from '@/components/nav/NavBar.vue'
 import type { DesktopLayout } from '@/types/desktop'
+import { useEditmodeStore } from '@/stores/editmode'
 
 const props = defineProps<{
   desktops: DesktopLayout[]
 }>()
 
 const emit = defineEmits(['change'])
+const editmodeStore = useEditmodeStore()
 const current = ref(0)
 
 // --- Navigation ---
@@ -69,7 +71,13 @@ onBeforeUnmount(() => {
       <slot :desktop="desktop" :index="index" />
     </div>
   </div>
-  <NavBar :total="desktops.length" :current="current" :swipe-threshold="20" @go-to="goTo" />
+  <NavBar
+    v-if="desktops.length > 1 || editmodeStore.editmode"
+    :total="desktops.length"
+    :current="current"
+    :swipe-threshold="20"
+    @go-to="goTo"
+  />
 </template>
 
 <style scoped>
