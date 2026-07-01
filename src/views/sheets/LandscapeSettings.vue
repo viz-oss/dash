@@ -59,6 +59,7 @@ const landscapes = [
   'ocean',
   'countryside',
   'treasure',
+  'construction',
 ]
 </script>
 
