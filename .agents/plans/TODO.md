@@ -1,9 +1,5 @@
 # TODO
 
-- konfiguracja tytułu desktopu
-
----
-
 DEMO z API/MCP
 
 - zapewne jeden kafel to powinien być jeden endpoint a rózne parametry to JSON path?
