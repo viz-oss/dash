@@ -12,13 +12,9 @@ const props = defineProps({
 const desktopStore = useDesktopStore()
 const { updateWidget } = desktopStore
 const desktopIndex = ref(
-  desktopStore.desktops.findIndex((desktop) =>
-    desktop.some((item) => item.i === props.widgetId)
-  )
+  desktopStore.desktops.findIndex((desktop) => desktop.some((item) => item.i === props.widgetId)),
 )
-const widget = ref(
-  desktopStore.desktops.flat().find((item) => item.i === props.widgetId)
-)
+const widget = ref(desktopStore.desktops.flat().find((item) => item.i === props.widgetId))
 
 const form = ref({
   theme: widget.value?.props?.theme || 'mountains',
@@ -59,6 +55,7 @@ const landscapes = [
   'ocean',
   'countryside',
   'treasure',
+  'marina',
   'construction',
 ]
 </script>
@@ -75,7 +72,13 @@ const landscapes = [
     <div class="field">
       <label for="landscape-name">Select the picture</label>
       <div class="landscape-options" ref="sheetCards">
-        <div v-for="landscape in landscapes" :key="landscape" class="card" :class="{ selected: form.theme === landscape }" :data-theme="landscape">
+        <div
+          v-for="landscape in landscapes"
+          :key="landscape"
+          class="card"
+          :class="{ selected: form.theme === landscape }"
+          :data-theme="landscape"
+        >
           <img :src="`/public/_landscape-${landscape}.png`" />
         </div>
       </div>
@@ -119,5 +122,4 @@ const landscapes = [
 .card.selected {
   border: 2px solid var(--key-color-dark);
 }
-
 </style>
