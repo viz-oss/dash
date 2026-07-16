@@ -126,7 +126,7 @@ export function parseCurlToFetch(
     }
 
     // If this is not a flag (does not start with '-') and we don't have a URL yet, treat it as the URL
-    if (!token.startsWith('-') && !url) {
+    if (token && !token.startsWith('-') && !url) {
       url = token
     }
   }
