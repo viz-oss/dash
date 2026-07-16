@@ -60,12 +60,13 @@ const send = async (text: string) => {
   // 2. Send message to URL and show typing indicator on the left
   typing(true, 'left')
   try {
+    const key_api = '' // Testing only
     const response = await fetch(
       props.url.replace('%PROMPT%', encodeURIComponent(text)).replace('%THREAD%', ssid),
       {
         method: 'GET',
         headers: {
-          'X-API-Key': 'da5e1038-cc7a-4ad6-a196-882c241524f1', // Developer API Key for testing
+          'X-API-Key': key_api,
           'Content-Type': 'application/json',
           'Origin': window.location.origin, // Ensure CORS compliance
         },
