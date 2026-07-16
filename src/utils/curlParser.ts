@@ -1,7 +1,7 @@
 // Type returned by parser – for native fetch()
 export interface ParsedFetch {
-  url: string;
-  options: RequestInit;
+  url: string
+  options: RequestInit
 }
 
 /**
@@ -23,27 +23,27 @@ function interpolateVariables(
 ): string {
   // Helper function: if the variable exists in the dictionary, replace it.
   // Otherwise, leave the original text.
-  const replacer = (match: string, key: string) => variables[key] ?? match;
+  const replacer: (match: string, key: string) => string = (match: string, key: string) => variables[key] ?? match
 
-  let interpolated = text;
+  let interpolated: string = text
 
   // 1. Format: {{NAME}}
-  interpolated = interpolated.replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, replacer);
+  interpolated = interpolated.replace(/\{\{\s*([a-zA-Z0-9_]+)\s*\}\}/g, replacer)
   
   // 2. Format: ${NAME}
-  interpolated = interpolated.replace(/\$\{([a-zA-Z0-9_]+)\}/g, replacer);
+  interpolated = interpolated.replace(/\$\{([a-zA-Z0-9_]+)\}/g, replacer)
   
   // 3. Format: $NAME
-  interpolated = interpolated.replace(/\$([a-zA-Z0-9_]+)/g, replacer);
+  interpolated = interpolated.replace(/\$([a-zA-Z0-9_]+)/g, replacer)
   
   // 4. Format: %NAME%
-  interpolated = interpolated.replace(/%([a-zA-Z0-9_]+)%/g, replacer);
+  interpolated = interpolated.replace(/%([a-zA-Z0-9_]+)%/g, replacer)
   
   // 5. Format: :NAME
   // We use "Negative Lookbehind" (?<!...) to avoid matching "http:" or "https:"
-  interpolated = interpolated.replace(/(?<!https?|ftp):([a-zA-Z0-9_]+)\b/g, replacer);
+  interpolated = interpolated.replace(/(?<!https?|ftp):([a-zA-Z0-9_]+)\b/g, replacer)
 
-  return interpolated;
+  return interpolated
 }
 
 /**
@@ -57,15 +57,15 @@ function interpolateVariables(
  * @returns An array of tokens/arguments.
  */
 function tokenize(command: string): string[] {
-  const regex = /[^\s"']+|"([^"]*)"|'([^']*)'/g;
-  const tokens: string[] = [];
-  let match;
+  const regex = /[^\s"']+|"([^"]*)"|'([^']*)'/g
+  const tokens: string[] = []
+  let match: RegExpExecArray | null
 
   while ((match = regex.exec(command)) !== null) {
-    tokens.push(match[1] ?? match[2] ?? match[0]);
+    tokens.push(match[1] ?? match[2] ?? match[0])
   }
 
-  return tokens;
+  return tokens
 }
 
 /**
@@ -75,55 +75,61 @@ export function parseCurlToFetch(
   curlCommand: string,
   variables: Record<string, string> = {}
 ): ParsedFetch {
-  const interpolatedCommand = interpolateVariables(curlCommand, variables);
+  const interpolatedCommand: string = interpolateVariables(curlCommand, variables)
 
-  const tokens = tokenize(interpolatedCommand);
+  const tokens: string[] = tokenize(interpolatedCommand)
 
-  let url = '';
+  let url: string = ''
   const options: RequestInit = {
     method: 'GET', // Default GET method
     headers: {} as Record<string, string>,
-  };
+  }
 
   // Iterate through the tokens to extract URL, method, headers, and body
   for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i];
+    const token: string | undefined = tokens[i]
 
-    if (token === 'curl') continue;
+    if (token === 'curl') continue
 
     // Capturing the HTTP method
     if (token === '-X' || token === '--request') {
-      options.method = tokens[++i].toUpperCase();
-      continue;
+      const method = tokens[++i]
+      if (method) {
+        options.method = method.toUpperCase()
+      }
+      continue
     }
 
     // Capturing headers
     if (token === '-H' || token === '--header') {
-      const headerStr = tokens[++i];
-      const colonIndex = headerStr.indexOf(':');
-      if (colonIndex > -1) {
-        const key = headerStr.slice(0, colonIndex).trim();
-        const value = headerStr.slice(colonIndex + 1).trim();
-        (options.headers as Record<string, string>)[key] = value;
+      const headerStr: string | undefined = tokens[++i]
+      if (headerStr) {
+        const colonIndex: number = headerStr.indexOf(':')
+        if (colonIndex > -1) {
+          const key: string = headerStr.slice(0, colonIndex).trim()
+          const value: string = headerStr.slice(colonIndex + 1).trim()
+          const headers = options.headers as Record<string, string>
+          headers[key] = value
+        }
       }
-      continue;
+      continue
     }
 
     // Capturing the request body (data/body)
     if (token === '-d' || token === '--data' || token === '--data-raw') {
-      options.body = tokens[++i];
+      options.body = tokens[++i]
       // If the user used -d but did not specify the method, curl defaults to POST
       if (options.method === 'GET') {
-        options.method = 'POST';
+        options.method = 'POST'
       }
-      continue;
+      continue
     }
 
     // If this is not a flag (does not start with '-') and we don't have a URL yet, treat it as the URL
     if (!token.startsWith('-') && !url) {
-      url = token;
+      url = token
     }
   }
 
-  return { url, options };
+  return { url, options }
 }
