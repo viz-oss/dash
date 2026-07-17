@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useEditmodeStore } from '@/stores/editmode'
+import { ref, computed } from 'vue'
 import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
+import { useEditmodeStore } from '@/stores/editmode'
 import StatCardSettings from '@/views/sheets/StatCardSettings.vue'
 import { parseVariables } from '@/utils/varParser'
+import { parseCurlToFetch } from '@/utils/curlParser'
+import { useRequest } from '@/composables/useRequest'
 
-defineProps({
+const props = defineProps({
   id: {
     type: String,
     required: false,
@@ -26,6 +28,11 @@ defineProps({
     type: [String, Number],
     required: false,
     default: '0',
+  },
+  url: {
+    type: String,
+    required: false,
+    default: '',
   },
   changeValue: {
     type: String,
@@ -59,17 +66,10 @@ const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
 const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 
-const mockupVariables = {
-  name: 'Mocked Name',
-  score: 1,
-  pts: [
-    { value: [1, 2, 3, 4, 5, 6] },
-    { value: [1, 2, 3, 4, 5, 6] },
-    { value: [1, 2, 3, 4, 5, 6] },
-    { value: [1, 2, 3, 4, 5, 6] },
-    { value: [1, 2, 3, 4, 5, 6] },
-  ],
-}
+const { url, options } = parseCurlToFetch(props.url)
+const { data, error, isFetching } = useRequest(url, options)
+const metricTitle = computed(() => parseVariables(props.title, data.value as Record<string, unknown>))
+const metricValue = computed(() => (typeof props.value === 'string' ? parseVariables(props.value, data.value as Record<string, unknown>) : String(props.value)))
 </script>
 
 <template>
@@ -92,14 +92,14 @@ const mockupVariables = {
       <i :class="[icon, 'user-icon']"></i>
     </div>
 
-    <div class="metric-title ellipsis" :title="parseVariables(title, mockupVariables)">
-      {{ parseVariables(title, mockupVariables) }}
+    <div class="metric-title ellipsis" :title="metricTitle">
+      {{ metricTitle }}
     </div>
     <div
       class="metric-value"
-      :title="typeof value == 'string' ? parseVariables(value, mockupVariables) : String(value)"
+      :title="metricValue"
     >
-      {{ typeof value == 'string' ? parseVariables(value, mockupVariables) : value }}
+      {{ metricValue }}
     </div>
 
     <div class="metric-change">
