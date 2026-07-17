@@ -63,6 +63,12 @@ body {
   user-select: text;
 }
 
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Grid with tiles */
 
 .dashboard-grid {

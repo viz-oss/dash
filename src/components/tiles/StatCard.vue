@@ -4,6 +4,7 @@ import { useEditmodeStore } from '@/stores/editmode'
 import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import StatCardSettings from '@/views/sheets/StatCardSettings.vue'
+import { parseVariables } from '@/utils/varParser'
 
 defineProps({
   id: {
@@ -57,6 +58,11 @@ const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
 const sheet = ref<{ open: () => void; close: () => void } | null>(null)
+
+const mockupVariables = {
+  name: 'Mocked Name',
+  score: '123',
+}
 </script>
 
 <template>
@@ -79,8 +85,15 @@ const sheet = ref<{ open: () => void; close: () => void } | null>(null)
       <i :class="[icon, 'user-icon']"></i>
     </div>
 
-    <div class="metric-title">{{ title }}</div>
-    <div class="metric-value">{{ value }}</div>
+    <div class="metric-title ellipsis" :title="parseVariables(title, mockupVariables)">
+      {{ parseVariables(title, mockupVariables) }}
+    </div>
+    <div
+      class="metric-value"
+      :title="typeof value == 'string' ? parseVariables(value, mockupVariables) : String(value)"
+    >
+      {{ typeof value == 'string' ? parseVariables(value, mockupVariables) : value }}
+    </div>
 
     <div class="metric-change">
       <span class="trend-icon" :class="isUp ? 'up-arrow' : 'down-arrow'">

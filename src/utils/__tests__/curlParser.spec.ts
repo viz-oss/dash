@@ -28,7 +28,6 @@ describe('curlParser - True Integration Test (httpbin)', () => {
 
     // 4. Act - Parsing the response body
     const data = await response.json()
-    console.log(data)
 
     // 4. Assert - httpbin returns e.g. URL in the object, headers, and data (body)
     expect(response.status).toBe(200)

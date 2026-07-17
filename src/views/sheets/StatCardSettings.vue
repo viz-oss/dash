@@ -13,18 +13,15 @@ const props = defineProps({
 const desktopStore = useDesktopStore()
 const { updateWidget } = desktopStore
 const desktopIndex = ref(
-  desktopStore.desktops.findIndex((desktop) =>
-    desktop.some((item) => item.i === props.widgetId)
-  )
+  desktopStore.desktops.findIndex((desktop) => desktop.some((item) => item.i === props.widgetId)),
 )
-const widget = ref(
-  desktopStore.desktops.flat().find((item) => item.i === props.widgetId)
-)
+const widget = ref(desktopStore.desktops.flat().find((item) => item.i === props.widgetId))
 
 const form = ref({
   icon: widget.value?.props?.icon || 'fas fa-users',
   title: widget.value?.props?.title || '',
-  url: widget.value?.props?.url || ''
+  value: widget.value?.props?.value || '',
+  url: widget.value?.props?.url || '',
 })
 
 const emit = defineEmits(['close'])
@@ -87,21 +84,20 @@ function close() {
     </div>
     <div class="field">
       <label for="stat-name">Stat Name</label>
+      <input id="stat-name" type="text" v-model="form.title" placeholder="Enter stat name" />
+    </div>
+    <div class="field">
+      <label for="stat-value">Stat Value</label>
       <input
-        id="stat-name"
+        id="stat-value"
         type="text"
-        v-model="form.title"
-        placeholder="Enter stat name"
+        v-model="form.value"
+        placeholder="Enter result path (e.g. $data.count)"
       />
     </div>
     <div class="field">
       <label for="stat-url">API URL</label>
-      <input
-        id="stat-url"
-        type="text"
-        v-model="form.url"
-        placeholder="Enter API URL"
-      />
+      <input id="stat-url" type="text" v-model="form.url" placeholder="Enter CURL-like command" />
     </div>
     <div class="sheet-footer">
       <button class="btn btn-secondary" @click="close">Cancel</button>
