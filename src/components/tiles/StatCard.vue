@@ -61,7 +61,7 @@ const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 
 const mockupVariables = {
   name: 'Mocked Name',
-  score: '123',
+  score: 123,
 }
 </script>
 

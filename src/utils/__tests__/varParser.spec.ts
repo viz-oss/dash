@@ -12,27 +12,27 @@ describe('parseVariables', () => {
 
   // Test case 1: Basic replacement for {{NAME}} format
   it('should replace variables in {{NAME}} format', () => {
-    const text = 'curl -H "User-Agent: {{USER}}" http://{{HOST}}:{{PORT}}/path'
+    const text = 'curl -H "User-Agent: {{USER}}" http://{{host}}:{{PORT}}/path'
     const expected = 'curl -H "User-Agent: testuser" http://example.com:8080/path'
     expect(parseVariables(text, variables)).toBe(expected)
   })
 
   // Test case 2: Basic replacement for ${NAME} format
   it('should replace variables in ${NAME} format', () => {
-    const text = 'curl -H "Authorization: Bearer ${SECRET_KEY}" http://${HOST}'
+    const text = 'curl -H "Authorization: Bearer ${SECRET_KEY}" http://${host}'
     const expected = 'curl -H "Authorization: Bearer supersecret" http://example.com'
     expect(parseVariables(text, variables)).toBe(expected)
   })
 
   // Test case 3: Basic replacement for $NAME format
-  it('should replace variables in $NAME format', () => {
+  it('should replace variables in $name format', () => {
     const text = 'curl -v "http://$HOST$PATH"'
     const expected = 'curl -v "http://example.com/api/v1"'
     expect(parseVariables(text, variables)).toBe(expected)
   })
 
   // Test case 4: Basic replacement for %NAME% format
-  it('should replace variables in %NAME% format', () => {
+  it('should replace variables in %name% format', () => {
     const text = 'curl --data "key=%SECRET_KEY%" http://%HOST%'
     const expected = 'curl --data "key=supersecret" http://example.com'
     expect(parseVariables(text, variables)).toBe(expected)
@@ -40,22 +40,22 @@ describe('parseVariables', () => {
 
   // Test case 5: Basic replacement for :NAME format (non-protocol)
   it('should replace variables in :NAME format when not part of a protocol', () => {
-    const text = 'curl -X GET http://${HOST}:${PORT}/resource/:USER'
+    const text = 'curl -X GET http://${HOST}:${port}/resource/:USER'
     const expected = 'curl -X GET http://example.com:8080/resource/testuser'
     expect(parseVariables(text, variables)).toBe(expected)
   })
 
   // Test case 6: Handling mixed formats and multiple replacements
   it('should correctly replace variables across different formats', () => {
-    const text = 'curl -X GET http://${HOST}:${PORT}/path/${USER}/?key=%SECRET_KEY%'
+    const text = 'curl -X GET http://${HOST}:${port}/path/${USER}/?key=%SECRET_KEY%'
     const expected = 'curl -X GET http://example.com:8080/path/testuser/?key=supersecret'
     expect(parseVariables(text, variables)).toBe(expected)
   })
 
   // Test case 7: Handling unreplaced variables (should remain unchanged)
   it('should leave variables that are not defined in the dictionary untouched', () => {
-    const text = 'curl http://unknown.com/path/$UNDEFINED_VAR?q={{MISSING}}'
-    const expected = 'curl http://unknown.com/path/$UNDEFINED_VAR?q={{MISSING}}'
+    const text = 'curl http://unknown.com/path/$UNDEFINED_VAR?q={{missing}}'
+    const expected = 'curl http://unknown.com/path/$UNDEFINED_VAR?q={{missing}}'
     expect(parseVariables(text, variables)).toBe(expected)
   })
 
