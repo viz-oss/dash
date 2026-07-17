@@ -60,7 +60,7 @@ const handleCancel = () => {
         v-if="editmodeStore.editmode"
         icon="fa-solid fa-plus"
         text="Add"
-        class="add-icon"
+        class="add-icon icon-button"
         @click="sheetAddNewTile?.open()"
       />
       <Icon

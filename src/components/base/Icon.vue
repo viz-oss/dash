@@ -20,7 +20,7 @@ defineProps({
 
 <style scoped>
 .icon {
-  min-width: 15px;
+  width: 35px;
   height: 35px;
   border-radius: 10px;
   display: flex;
@@ -30,6 +30,11 @@ defineProps({
   font-size: 18px;
   color: var(--key-color-dark);
   background-color: var(--key-color-light);
+}
+
+.icon-button {
+  width: auto;
+  min-width: 15px;
   padding: 0 10px;
 }
 
