@@ -77,4 +77,93 @@ describe('parseVariables', () => {
   it('should return an empty string when given an empty input', () => {
     expect(parseVariables('', variables)).toBe('')
   })
+
+  // Test case 10: Complex structure resolution (nested objects and arrays)
+  it('should resolve arbitrarily complex structures like {{foo[0].bar[1].x}}', () => {
+    const complexVars = {
+      foo: [
+        {
+          bar: [null, { x: 'resolved_value' }],
+        },
+      ],
+      user: {
+        address: {
+          city: 'Warsaw',
+          zip: '00-001',
+        },
+      },
+      pts: [{ value: [10, 20, 30] }],
+    }
+
+    expect(parseVariables('Value is {{foo[0].bar[1].x}}', complexVars)).toBe(
+      'Value is resolved_value',
+    )
+    expect(parseVariables('City: ${user.address.city}', complexVars)).toBe('City: Warsaw')
+    expect(parseVariables('Point: %pts[0].value[2]%', complexVars)).toBe('Point: 30')
+    expect(parseVariables('Path: /api/:foo[0].bar[1].x/details', complexVars)).toBe(
+      'Path: /api/resolved_value/details',
+    )
+    expect(parseVariables('Direct: $user.address.zip', complexVars)).toBe('Direct: 00-001')
+  })
+
+  // Test case 11: Case-insensitive property matching in nested objects
+  it('should perform case-insensitive property lookups in complex structures', () => {
+    const complexVars = {
+      Foo: [
+        {
+          Bar: {
+            X: 'case_insensitive_val',
+          },
+        },
+      ],
+    }
+
+    expect(parseVariables('Result: {{foo[0].bar.x}}', complexVars)).toBe(
+      'Result: case_insensitive_val',
+    )
+    expect(parseVariables('Result: {{FOO[0].BAR.X}}', complexVars)).toBe(
+      'Result: case_insensitive_val',
+    )
+  })
+
+  // Test case 12: Quoted bracket keys and flat keys containing dots/brackets
+  it('should resolve quoted bracket keys and direct flat path keys', () => {
+    const complexVars = {
+      data: {
+        'my-key': [{ 'nested.property': 999 }],
+      },
+      'flat[0].key': 'flat_result',
+    }
+
+    expect(parseVariables('Result: {{data["my-key"][0]["nested.property"]}}', complexVars)).toBe(
+      'Result: 999',
+    )
+    expect(parseVariables('Result: {{flat[0].key}}', complexVars)).toBe('Result: flat_result')
+  })
+
+  // Test case 13: Fallback prefix resolution for un-delimited formats ($NAME and :NAME)
+  it('should fallback to resolving prefixes if the full path is not found for $NAME and :NAME', () => {
+    const vars = {
+      user: {
+        name: 'alice',
+      },
+      host: 'localhost',
+    }
+
+    // Here, $user.name resolves to 'alice', and .com is left untouched because user.name.com does not exist
+    expect(parseVariables('http://$user.name.com', vars)).toBe('http://alice.com')
+    expect(parseVariables('http://$host.org/resource/:user.name.json', vars)).toBe(
+      'http://localhost.org/resource/alice.json',
+    )
+  })
+
+  // Test case 14: Formatting object/array values to JSON
+  it('should format resolved objects and arrays as JSON strings', () => {
+    const vars = {
+      pts: [{ value: [1, 2, 3] }],
+    }
+
+    expect(parseVariables('Data: {{pts[0].value}}', vars)).toBe('Data: [1,2,3]')
+    expect(parseVariables('Item: {{pts[0]}}', vars)).toBe('Item: {"value":[1,2,3]}')
+  })
 })

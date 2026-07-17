@@ -20,7 +20,7 @@ const form = ref({
   theme: widget.value?.props?.theme || 'mountains',
 })
 
-let sheetCards = ref<HTMLElement | null>(null)
+const sheetCards = ref<HTMLElement | null>(null)
 const emit = defineEmits(['close'])
 let selected: string | null = null
 

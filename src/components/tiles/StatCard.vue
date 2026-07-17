@@ -61,7 +61,14 @@ const sheet = ref<{ open: () => void; close: () => void } | null>(null)
 
 const mockupVariables = {
   name: 'Mocked Name',
-  score: 123,
+  score: 1,
+  pts: [
+    { value: [1, 2, 3, 4, 5, 6] },
+    { value: [1, 2, 3, 4, 5, 6] },
+    { value: [1, 2, 3, 4, 5, 6] },
+    { value: [1, 2, 3, 4, 5, 6] },
+    { value: [1, 2, 3, 4, 5, 6] },
+  ],
 }
 </script>
 

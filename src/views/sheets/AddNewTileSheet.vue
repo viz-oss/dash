@@ -6,7 +6,7 @@ import TrendChart from '@/components/tiles/TrendChart.vue'
 import AgentAvatar from '@/components/tiles/AgentAvatar.vue'
 import Landscape from '@/components/tiles/Landscape.vue'
 
-let sheetBody = ref<HTMLElement | null>(null)
+const sheetBody = ref<HTMLElement | null>(null)
 const emit = defineEmits(['ok', 'cancel'])
 let selected: string | null = null
 
