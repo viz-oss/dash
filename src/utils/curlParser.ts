@@ -29,13 +29,22 @@ function tokenize(command: string): string[] {
 }
 
 /**
+ * Clean curl-like strings by removing line continuations and extra whitespace.
+ * @param command The curl command string to clean.
+ * @returns A cleaned-up command string.
+ */
+function cleanCommand(command: string): string {
+  return command.replace(/\\\n/g, '').replaceAll('\\', '').replace(/\s+/g, ' ').trim()
+}
+
+/**
  * Main function that parses a curl command into parameters for fetch().
  */
 export function parseCurlToFetch(
   curlCommand: string,
   variables: Record<string, string> = {},
 ): ParsedFetch {
-  const interpolatedCommand: string = parseVariables(curlCommand, variables)
+  const interpolatedCommand: string = parseVariables(cleanCommand(curlCommand), variables)
 
   const tokens: string[] = tokenize(interpolatedCommand)
 
