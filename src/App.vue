@@ -189,6 +189,12 @@ body {
   flex-direction: column;
 }
 
+.sheet-content hr {
+  border: none;
+  border-top: var(--field-border);
+  margin: 20px 0;
+}
+
 .sheet-header {
   display: flex;
   align-items: center;

@@ -78,6 +78,13 @@ function close() {
           'fa-regular fa-money-bill-1',
           'fa-solid fa-circle-check',
           'fa-solid fa-circle-xmark',
+          'fa-solid fa-crown',
+          'fa-solid fa-flag-checkered',
+          'fa-solid fa-medal',
+          'fa-solid fa-trophy',
+          'fa-solid fa-bullhorn',
+          'fa-solid fa-bell',
+          'fa-solid fa-triangle-exclamation',
         ]"
         v-model="form.icon"
       />
@@ -95,9 +102,10 @@ function close() {
         placeholder="Enter result path (e.g. $data.count)"
       />
     </div>
+    <hr>
     <div class="field">
       <label for="stat-url">API URL</label>
-      <input id="stat-url" type="text" v-model="form.url" placeholder="Enter CURL-like command" />
+      <input id="stat-url" type="text" v-model="form.url" placeholder="API endpoint or CURL command" />
     </div>
     <div class="sheet-footer">
       <button class="btn btn-secondary" @click="close">Cancel</button>

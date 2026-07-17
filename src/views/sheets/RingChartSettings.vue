@@ -22,10 +22,12 @@ const widget = ref(
 
 const form = ref({
   title: widget.value?.props?.title || '',
+  max: widget.value?.props?.max || '',
   name1: widget.value?.props?.name1 || 'A',
-  url1: widget.value?.props?.url1 || '',
+  value1: widget.value?.props?.value1 || '',
   name2: widget.value?.props?.name2 || 'B',
-  url2: widget.value?.props?.url2 || '',
+  value2: widget.value?.props?.value2 || '',
+  url: widget.value?.props?.url || '',
 })
 
 const emit = defineEmits(['close'])
@@ -54,47 +56,55 @@ function close() {
     <div class="field">
       <label for="stat-name">Title</label>
       <input
-        id="stat-name"
         type="text"
         v-model="form.title"
         placeholder="Enter title"
       />
     </div>
     <div class="field">
-      <label for="stat-name">Stat #1 name</label>
+      <label for="stat-name">Stat Max</label>
       <input
-        id="stat-name"
+        type="text"
+        v-model="form.max"
+        placeholder="Enter stat max"
+      />
+    </div>
+    <div class="field">
+      <label for="stat-name">Stat #1 Name</label>
+      <input
         type="text"
         v-model="form.name1"
         placeholder="Enter stat #1 name"
       />
     </div>
     <div class="field">
-      <label for="stat-url">Stat #1 API URL</label>
+      <label for="stat-url">Stat #1 Value</label>
       <input
-        id="stat-url"
         type="text"
-        v-model="form.url1"
-        placeholder="Enter Stat #1 API URL"
+        v-model="form.value1"
+        placeholder="Enter Stat #1 Value"
       />
     </div>
     <div class="field">
       <label for="stat-name">Stat #2 name</label>
       <input
-        id="stat-name"
         type="text"
         v-model="form.name2"
         placeholder="Enter stat #2 name"
       />
     </div>
     <div class="field">
-      <label for="stat-url">Stat #2 API URL</label>
+      <label for="stat-url">Stat #2 Value</label>
       <input
-        id="stat-url"
         type="text"
-        v-model="form.url2"
-        placeholder="Enter Stat #2 API URL"
+        v-model="form.value2"
+        placeholder="Enter Stat #2 Value"
       />
+    </div>
+    <hr>
+    <div class="field">
+      <label for="stat-url">API URL</label>
+      <input id="stat-url" type="text" v-model="form.url" placeholder="API endpoint or CURL command" />
     </div>
     <div class="sheet-footer">
       <button class="btn btn-secondary" @click="close">Cancel</button>

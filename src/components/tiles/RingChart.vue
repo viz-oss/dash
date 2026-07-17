@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import type { ApexOptions } from 'apexcharts'
 import apexchart from 'vue3-apexcharts'
 import { useEditmodeStore } from '@/stores/editmode'
 import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import RingChartSettings from '@/views/sheets/RingChartSettings.vue'
+import { parseVariables } from '@/utils/varParser'
+import { parseCurlToFetch } from '@/utils/curlParser'
+import { useRequest } from '@/composables/useRequest'
 
-defineProps({
+const props = defineProps({
   id: {
     type: String,
     required: false,
@@ -18,15 +21,35 @@ defineProps({
     required: false,
     default: 'Ring Chart',
   },
+  max: {
+    type: String,
+    required: false,
+    default: '100',
+  },
   name1: {
     type: String,
     required: false,
     default: 'A',
   },
+  value1: {
+    type: String,
+    required: false,
+    default: '0',
+  },
   name2: {
     type: String,
     required: false,
     default: 'B',
+  },
+  value2: {
+    type: String,
+    required: false,
+    default: '0',
+  },
+  url: {
+    type: String,
+    required: false,
+    default: '',
   },
   thumb: {
     type: Boolean,
@@ -38,6 +61,16 @@ const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
 const sheet = ref<{ open: () => void; close: () => void } | null>(null)
+
+const { url, options } = parseCurlToFetch(props.url)
+const { data, error, isFetching } = useRequest(url, options)
+
+const showTitle = computed(() => parseVariables(props.title, data.value as Record<string, unknown>))
+const showMax = computed(() => parseVariables(props.max, data.value as Record<string, unknown>))
+const showName1 = computed(() => parseVariables(props.name1, data.value as Record<string, unknown>))
+const showValue1 = computed(() => parseVariables(props.value1, data.value as Record<string, unknown>))
+const showName2 = computed(() => parseVariables(props.name2, data.value as Record<string, unknown>))
+const showValue2 = computed(() => parseVariables(props.value2, data.value as Record<string, unknown>))
 
 const chartOptions = ref<ApexOptions>({
   chart: {
@@ -69,6 +102,23 @@ const chartOptions = ref<ApexOptions>({
   },
   colors: ['rgb(112, 65, 250)', 'rgb(173, 172, 254)'],
 })
+
+const normalizeToPercent = (value: string, max: string): number => {
+  const numericValue = parseFloat(value)
+  const numericMax = parseFloat(max)
+
+  if (!Number.isFinite(numericValue) || !Number.isFinite(numericMax) || numericMax <= 0) {
+    return 0
+  }
+
+  const normalized = (numericValue / numericMax) * 100
+  return Math.min(100, Math.max(0, normalized))
+}
+
+const chartSeries = computed(() => [
+  normalizeToPercent(showValue1.value, showMax.value),
+  normalizeToPercent(showValue2.value, showMax.value),
+])
 </script>
 
 <template>
@@ -92,15 +142,15 @@ const chartOptions = ref<ApexOptions>({
       width="140"
       height="140"
       :options="chartOptions"
-      :series="[70, 30]"
+      :series="chartSeries"
       style="width: 134px; margin-left: -26px; margin-top: -22px"
     />
     <div class="right">
-      <div class="title">{{ title }}</div>
-      <div class="percent">70%</div>
-      <div class="description">{{ name1 }}</div>
-      <div class="percent">30%</div>
-      <div class="description">{{ name2 }}</div>
+      <div class="title">{{ showTitle }}</div>
+      <div class="percent" :title="showValue1">{{ showValue1 }}</div>
+      <div class="description">{{ showName1 }}</div>
+      <div class="percent" :title="showValue2">{{ showValue2 }}</div>
+      <div class="description">{{ showName2 }}</div>
     </div>
     <VueBottomSheet ref="sheet">
       <RingChartSettings :widgetId="id" @close="sheet?.close()" />
