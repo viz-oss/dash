@@ -63,7 +63,7 @@ function close() {
         id="agent-url"
         type="text"
         v-model="form.url"
-        placeholder="Enter API URL"
+        placeholder="API endpoint or CURL command with variables: PROMPT, THREAD_ID"
       />
     </div>
     <div class="sheet-footer">

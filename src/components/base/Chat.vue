@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { parseCurlToFetch } from '@/utils/curlParser'
 
 // Props definition
 const props = defineProps({
@@ -59,20 +60,9 @@ const send = async (text: string) => {
 
   // 2. Send message to URL and show typing indicator on the left
   typing(true, 'left')
+  const { url, options } = parseCurlToFetch(props.url, { 'PROMPT': text, 'THREAD_ID': ssid })
   try {
-    const key_api = '' // Testing only
-    const response = await fetch(
-      props.url.replace('%PROMPT%', encodeURIComponent(text)).replace('%THREAD%', ssid),
-      {
-        method: 'GET',
-        headers: {
-          'X-API-Key': key_api,
-          'Content-Type': 'application/json',
-          'Origin': window.location.origin, // Ensure CORS compliance
-        },
-      }
-    )
-
+    const response = await fetch(url, options)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
