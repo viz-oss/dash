@@ -34,7 +34,7 @@ function tokenize(command: string): string[] {
  * @returns A cleaned-up command string.
  */
 function cleanCommand(command: string): string {
-  return command.replace(/\\\n/g, '').replaceAll('\\', '').replace(/\s+/g, ' ').trim()
+  return command.replace(/\\\n/g, '').replace(/\\/g, '').replace(/\s+/g, ' ').trim()
 }
 
 /**

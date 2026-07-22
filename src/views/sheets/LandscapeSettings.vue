@@ -79,7 +79,7 @@ const landscapes = [
           :class="{ selected: form.theme === landscape }"
           :data-theme="landscape"
         >
-          <img :src="`/public/_landscape-${landscape}.png`" />
+          <img :src="`public/_landscape-${landscape}.png`" />
         </div>
       </div>
     </div>

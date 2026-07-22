@@ -153,3 +153,5 @@ __screenshots__/
 /cypress/videos/
 /cypress/screenshots/
 
+# Other
+dist.zip
