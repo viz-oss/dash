@@ -54,7 +54,7 @@ function close() {
       </div>
     </div>
     <div class="field">
-      <label for="stat-name">Title</label>
+      <label>Title</label>
       <input
         type="text"
         v-model="form.title"
@@ -62,7 +62,7 @@ function close() {
       />
     </div>
     <div class="field">
-      <label for="stat-name">Stat Max</label>
+      <label>Stat Max</label>
       <input
         type="text"
         v-model="form.max"
@@ -70,7 +70,7 @@ function close() {
       />
     </div>
     <div class="field">
-      <label for="stat-name">Stat #1 Name</label>
+      <label>Stat #1 Name</label>
       <input
         type="text"
         v-model="form.name1"
@@ -78,7 +78,7 @@ function close() {
       />
     </div>
     <div class="field">
-      <label for="stat-url">Stat #1 Value</label>
+      <label>Stat #1 Value</label>
       <input
         type="text"
         v-model="form.value1"
@@ -86,7 +86,7 @@ function close() {
       />
     </div>
     <div class="field">
-      <label for="stat-name">Stat #2 name</label>
+      <label>Stat #2 Name</label>
       <input
         type="text"
         v-model="form.name2"
@@ -94,7 +94,7 @@ function close() {
       />
     </div>
     <div class="field">
-      <label for="stat-url">Stat #2 Value</label>
+      <label>Stat #2 Value</label>
       <input
         type="text"
         v-model="form.value2"
@@ -103,8 +103,8 @@ function close() {
     </div>
     <hr>
     <div class="field">
-      <label for="stat-url">API URL</label>
-      <input id="stat-url" type="text" v-model="form.url" placeholder="API endpoint or CURL command" />
+      <label>API URL</label>
+      <input type="text" v-model="form.url" placeholder="API endpoint or CURL command" />
     </div>
     <div class="sheet-footer">
       <button class="btn btn-secondary" @click="close">Cancel</button>

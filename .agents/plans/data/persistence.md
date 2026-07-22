@@ -1,3 +1,0 @@
-# Data persistence
-
-@capacitor/preferences

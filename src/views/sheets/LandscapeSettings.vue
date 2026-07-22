@@ -70,7 +70,7 @@ const landscapes = [
       </div>
     </div>
     <div class="field">
-      <label for="landscape-name">Select the picture</label>
+      <label>Select the picture</label>
       <div class="landscape-options" ref="sheetCards">
         <div
           v-for="landscape in landscapes"

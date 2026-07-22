@@ -90,13 +90,12 @@ function close() {
       />
     </div>
     <div class="field">
-      <label for="stat-name">Stat Name</label>
-      <input id="stat-name" type="text" v-model="form.title" placeholder="Enter stat name" />
+      <label>Stat Name</label>
+      <input type="text" v-model="form.title" placeholder="Enter stat name" />
     </div>
     <div class="field">
-      <label for="stat-value">Stat Value</label>
+      <label>Stat Value</label>
       <input
-        id="stat-value"
         type="text"
         v-model="form.value"
         placeholder="Enter result path (e.g. $data.count)"
@@ -104,8 +103,8 @@ function close() {
     </div>
     <hr>
     <div class="field">
-      <label for="stat-url">API URL</label>
-      <input id="stat-url" type="text" v-model="form.url" placeholder="API endpoint or CURL command" />
+      <label>API URL</label>
+      <input type="text" v-model="form.url" placeholder="API endpoint or CURL command" />
     </div>
     <div class="sheet-footer">
       <button class="btn btn-secondary" @click="close">Cancel</button>

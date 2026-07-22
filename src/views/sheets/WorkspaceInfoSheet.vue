@@ -51,21 +51,20 @@ function close() {
       </div>
     </div>
     <div class="field">
-      <label for="workspace-name">Workspace Name</label>
+      <label>Workspace Name</label>
       <input
-        id="workspace-name"
         type="text"
         v-model="form.title"
         placeholder="Enter workspace name"
       />
     </div>
     <div class="field">
-      <label for="workspace-description">Description</label>
-      <textarea
-        id="workspace-description"
+      <label>Description</label>
+      <input
+        type="text"
         v-model="form.description"
         placeholder="Enter workspace description"
-      ></textarea>
+      />
     </div>
     <div class="field">
       <label>Workspace Icon</label>

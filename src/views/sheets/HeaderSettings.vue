@@ -21,8 +21,8 @@ const widget = ref(
 )
 
 const form = ref({
-  title: widget.value?.props?.title || 'Overview',
-  url: widget.value?.props?.url || ''
+  title: widget.value?.props?.title || '',
+  subtitle: widget.value?.props?.subtitle || '',
 })
 
 const emit = defineEmits(['close'])
@@ -44,24 +44,24 @@ function close() {
     <div class="sheet-header">
       <i class="icon fa-solid fa-gear"></i>
       <div class="about">
-        <div class="title">Trend Chart Settings</div>
-        <div class="subtitle">Customize your trend chart preferences</div>
+        <div class="title">Header Settings</div>
+        <div class="subtitle">Customize your header preferences</div>
       </div>
     </div>
     <div class="field">
-      <label>Stat Name</label>
+      <label>Title</label>
       <input
         type="text"
         v-model="form.title"
-        placeholder="Enter stat name"
+        placeholder="Enter text"
       />
     </div>
     <div class="field">
-      <label>API URL</label>
+      <label>Subtitle</label>
       <input
         type="text"
-        v-model="form.url"
-        placeholder="Enter API URL"
+        v-model="form.subtitle"
+        placeholder="Enter text"
       />
     </div>
     <div class="sheet-footer">
@@ -70,4 +70,3 @@ function close() {
     </div>
   </div>
 </template>
-    

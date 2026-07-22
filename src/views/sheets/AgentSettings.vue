@@ -49,18 +49,16 @@ function close() {
       </div>
     </div>
     <div class="field">
-      <label for="agent-name">Agent Name</label>
+      <label>Agent Name</label>
       <input
-        id="agent-name"
         type="text"
         v-model="form.name"
         placeholder="Enter agent name"
       />
     </div>
     <div class="field">
-      <label for="agent-url">Agent Connection URL</label>
+      <label>Agent Connection URL</label>
       <input
-        id="agent-url"
         type="text"
         v-model="form.url"
         placeholder="API endpoint or CURL command with variables: PROMPT, THREAD_ID"

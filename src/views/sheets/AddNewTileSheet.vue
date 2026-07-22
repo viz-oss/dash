@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import Header from '@/components/tiles/Header.vue'
 import StatCard from '@/components/tiles/StatCard.vue'
 import RingChart from '@/components/tiles/RingChart.vue'
 import TrendChart from '@/components/tiles/TrendChart.vue'
@@ -55,6 +56,12 @@ function cancel() {
       </div>
     </div>
     <div class="sheet-body" ref="sheetBody">
+      <div class="slot" data-tile="header">
+        <Header
+          id="example-header"
+          :thumb="true"
+        />
+      </div>
       <div class="slot" data-tile="stat">
         <StatCard
           :thumb="true"
