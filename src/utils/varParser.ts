@@ -158,7 +158,7 @@ export function parseVariables(text: string, variables: Record<string, unknown>)
     if (res.found) {
       return formatValue(res.value)
     }
-    return match
+    return '?'
   }
 
   const prefixFallbackReplacer = (match: string, path: string): string => {
@@ -172,7 +172,7 @@ export function parseVariables(text: string, variables: Record<string, unknown>)
         return formatValue(res.value) + leftover
       }
     }
-    return match
+    return '?'
   }
 
   let interpolated: string = text
