@@ -123,10 +123,10 @@ const handleCancel = () => {
 }
 
 .description {
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 500;
   color: var(--font-color-light);
-  margin-bottom: 2px;
+  margin: 2px 0 4px 0;
 }
 
 .right-icons {
