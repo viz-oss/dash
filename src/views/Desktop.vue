@@ -5,6 +5,7 @@ import { useEditmodeStore } from '@/stores/editmode'
 import { useDesktopStore } from '@/stores/desktopStore'
 import { tileDefinitions, type DesktopLayout } from '@/types/desktop'
 import TopNav from '@/components/nav/TopNav.vue'
+import inobounce from 'inobounce'
 
 const props = defineProps<{
   layout: DesktopLayout
@@ -57,6 +58,18 @@ function removeTile(id: string | number) {
     updateDesktop(props.index, layoutModel.value)
   }
 }
+
+const dragOptions = {
+  onstart: () => {
+    document.body.classList.add('body-no-scroll')
+    inobounce.enable();
+  },
+  onend: () => {
+    document.body.classList.remove('body-no-scroll')
+    inobounce.disable();
+  },
+  autoScroll: false,
+};
 </script>
 
 <template>
@@ -80,6 +93,7 @@ function removeTile(id: string | number) {
       :key="item.i"
       v-bind="item"
       drag-ignore-from=".close, .bottom-sheet, .chat"
+      :drag-option="dragOptions"
       @move="onTileMove"
       @moved="onTileMoved"
     >

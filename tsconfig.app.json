@@ -9,7 +9,8 @@
     // Path mapping for cleaner imports.
     "paths": {
       "@/*": ["./src/*"],
-      "@webzlodimir/vue-bottom-sheet": ["./src/types/vue-bottom-sheet.d.ts"]
+      "@webzlodimir/vue-bottom-sheet": ["./src/types/vue-bottom-sheet.d.ts"],
+      "@inobounce": ["./src/types/inbounce.d.ts"]
     },
 
     // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking.

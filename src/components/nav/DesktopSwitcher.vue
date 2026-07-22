@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
   />
 </template>
 
-<style scoped>
+<style>
 .desktops-container {
   display: flex;
   overflow-x: scroll;
@@ -184,5 +184,6 @@ onBeforeUnmount(() => {
 .desktop {
   flex: 0 0 100vw;
   scroll-snap-align: start;
+  overflow: hidden;
 }
 </style>

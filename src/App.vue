@@ -42,6 +42,11 @@ desktopStore.ensureInfoLength()
   --field-border: 1px solid rgba(132, 145, 186, 0.2);
 }
 
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background-color: var(--bg-color);
@@ -49,9 +54,14 @@ body {
   margin: 0;
   -webkit-user-select: none; /* Safari */
   user-select: none;
-  overflow-x: hidden;
   scrollbar-width: none;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.body-no-scroll {
+  overflow: hidden;
+  height: 100%;
 }
 
 &::-webkit-scrollbar {
