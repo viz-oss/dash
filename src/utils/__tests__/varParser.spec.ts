@@ -68,17 +68,29 @@ describe('parseVariables', () => {
     const expected = 'curl https://example.com:/path/to/testuser'
     expect(parseVariables(text, variables)).toBe(expected)
 
-    // Test case where the variable is part of a protocol (e.g., port number) - this should not happen with current regex but good to test boundary.
-    const text2 = 'curl http://example.com:80/path' // No variables here, just checking structure
+    // URL port separators must stay intact.
+    const text2 = 'curl http://example.com:80/path'
     expect(parseVariables(text2, variables)).toBe(text2)
   })
 
-  // Test case 9: Empty input string
+  // Test case 9: URL host port should not be treated as :NAME, unless forced with double-colon syntax
+  it('should preserve host ports and allow explicit ::NAME variable syntax', () => {
+    const vars = {
+      8000: 'PORT_VALUE',
+    }
+
+    expect(parseVariables('curl http://127.0.0.1:8000/', vars)).toBe('curl http://127.0.0.1:8000/')
+    expect(parseVariables('curl http://127.0.0.1::8000/', vars)).toBe(
+      'curl http://127.0.0.1:PORT_VALUE/',
+    )
+  })
+
+  // Test case 10: Empty input string
   it('should return an empty string when given an empty input', () => {
     expect(parseVariables('', variables)).toBe('')
   })
 
-  // Test case 10: Complex structure resolution (nested objects and arrays)
+  // Test case 11: Complex structure resolution (nested objects and arrays)
   it('should resolve arbitrarily complex structures like {{foo[0].bar[1].x}}', () => {
     const complexVars = {
       foo: [
@@ -106,7 +118,7 @@ describe('parseVariables', () => {
     expect(parseVariables('Direct: $user.address.zip', complexVars)).toBe('Direct: 00-001')
   })
 
-  // Test case 11: Case-insensitive property matching in nested objects
+  // Test case 12: Case-insensitive property matching in nested objects
   it('should perform case-insensitive property lookups in complex structures', () => {
     const complexVars = {
       Foo: [
@@ -126,7 +138,7 @@ describe('parseVariables', () => {
     )
   })
 
-  // Test case 12: Quoted bracket keys and flat keys containing dots/brackets
+  // Test case 13: Quoted bracket keys and flat keys containing dots/brackets
   it('should resolve quoted bracket keys and direct flat path keys', () => {
     const complexVars = {
       data: {
@@ -141,7 +153,7 @@ describe('parseVariables', () => {
     expect(parseVariables('Result: {{flat[0].key}}', complexVars)).toBe('Result: flat_result')
   })
 
-  // Test case 13: Fallback prefix resolution for un-delimited formats ($NAME and :NAME)
+  // Test case 14: Fallback prefix resolution for un-delimited formats ($NAME and :NAME)
   it('should fallback to resolving prefixes if the full path is not found for $NAME and :NAME', () => {
     const vars = {
       user: {
@@ -157,7 +169,7 @@ describe('parseVariables', () => {
     )
   })
 
-  // Test case 14: Formatting object/array values to JSON
+  // Test case 15: Formatting object/array values to JSON
   it('should format resolved objects and arrays as JSON strings', () => {
     const vars = {
       pts: [{ value: [1, 2, 3] }],

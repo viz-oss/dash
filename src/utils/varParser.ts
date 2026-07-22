@@ -44,6 +44,18 @@ function formatValue(val: unknown): string {
 }
 
 /**
+ * Keep URL authority ports (e.g. http://host:8000) untouched.
+ * Explicit double-colon syntax (e.g. http://host::PORT) still allows :PORT replacement.
+ */
+function isUrlAuthorityPortToken(input: string, tokenStartIndex: number): boolean {
+  if (tokenStartIndex <= 0) return false
+  if (input[tokenStartIndex - 1] === ':') return false
+
+  const prefix = input.slice(0, tokenStartIndex)
+  return /(?:^|[\s"'`(])(?:https?|ftp):\/\/[^\s/?#]+$/i.test(prefix)
+}
+
+/**
  * Resolve a tokenized path of length `count` against `variables` and `variableMap`.
  */
 function resolveTokens(
@@ -202,10 +214,15 @@ export function parseVariables(text: string, variables: Record<string, unknown>)
     exactReplacer(match, path),
   )
 
-  // 5. Format: :NAME (but not in http: or https:)
+  // 5. Format: :NAME
   interpolated = interpolated.replace(
-    new RegExp(`(?<!https?|ftp):(${pathPattern})`, 'gi'),
-    (match, path) => prefixFallbackReplacer(match, path),
+    new RegExp(`:(${pathPattern})`, 'gi'),
+    (match, path, offset: number, input: string) => {
+      if (isUrlAuthorityPortToken(input, offset)) {
+        return match
+      }
+      return prefixFallbackReplacer(match, path)
+    },
   )
 
   return interpolated
