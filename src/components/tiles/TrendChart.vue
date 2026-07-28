@@ -44,14 +44,14 @@ const todayName = computed(() => {
 
 // --- Chart ---
 
-const mockData = [61, 68, 70, 84, 66, 75, 93]
+const mockData = [60, 70, 67, 75, 80, 69, 85, 90, 88]
 const highlightIndex = 3
 
 const SVG_W = 300
 const SVG_H = 128
 const PAD_TOP = 18
 const PAD_BOTTOM = 4
-const TENSION = 0.38
+const TENSION = 0.17
 
 type Point = { x: number; y: number }
 
@@ -122,8 +122,8 @@ const highlight = computed<Point>(() => chartPoints.value[highlightIndex]!)
       >
         <defs>
           <linearGradient id="chart-area-gradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="var(--key-color)" stop-opacity="0.18" />
-            <stop offset="100%" stop-color="var(--key-color)" stop-opacity="0" />
+            <stop offset="0%" stop-color="var(--key-color-dark)" stop-opacity="0.18" />
+            <stop offset="100%" stop-color="var(--key-color-dark)" stop-opacity="0" />
           </linearGradient>
         </defs>
 
@@ -134,14 +134,14 @@ const highlight = computed<Point>(() => chartPoints.value[highlightIndex]!)
         <path
           :d="linePath"
           fill="none"
-          stroke="var(--key-color)"
+          stroke="var(--key-color-dark)"
           stroke-width="2.5"
           stroke-linecap="round"
           stroke-linejoin="round"
         />
 
         <!-- Highlight dot -->
-        <circle :cx="highlight.x" :cy="highlight.y" r="5" fill="var(--key-color)" />
+        <circle :cx="highlight.x" :cy="highlight.y" r="5" fill="var(--key-color-dark)" />
         <circle :cx="highlight.x" :cy="highlight.y" r="3" fill="white" />
 
         <!-- Tooltip -->
