@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import WorkspaceSwitcher from '@/components/nav/WorkspaceSwitcher.vue'
-import Workspace from '@/views/Workspace.vue'
+import Workspace from '@/components/nav/Workspace.vue'
 import { storeToRefs } from 'pinia'
 import { useWorkspaceStore } from '@/stores/workspaceStore'
 

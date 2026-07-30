@@ -5,7 +5,7 @@ import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import { useOS } from '@/composables/useOS'
 import Chat from '@/components/base/Chat.vue'
 import { useEditmodeStore } from '@/stores/editmode'
-import AgentSettings from '@/views/sheets/AgentSettings.vue'
+import AgentSettings from '@/components/sheets/AgentSettings.vue'
 
 defineProps({
   id: {

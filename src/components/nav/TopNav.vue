@@ -6,8 +6,8 @@ import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode.ts'
 import { useWorkspaceStore } from '@/stores/workspaceStore'
 import { defaultWorkspaceInfo } from '@/types/workspace'
-import AddNewTileSheet from '@/views/sheets/AddNewTileSheet.vue'
-import WorkspaceInfoSheet from '@/views/sheets/WorkspaceInfoSheet.vue'
+import AddNewTileSheet from '@/components/sheets/AddNewTileSheet.vue'
+import WorkspaceInfoSheet from '@/components/sheets/WorkspaceInfoSheet.vue'
 
 const props = defineProps({
   id: {

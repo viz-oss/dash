@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { useEditmodeStore } from '@/stores/editmode'
 import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
-import TrendChartSettings from '@/views/sheets/TrendChartSettings.vue'
+import TrendChartSettings from '@/components/sheets/TrendChartSettings.vue'
 
 defineProps({
   id: {

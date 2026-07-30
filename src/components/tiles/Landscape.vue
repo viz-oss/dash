@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useEditmodeStore } from '@/stores/editmode'
 import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
-import LandscapeSettings from '@/views/sheets/LandscapeSettings.vue'
+import LandscapeSettings from '@/components/sheets/LandscapeSettings.vue'
 
 defineProps({
   id: {

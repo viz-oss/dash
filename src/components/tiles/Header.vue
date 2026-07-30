@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useEditmodeStore } from '@/stores/editmode'
 import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
-import HeaderSettings from '@/views/sheets/HeaderSettings.vue'
+import HeaderSettings from '@/components/sheets/HeaderSettings.vue'
 
 defineProps({
   id: {
