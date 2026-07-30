@@ -2,20 +2,20 @@
 import { ref } from 'vue'
 import { GridItem, GridLayout } from 'grid-layout-plus'
 import { useEditmodeStore } from '@/stores/editmode'
-import { useDesktopStore } from '@/stores/desktopStore'
-import { tileDefinitions, type DesktopLayout } from '@/types/desktop'
+import { useWorkspaceStore } from '@/stores/workspaceStore'
+import { tileDefinitions, type WorkspaceLayout } from '@/types/workspace'
 import TopNav from '@/components/nav/TopNav.vue'
 import inobounce from 'inobounce'
 
 const props = defineProps<{
-  layout: DesktopLayout
+  layout: WorkspaceLayout
   index: number
 }>()
 
-const layoutModel = ref<DesktopLayout>([...props.layout])
+const layoutModel = ref<WorkspaceLayout>([...props.layout])
 const editmodeStore = useEditmodeStore()
-const desktopStore = useDesktopStore()
-const { updateDesktop } = desktopStore
+const workspaceStore = useWorkspaceStore()
+const { updateWorkspace } = workspaceStore
 const isTileDragging = ref(false)
 const suppressTileClickUntil = ref(0)
 
@@ -49,13 +49,13 @@ function addTile(tileType: string) {
     maxH: tileDefinitions[tileType]?.maxH || 1,
   }
   layoutModel.value.push(newTile)
-  updateDesktop(props.index, layoutModel.value)
+  updateWorkspace(props.index, layoutModel.value)
 }
 
 function removeTile(id: string | number) {
   if (confirm('Are you sure you want to remove this tile?')) {
     layoutModel.value = layoutModel.value.filter((item) => item.i !== id)
-    updateDesktop(props.index, layoutModel.value)
+    updateWorkspace(props.index, layoutModel.value)
   }
 }
 
@@ -73,7 +73,7 @@ const dragOptions = {
 </script>
 
 <template>
-  <TopNav :id="`topnav-${props.index}`" :desktop-index="props.index" @add="addTile" />
+  <TopNav :id="`topnav-${props.index}`" :workspace-index="props.index" @add="addTile" />
   <GridLayout
     v-model:layout="layoutModel"
     :col-num="3"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDesktopStore } from '@/stores/desktopStore'
+import { useWorkspaceStore } from '@/stores/workspaceStore'
 
 const props = defineProps({
   widgetId: {
@@ -9,15 +9,15 @@ const props = defineProps({
   },
 })
 
-const desktopStore = useDesktopStore()
-const { updateWidget } = desktopStore
-const desktopIndex = ref(
-  desktopStore.desktops.findIndex((desktop) =>
-    desktop.some((item) => item.i === props.widgetId)
+const workspaceStore = useWorkspaceStore()
+const { updateWidget } = workspaceStore
+const workspaceIndex = ref(
+  workspaceStore.workspaces.findIndex((workspace) =>
+    workspace.some((item) => item.i === props.widgetId)
   )
 )
 const widget = ref(
-  desktopStore.desktops.flat().find((item) => item.i === props.widgetId)
+  workspaceStore.workspaces.flat().find((item) => item.i === props.widgetId)
 )
 
 const form = ref({
@@ -33,7 +33,7 @@ const form = ref({
 const emit = defineEmits(['close'])
 
 function save() {
-  updateWidget(desktopIndex.value, props.widgetId, form.value)
+  updateWidget(workspaceIndex.value, props.widgetId, form.value)
   close()
 }
 

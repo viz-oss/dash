@@ -4,8 +4,8 @@ import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode.ts'
-import { useDesktopStore } from '@/stores/desktopStore'
-import { defaultDesktopInfo } from '@/types/desktop'
+import { useWorkspaceStore } from '@/stores/workspaceStore'
+import { defaultWorkspaceInfo } from '@/types/workspace'
 import AddNewTileSheet from '@/views/sheets/AddNewTileSheet.vue'
 import WorkspaceInfoSheet from '@/views/sheets/WorkspaceInfoSheet.vue'
 
@@ -15,19 +15,19 @@ const props = defineProps({
     required: false,
     default: () => `topnav-${crypto.randomUUID()}`,
   },
-  desktopIndex: {
+  workspaceIndex: {
     type: Number,
     required: true,
   },
 })
 
 const editmodeStore = useEditmodeStore()
-const desktopStore = useDesktopStore()
+const workspaceStore = useWorkspaceStore()
 const emit = defineEmits(['remove', 'add'])
 const sheetAddNewTile = ref<{ open: () => void; close: () => void } | null>(null)
 const sheetWorkspaceInfo = ref<{ open: () => void; close: () => void } | null>(null)
 const addNewTileSheet = ref<{ onOpened: () => void } | null>(null)
-const desktopInfo = computed(() => desktopStore.info[props.desktopIndex] ?? defaultDesktopInfo)
+const workspaceInfo = computed(() => workspaceStore.info[props.workspaceIndex] ?? defaultWorkspaceInfo)
 
 const handleAddNewTileOpened = () => {
   addNewTileSheet.value?.onOpened()
@@ -46,13 +46,13 @@ const handleCancel = () => {
 <template>
   <div class="widget-full top-nav">
     <div
-      class="desktop-info"
+      class="workspace-info"
       @click="editmodeStore.editmode ? sheetWorkspaceInfo?.open() : sheetWorkspaceInfo?.close()"
     >
-      <Icon :icon="desktopInfo.icon" />
+      <Icon :icon="workspaceInfo.icon" />
       <div class="text">
-        <div class="title">{{ desktopInfo.title }}</div>
-        <div class="description">{{ desktopInfo.description }}</div>
+        <div class="title">{{ workspaceInfo.title }}</div>
+        <div class="description">{{ workspaceInfo.description }}</div>
       </div>
     </div>
     <div class="right-icons">
@@ -75,7 +75,7 @@ const handleCancel = () => {
     </VueBottomSheet>
     <VueBottomSheet ref="sheetWorkspaceInfo">
       <WorkspaceInfoSheet
-        :desktop-index="props.desktopIndex"
+        :workspace-index="props.workspaceIndex"
         @close="sheetWorkspaceInfo?.close()"
       />
     </VueBottomSheet>
@@ -94,7 +94,7 @@ const handleCancel = () => {
   padding: 15px 15px 5px 15px;
 }
 
-.desktop-info {
+.workspace-info {
   border: 2px solid transparent;
   border-radius: 10px;
   display: flex;
@@ -102,7 +102,7 @@ const handleCancel = () => {
   align-items: center;
 }
 
-.editmode .desktop-info {
+.editmode .workspace-info {
   border: 2px solid var(--edit-color);
 }
 
@@ -136,7 +136,7 @@ const handleCancel = () => {
   gap: 5px;
 }
 
-.editmode .desktop-info,
+.editmode .workspace-info,
 .editmode .add-icon,
 .edit-icon {
   cursor: pointer;

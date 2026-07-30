@@ -1,58 +1,58 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { createPinia, setActivePinia } from 'pinia'
-import { useDesktopStore } from '@/stores/desktopStore'
-import { defaultDesktopInfo } from '@/types/desktop'
+import { useWorkspaceStore } from '@/stores/workspaceStore'
+import { defaultWorkspaceInfo } from '@/types/workspace'
 
-describe('desktopStore', () => {
+describe('workspaceStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
   })
 
-  it('keeps info in sync when adding desktops', () => {
-    const store = useDesktopStore()
+  it('keeps info in sync when adding workspaces', () => {
+    const store = useWorkspaceStore()
 
-    store.addDesktop([])
-    store.addDesktop([], { title: 'Second desktop' })
+    store.addWorkspace([])
+    store.addWorkspace([], { title: 'Second workspace' })
 
-    expect(store.desktops).toHaveLength(3)
+    expect(store.workspaces).toHaveLength(3)
     expect(store.info).toHaveLength(3)
-    expect(store.info[2]?.title).toBe('Second desktop')
+    expect(store.info[2]?.title).toBe('Second workspace')
   })
 
-  it('removes matching info entry when deleting desktop', () => {
-    const store = useDesktopStore()
+  it('removes matching info entry when deleting workspace', () => {
+    const store = useWorkspaceStore()
 
-    store.addDesktop([], { title: 'Second desktop' })
-    store.removeDesktop(0)
+    store.addWorkspace([], { title: 'Second workspace' })
+    store.removeWorkspace(0)
 
-    expect(store.desktops).toHaveLength(1)
+    expect(store.workspaces).toHaveLength(1)
     expect(store.info).toHaveLength(1)
-    expect(store.info[0]?.title).toBe('Second desktop')
+    expect(store.info[0]?.title).toBe('Second workspace')
   })
 
-  it('moves info together with desktop order', () => {
-    const store = useDesktopStore()
+  it('moves info together with workspace order', () => {
+    const store = useWorkspaceStore()
 
-    store.updateDesktopInfo(0, { title: 'First desktop' })
-    store.addDesktop([], { title: 'Second desktop' })
+    store.updateWorkspaceInfo(0, { title: 'First workspace' })
+    store.addWorkspace([], { title: 'Second workspace' })
 
-    store.moveDesktopRight(0)
-    expect(store.info[0]?.title).toBe('Second desktop')
-    expect(store.info[1]?.title).toBe('First desktop')
+    store.moveWorkspaceRight(0)
+    expect(store.info[0]?.title).toBe('Second workspace')
+    expect(store.info[1]?.title).toBe('First workspace')
 
-    store.moveDesktopLeft(1)
-    expect(store.info[0]?.title).toBe('First desktop')
-    expect(store.info[1]?.title).toBe('Second desktop')
+    store.moveWorkspaceLeft(1)
+    expect(store.info[0]?.title).toBe('First workspace')
+    expect(store.info[1]?.title).toBe('Second workspace')
   })
 
   it('normalizes missing info entries after persistence restore', () => {
-    const store = useDesktopStore()
+    const store = useWorkspaceStore()
 
-    store.desktops = [[], [], []]
+    store.workspaces = [[], [], []]
     store.info = []
     store.ensureInfoLength()
 
     expect(store.info).toHaveLength(3)
-    expect(store.info[0]).toEqual(defaultDesktopInfo)
+    expect(store.info[0]).toEqual(defaultWorkspaceInfo)
   })
 })

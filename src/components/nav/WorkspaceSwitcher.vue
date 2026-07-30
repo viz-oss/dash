@@ -1,41 +1,41 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 import NavBar from '@/components/nav/NavBar.vue'
-import type { DesktopLayout } from '@/types/desktop'
+import type { WorkspaceLayout } from '@/types/workspace'
 import { useEditmodeStore } from '@/stores/editmode'
-import { useDesktopStore } from '@/stores/desktopStore'
+import { useWorkspaceStore } from '@/stores/workspaceStore'
 
 const props = defineProps<{
-  desktops: DesktopLayout[]
+  workspaces: WorkspaceLayout[]
 }>()
 
 const emit = defineEmits(['change'])
 const editmodeStore = useEditmodeStore()
-const desktopStore = useDesktopStore()
+const workspaceStore = useWorkspaceStore()
 const current = ref(0)
 const pendingProgrammaticIndex = ref<number | null>(null)
-const desktopKeys = ref<number[]>([])
-let nextDesktopKey = 0
+const workspaceKeys = ref<number[]>([])
+let nextWorkspaceKey = 0
 
-function syncDesktopKeys(length: number) {
-  while (desktopKeys.value.length < length) {
-    desktopKeys.value.push(nextDesktopKey++)
+function syncWorkspaceKeys(length: number) {
+  while (workspaceKeys.value.length < length) {
+    workspaceKeys.value.push(nextWorkspaceKey++)
   }
-  if (desktopKeys.value.length > length) {
-    desktopKeys.value.splice(length)
+  if (workspaceKeys.value.length > length) {
+    workspaceKeys.value.splice(length)
   }
 }
 
 watch(
-  () => props.desktops.length,
-  (length) => syncDesktopKeys(length),
+  () => props.workspaces.length,
+  (length) => syncWorkspaceKeys(length),
   { immediate: true },
 )
 
 // --- Navigation ---
 
 function goTo(index: number) {
-  const total = props.desktops.length
+  const total = props.workspaces.length
   const next = Math.max(0, Math.min(total - 1, index))
   if (next === current.value) return
   pendingProgrammaticIndex.value = next
@@ -45,10 +45,10 @@ function goTo(index: number) {
 }
 
 function scrollTo(index: number, smooth = true) {
-  const container = document.querySelector('.desktops-container') as HTMLElement | null
+  const container = document.querySelector('.workspaces-container') as HTMLElement | null
   if (!container) return
-  const desktop = container.querySelectorAll('.desktop')[index]
-  desktop?.scrollIntoView({
+  const workspace = container.querySelectorAll('.workspace')[index]
+  workspace?.scrollIntoView({
     behavior: smooth ? 'smooth' : 'instant',
     block: 'nearest',
     inline: 'start',
@@ -57,52 +57,52 @@ function scrollTo(index: number, smooth = true) {
 
 // --- Change ---
 
-// Switch places with desktop on the left side
+// Switch places with workspace on the left side
 function moveLeft() {
   if (current.value > 0) {
     const index = current.value
-    desktopStore.moveDesktopLeft(index)
+    workspaceStore.moveWorkspaceLeft(index)
 
-    const keyTemp = desktopKeys.value[index - 1]!
-    desktopKeys.value[index - 1] = desktopKeys.value[index]!
-    desktopKeys.value[index] = keyTemp
+    const keyTemp = workspaceKeys.value[index - 1]!
+    workspaceKeys.value[index - 1] = workspaceKeys.value[index]!
+    workspaceKeys.value[index] = keyTemp
 
     goTo(current.value - 1)
   }
 }
 
-// Switch places with desktop on the right side
+// Switch places with workspace on the right side
 function moveRight() {
-  if (current.value < props.desktops.length - 1) {
+  if (current.value < props.workspaces.length - 1) {
     const index = current.value
-    desktopStore.moveDesktopRight(index)
+    workspaceStore.moveWorkspaceRight(index)
 
-    const keyTemp = desktopKeys.value[index + 1]!
-    desktopKeys.value[index + 1] = desktopKeys.value[index]!
-    desktopKeys.value[index] = keyTemp
+    const keyTemp = workspaceKeys.value[index + 1]!
+    workspaceKeys.value[index + 1] = workspaceKeys.value[index]!
+    workspaceKeys.value[index] = keyTemp
 
     goTo(current.value + 1)
   }
 }
 
-// Add a new desktop with an empty layout
+// Add a new workspace with an empty layout
 async function addNew() {
-  desktopStore.addDesktop([])
-  desktopKeys.value.push(nextDesktopKey++)
+  workspaceStore.addWorkspace([])
+  workspaceKeys.value.push(nextWorkspaceKey++)
   await nextTick()
-  goTo(props.desktops.length - 1)
+  goTo(props.workspaces.length - 1)
 }
 
-// Delete the current desktop
+// Delete the current workspace
 function deleteCurrent() {
-  if (confirm('Are you sure you want to delete this desktop?')) {
+  if (confirm('Are you sure you want to delete this workspace?')) {
     const deletingIndex = current.value
-    desktopKeys.value.splice(deletingIndex, 1)
-    desktopStore.removeDesktop(deletingIndex)
-    syncDesktopKeys(props.desktops.length)
+    workspaceKeys.value.splice(deletingIndex, 1)
+    workspaceStore.removeWorkspace(deletingIndex)
+    syncWorkspaceKeys(props.workspaces.length)
 
-    if (current.value >= props.desktops.length) {
-      current.value = Math.max(0, props.desktops.length - 1)
+    if (current.value >= props.workspaces.length) {
+      current.value = Math.max(0, props.workspaces.length - 1)
     }
 
     goTo(current.value)
@@ -114,7 +114,7 @@ function deleteCurrent() {
 let observer: IntersectionObserver | null = null
 
 onMounted(() => {
-  const container = document.querySelector('.desktops-container') as HTMLElement | null
+  const container = document.querySelector('.workspaces-container') as HTMLElement | null
   if (!container) return
 
   observer = new IntersectionObserver(
@@ -138,7 +138,7 @@ onMounted(() => {
     { root: container, threshold: 0.6 },
   )
 
-  container.querySelectorAll('.desktop').forEach((el) => observer?.observe(el))
+  container.querySelectorAll('.workspace').forEach((el) => observer?.observe(el))
 })
 
 onBeforeUnmount(() => {
@@ -147,19 +147,19 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="desktops-container">
+  <div class="workspaces-container">
     <div
-      class="desktop"
-      v-for="(desktop, index) in desktops"
-      :key="desktopKeys[index]"
+      class="workspace"
+      v-for="(workspace, index) in workspaces"
+      :key="workspaceKeys[index]"
       :data-index="index"
     >
-      <slot :desktop="desktop" :index="index" />
+      <slot :workspace="workspace" :index="index" />
     </div>
   </div>
   <NavBar
-    v-if="desktops.length > 1 || editmodeStore.editmode"
-    :total="desktops.length"
+    v-if="workspaces.length > 1 || editmodeStore.editmode"
+    :total="workspaces.length"
     :current="current"
     :swipe-threshold="20"
     @go-to="goTo"
@@ -171,7 +171,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-.desktops-container {
+.workspaces-container {
   display: flex;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
@@ -181,7 +181,7 @@ onBeforeUnmount(() => {
   scrollbar-width: none;
 }
 
-.desktop {
+.workspace {
   flex: 0 0 100vw;
   scroll-snap-align: start;
   overflow: hidden;

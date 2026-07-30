@@ -3,17 +3,17 @@ import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode'
 
 const props = defineProps({
-  // Total desktops in the switcher
+  // Total workspaces in the switcher
   total: {
     type: Number,
     required: true,
   },
-  // Current desktop index (0-based)
+  // Current workspace index (0-based)
   current: {
     type: Number,
     required: true,
   },
-  // Minimal swipe distance (px) to change desktop
+  // Minimal swipe distance (px) to change workspace
   swipeThreshold: {
     type: Number,
     default: 20,

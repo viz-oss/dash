@@ -1,27 +1,27 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { useDesktopStore } from '@/stores/desktopStore'
-import { defaultDesktopInfo } from '@/types/desktop'
+import { useWorkspaceStore } from '@/stores/workspaceStore'
+import { defaultWorkspaceInfo } from '@/types/workspace'
 import IconPicker from '@/components/base/IconPicker.vue'
 
 const props = defineProps<{
-  desktopIndex: number
+  workspaceIndex: number
 }>()
 
-const desktopStore = useDesktopStore()
+const workspaceStore = useWorkspaceStore()
 
 const form = ref({
-  ...defaultDesktopInfo,
+  ...defaultWorkspaceInfo,
 })
 
 watch(
-  () => props.desktopIndex,
+  () => props.workspaceIndex,
   (index) => {
-    const desktopInfo = desktopStore.info[index] ?? defaultDesktopInfo
+    const workspaceInfo = workspaceStore.info[index] ?? defaultWorkspaceInfo
     form.value = {
-      icon: desktopInfo.icon,
-      title: desktopInfo.title,
-      description: desktopInfo.description,
+      icon: workspaceInfo.icon,
+      title: workspaceInfo.title,
+      description: workspaceInfo.description,
     }
   },
   { immediate: true },
@@ -30,7 +30,7 @@ watch(
 const emit = defineEmits(['close'])
 
 function save() {
-  desktopStore.updateDesktopInfo(props.desktopIndex, form.value)
+  workspaceStore.updateWorkspaceInfo(props.workspaceIndex, form.value)
   close()
 }
 

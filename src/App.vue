@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import DesktopSwitcher from '@/components/nav/DesktopSwitcher.vue'
-import Desktop from '@/views/Desktop.vue'
+import WorkspaceSwitcher from '@/components/nav/WorkspaceSwitcher.vue'
+import Workspace from '@/views/Workspace.vue'
 import { storeToRefs } from 'pinia'
-import { useDesktopStore } from '@/stores/desktopStore'
+import { useWorkspaceStore } from '@/stores/workspaceStore'
 
-const desktopStore = useDesktopStore()
-const { desktops } = storeToRefs(desktopStore)
+const workspaceStore = useWorkspaceStore()
+const { workspaces } = storeToRefs(workspaceStore)
 
-desktopStore.ensureInfoLength()
+workspaceStore.ensureInfoLength()
 </script>
 
 <template>
-  <DesktopSwitcher :desktops="desktops">
-    <template #default="{ desktop, index }">
-      <Desktop :layout="desktop" :index="index" />
+  <WorkspaceSwitcher :workspaces="workspaces">
+    <template #default="{ workspace, index }">
+      <Workspace :layout="workspace" :index="index" />
     </template>
-  </DesktopSwitcher>
+  </WorkspaceSwitcher>
 </template>
 
 <style>
