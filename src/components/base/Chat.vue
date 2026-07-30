@@ -8,18 +8,34 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  systemPrompt: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  command: {
+    type: String,
+    required: false,
+    default: '',
+  },
 })
 
 // Generate session ID for tracking conversations
 const ssid = crypto.randomUUID()
 
 // State management
-const messages = ref<{ sender: 'user' | 'bot'; text: string }[]>([])
+const messages = ref<{ sender: 'me' | 'other'; text: string }[]>([])
 const messageInput = ref('')
 const isLoadingTyping = ref(false)
+const systemPromptSent = ref(false) // Track if system prompt has been sent
 
 // Focus the input field on component mount
 onMounted(() => {
+  // Send initial message
+  if (props.command) {
+    send(props.command)
+  }
+  // Focus the input field when the component is mounted
   const inputElement = document.querySelector<HTMLInputElement>('.chat-actions input')
   if (inputElement) {
     inputElement.focus()
@@ -31,8 +47,10 @@ onMounted(() => {
  * @param {string} text - The content of the message.
  * @param {'left' | 'right'} position - Alignment ('left' or 'right').
  */
-const msg = (text: string, position: 'left' | 'right') => {
-  messages.value.push({ sender: position === 'right' ? 'user' : 'bot', text: text })
+const msg = (text: string, position: 'left' | 'right', hidden = false) => {
+  if (!hidden) {
+    messages.value.push({ sender: position === 'right' ? 'me' : 'other', text: text })
+  }
 }
 
 /**
@@ -60,7 +78,9 @@ const send = async (text: string) => {
 
   // 2. Send message to URL and show typing indicator on the left
   typing(true, 'left')
-  const { url, options } = parseCurlToFetch(props.url, { 'PROMPT': text, 'THREAD_ID': ssid })
+  const prompt = (!systemPromptSent.value && props.systemPrompt) ? `${props.systemPrompt.replace(/\n/g, ' ')} ${text}` : text
+  systemPromptSent.value = true
+  const { url, options } = parseCurlToFetch(props.url, { 'PROMPT': prompt, 'THREAD_ID': ssid })
   try {
     const response = await fetch(url, options)
     if (!response.ok) {
@@ -89,7 +109,7 @@ const send = async (text: string) => {
       <div
         v-for="(msg, index) in messages"
         :key="index"
-        :class="['message-bubble', msg.sender === 'user' ? 'right' : 'left']"
+        :class="['message-bubble', msg.sender === 'me' ? 'right' : 'left']"
       >
         {{ msg.text }}
       </div>
@@ -109,7 +129,11 @@ const send = async (text: string) => {
         v-model="messageInput"
         @keyup.enter="send(messageInput)"
         type="text"
+        name="chat-message"
         placeholder="Type your message..."
+        autocomplete="off"
+        autocapitalize="sentences"
+        data-lpignore="true"
       />
     </div>
   </div>

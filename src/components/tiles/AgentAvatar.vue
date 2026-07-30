@@ -23,6 +23,16 @@ defineProps({
     required: false,
     default: '',
   },
+  systemPrompt: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  command: {
+    type: String,
+    required: false,
+    default: '',
+  },
   thumb: {
     type: Boolean,
     required: false,
@@ -57,8 +67,8 @@ onMounted(() => {
     if (eyeLeft.value) eyeLeft.value.style.left = '16px'
     if (eyeRight.value) eyeRight.value.style.right = '12px'
   } else if (osName.value === 'iOS') {
-    if (eyeLeft.value) eyeLeft.value.style.left = '27px'
-    if (eyeRight.value) eyeRight.value.style.right = '0px'
+    if (eyeLeft.value) eyeLeft.value.style.left = '16px'
+    if (eyeRight.value) eyeRight.value.style.right = '12px'
   }
 })
 
@@ -226,6 +236,8 @@ const onMouseMove = (event: MouseEvent) => {
       <Chat
         v-if="!editmodeStore.editmode"
         :url="url"
+        :systemPrompt="systemPrompt"
+        :command="command"
       />
       <AgentSettings
         v-else

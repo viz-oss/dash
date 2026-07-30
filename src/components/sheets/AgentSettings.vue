@@ -21,8 +21,9 @@ const widget = ref(
 )
 
 const form = ref({
-  name: widget.value?.props?.name || '',
   url: widget.value?.props?.url || '',
+  systemPrompt: widget.value?.props?.systemPrompt || '',
+  command: widget.value?.props?.command || '',
 })
 
 const emit = defineEmits(['close'])
@@ -49,19 +50,26 @@ function close() {
       </div>
     </div>
     <div class="field">
-      <label>Agent Name</label>
-      <input
-        type="text"
-        v-model="form.name"
-        placeholder="Enter agent name"
-      />
-    </div>
-    <div class="field">
       <label>Agent Connection URL</label>
       <input
         type="text"
         v-model="form.url"
-        placeholder="API endpoint or CURL command with variables: PROMPT, THREAD_ID"
+        placeholder="API endpoint or CURL with variables: PROMPT, THREAD_ID"
+      />
+    </div>
+    <div class="field">
+      <label>System prompt</label>
+      <textarea
+        v-model="form.systemPrompt"
+        placeholder="System prompt for the agent"
+      ></textarea>
+    </div>
+    <div class="field">
+      <label>Initial command</label>
+      <input
+        type="text"
+        v-model="form.command"
+        placeholder="Initial invisible command to run when the agent starts"
       />
     </div>
     <div class="sheet-footer">
