@@ -87,9 +87,12 @@ const send = async (text: string) => {
       throw new Error(`HTTP error! status: ${response.status}`)
     }
 
+    let botResponseText = ''
     const data = await response.json()
-    // Assuming the API returns a structure with the reply content
-    const botResponseText = data?.payload?.text || 'Nie udało się odebrać odpowiedzi.'
+    if (data?.status === 'processing' ) botResponseText = 'Odpowiedź w trakcie generowania...'
+    else if (data?.status === 'ok') botResponseText = data?.payload?.text || 'Nie udało się odebrać odpowiedzi.'
+    else if (data?.status === 'error') botResponseText = `Błąd: ${data?.payload?.error || 'Nieznany błąd'}`
+    else botResponseText = 'Nie udało się odebrać odpowiedzi.'
 
     // 3. Display response on the left
     msg(botResponseText, 'left')

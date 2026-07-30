@@ -336,4 +336,11 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(80, 100, 255, 0.3);
 }
+
+/* Tweaks */
+
+.bottom-sheet__main[data-v-f0c780e0] {
+  overflow: hidden !important;
+}
+
 </style>
