@@ -276,13 +276,14 @@ const send = async (text: string) => {
 
 /* Message Bubble Styling (General) */
 .message-bubble {
-  max-width: 70%;
   width: fit-content;
   padding: 10px 15px;
   margin-bottom: 15px;
   border-radius: 20px;
   line-height: 1.4;
   font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .message-link-button {
