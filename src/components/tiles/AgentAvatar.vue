@@ -6,6 +6,7 @@ import { useOS } from '@/composables/useOS'
 import Chat from '@/components/base/Chat.vue'
 import { useEditmodeStore } from '@/stores/editmode'
 import AgentSettings from '@/components/sheets/AgentSettings.vue'
+import cactusImage from '../../../assets/cac2.png'
 
 defineProps({
   id: {
@@ -42,7 +43,6 @@ defineProps({
 
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
-const { osName } = useOS()
 const emit = defineEmits(['remove'])
 const sheetChat = ref<{ open: () => void; close: () => void } | null>(null)
 
@@ -58,17 +58,6 @@ onMounted(() => {
 
   if (eyeLeft.value) {
     eyeLeft.value.addEventListener('animationiteration', onBlinkIteration)
-  }
-
-  if (osName.value === 'Windows') {
-    if (eyeLeft.value) eyeLeft.value.style.left = '27px'
-    if (eyeRight.value) eyeRight.value.style.right = '0px'
-  } else if (osName.value === 'macOS') {
-    if (eyeLeft.value) eyeLeft.value.style.left = '16px'
-    if (eyeRight.value) eyeRight.value.style.right = '12px'
-  } else if (osName.value === 'iOS') {
-    if (eyeLeft.value) eyeLeft.value.style.left = '16px'
-    if (eyeRight.value) eyeRight.value.style.right = '12px'
   }
 })
 
@@ -227,7 +216,7 @@ const onMouseMove = (event: MouseEvent) => {
       @click="emit('remove')"
     ></i>
     <div ref="cactus" class="cactus">
-      🌵
+      <img :src="cactusImage" />
       <div ref="eyeLeft" class="eye left"></div>
       <div ref="eyeRight" class="eye right"></div>
       <div class="cloud">{{ hint }}</div>
@@ -239,11 +228,7 @@ const onMouseMove = (event: MouseEvent) => {
         :systemPrompt="systemPrompt"
         :command="command"
       />
-      <AgentSettings
-        v-else
-        :widgetId="id"
-        @close="sheetChat?.close()"
-      />
+      <AgentSettings v-else :widgetId="id" @close="sheetChat?.close()" />
     </VueBottomSheet>
   </div>
 </template>
@@ -264,6 +249,11 @@ const onMouseMove = (event: MouseEvent) => {
   transform: translate(-50%, 0);
 }
 
+.cactus img {
+  width: 100%;
+  height: auto;
+}
+
 .cactus .eye {
   position: absolute;
   top: 12px;
@@ -282,11 +272,11 @@ const onMouseMove = (event: MouseEvent) => {
 }
 
 .cactus .eye.left {
-  left: 18px;
+  left: 12px;
 }
 
 .cactus .eye.right {
-  right: 18px;
+  right: 14px;
 }
 
 .cactus .eye::after {
