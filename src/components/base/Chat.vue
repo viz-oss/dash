@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
 import { parseCurlToFetch } from '@/utils/curlParser'
 
 type JsonValue = string | number | boolean | null | { [key: string]: JsonValue } | JsonValue[]
@@ -45,6 +45,15 @@ const messages = ref<ChatMessage[]>([])
 const messageInput = ref('')
 const isLoadingTyping = ref(false)
 const systemPromptSent = ref(false) // Track if system prompt has been sent
+const messageList = ref<HTMLDivElement | null>(null)
+
+const scrollToBottom = async () => {
+  await nextTick()
+
+  if (!messageList.value) return
+
+  messageList.value.scrollTop = messageList.value.scrollHeight
+}
 
 const isHttpUrl = (value: string) => /^https?:\/\//i.test(value)
 const isObject = (value: JsonValue): value is { [key: string]: JsonValue } =>
@@ -242,6 +251,18 @@ onMounted(() => {
   }
 })
 
+watch(
+  messages,
+  () => {
+    void scrollToBottom()
+  },
+  { deep: true },
+)
+
+watch(isLoadingTyping, () => {
+  void scrollToBottom()
+})
+
 /**
  * Displays a message bubble. Visual only.
  * @param {string} text - The content of the message.
@@ -321,7 +342,7 @@ const send = async (text: string) => {
 
 <template>
   <div class="chat-container">
-    <div class="message-list">
+    <div ref="messageList" class="message-list">
       <div
         v-for="(msg, index) in messages"
         :key="index"
