@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import type { ApexOptions } from 'apexcharts'
 import apexchart from 'vue3-apexcharts'
 import { useEditmodeStore } from '@/stores/editmode'
-import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import VueBottomSheet, { type VueBottomSheetRef } from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import RingChartSettings from '@/components/sheets/RingChartSettings.vue'
 import { parseVariables } from '@/utils/varParser'
@@ -60,7 +60,7 @@ const props = defineProps({
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
-const sheet = ref<{ open: () => void; close: () => void } | null>(null)
+const sheet = ref<VueBottomSheetRef | null>(null)
 
 const { url, options } = parseCurlToFetch(props.url)
 const { data, error, isFetching } = useRequest(url, options)

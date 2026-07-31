@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import VueBottomSheet, { type VueBottomSheetRef } from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import Icon from '@/components/base/Icon.vue'
 import { useEditmodeStore } from '@/stores/editmode.ts'
@@ -24,8 +24,8 @@ const props = defineProps({
 const editmodeStore = useEditmodeStore()
 const workspaceStore = useWorkspaceStore()
 const emit = defineEmits(['remove', 'add'])
-const sheetAddNewTile = ref<{ open: () => void; close: () => void } | null>(null)
-const sheetWorkspaceInfo = ref<{ open: () => void; close: () => void } | null>(null)
+const sheetAddNewTile = ref<VueBottomSheetRef | null>(null)
+const sheetWorkspaceInfo = ref<VueBottomSheetRef | null>(null)
 const addNewTileSheet = ref<{ onOpened: () => void } | null>(null)
 const workspaceInfo = computed(() => workspaceStore.info[props.workspaceIndex] ?? defaultWorkspaceInfo)
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import VueBottomSheet, { type VueBottomSheetRef } from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import { useOS } from '@/composables/useOS'
 import Chat from '@/components/base/Chat.vue'
@@ -44,7 +44,7 @@ defineProps({
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
-const sheetChat = ref<{ open: () => void; close: () => void } | null>(null)
+const sheetChat = ref<VueBottomSheetRef | null>(null)
 
 // Cactus eye positioning
 const cactus = ref<HTMLElement | null>(null)

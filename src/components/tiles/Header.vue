@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useEditmodeStore } from '@/stores/editmode'
-import VueBottomSheet from '@webzlodimir/vue-bottom-sheet'
+import VueBottomSheet, { type VueBottomSheetRef } from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
 import HeaderSettings from '@/components/sheets/HeaderSettings.vue'
 
@@ -31,7 +31,7 @@ defineProps({
 const editmodeStore = useEditmodeStore()
 const randomFloatDelay = `${Math.round((Math.random() * 2 - 1) * 100) / 100}s`
 const emit = defineEmits(['remove'])
-const sheet = ref<{ open: () => void; close: () => void } | null>(null)
+const sheet = ref<VueBottomSheetRef | null>(null)
 
 </script>
 
