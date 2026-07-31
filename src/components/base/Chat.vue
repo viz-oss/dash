@@ -2,6 +2,13 @@
 import { ref, onMounted } from 'vue'
 import { parseCurlToFetch } from '@/utils/curlParser'
 
+type MessagePart =
+  | { type: 'text'; content: string }
+  | { type: 'external-link'; href: string; label: string }
+  | { type: 'command'; command: string; label: string }
+
+type ChatMessage = { sender: 'me' | 'other'; text: string; parts: MessagePart[] }
+
 // Props definition
 const props = defineProps({
   url: {
@@ -23,11 +30,78 @@ const props = defineProps({
 // Generate session ID for tracking conversations
 const ssid = crypto.randomUUID()
 
+const markdownLinkRegex = /\[([^\]]+)\]\(([^)]+)\)/g
+const rawHttpRegex = /https?:\/\/[\w\-._~:/?#[\]@!$&'()*+,;=%]+/g
+
 // State management
-const messages = ref<{ sender: 'me' | 'other'; text: string }[]>([])
+const messages = ref<ChatMessage[]>([])
 const messageInput = ref('')
 const isLoadingTyping = ref(false)
 const systemPromptSent = ref(false) // Track if system prompt has been sent
+
+const isHttpUrl = (value: string) => /^https?:\/\//i.test(value)
+
+const parseRawHttpLinks = (text: string) => {
+  const parts: MessagePart[] = []
+  let lastIndex = 0
+  rawHttpRegex.lastIndex = 0
+
+  for (const match of text.matchAll(rawHttpRegex)) {
+    const start = match.index ?? 0
+    const url = match[0]
+
+    if (start > lastIndex) {
+      parts.push({ type: 'text', content: text.slice(lastIndex, start) })
+    }
+
+    parts.push({ type: 'external-link', href: url, label: '' })
+    lastIndex = start + url.length
+  }
+
+  if (lastIndex < text.length) {
+    parts.push({ type: 'text', content: text.slice(lastIndex) })
+  }
+
+  return parts
+}
+
+const parseMessageParts = (text: string) => {
+  const parts: MessagePart[] = []
+  let lastIndex = 0
+  markdownLinkRegex.lastIndex = 0
+
+  for (const match of text.matchAll(markdownLinkRegex)) {
+    const start = match.index ?? 0
+    const label = (match[1] || '').trim()
+    const target = (match[2] || '').trim()
+
+    if (start > lastIndex) {
+      parts.push(...parseRawHttpLinks(text.slice(lastIndex, start)))
+    }
+
+    if (target) {
+      if (isHttpUrl(target)) {
+        parts.push({ type: 'external-link', href: target, label: label || target })
+      } else {
+        parts.push({ type: 'command', command: target, label: label || target })
+      }
+    } else if (match[0]) {
+      parts.push({ type: 'text', content: match[0] })
+    }
+
+    lastIndex = start + match[0].length
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(...parseRawHttpLinks(text.slice(lastIndex)))
+  }
+
+  if (!parts.length) {
+    return [{ type: 'text', content: text }] as MessagePart[]
+  }
+
+  return parts
+}
 
 // Focus the input field on component mount
 onMounted(() => {
@@ -49,8 +123,16 @@ onMounted(() => {
  */
 const msg = (text: string, position: 'left' | 'right', hidden = false) => {
   if (!hidden) {
-    messages.value.push({ sender: position === 'right' ? 'me' : 'other', text: text })
+    messages.value.push({
+      sender: position === 'right' ? 'me' : 'other',
+      text: text,
+      parts: parseMessageParts(text),
+    })
   }
+}
+
+const openExternalLink = (href: string) => {
+  window.open(href, '_blank', 'noopener,noreferrer')
 }
 
 /**
@@ -78,9 +160,12 @@ const send = async (text: string) => {
 
   // 2. Send message to URL and show typing indicator on the left
   typing(true, 'left')
-  const prompt = (!systemPromptSent.value && props.systemPrompt) ? `${props.systemPrompt.replace(/\n/g, ' ')} ${text}` : text
+  const prompt =
+    !systemPromptSent.value && props.systemPrompt
+      ? `${props.systemPrompt.replace(/\n/g, ' ')} ${text}`
+      : text
   systemPromptSent.value = true
-  const { url, options } = parseCurlToFetch(props.url, { 'PROMPT': prompt, 'THREAD_ID': ssid })
+  const { url, options } = parseCurlToFetch(props.url, { PROMPT: prompt, THREAD_ID: ssid })
   try {
     const response = await fetch(url, options)
     if (!response.ok) {
@@ -89,9 +174,11 @@ const send = async (text: string) => {
 
     let botResponseText = ''
     const data = await response.json()
-    if (data?.status === 'processing' ) botResponseText = 'Odpowiedź w trakcie generowania...'
-    else if (data?.status === 'ok') botResponseText = data?.payload?.text || 'Nie udało się odebrać odpowiedzi.'
-    else if (data?.status === 'error') botResponseText = `Błąd: ${data?.payload?.error || 'Nieznany błąd'}`
+    if (data?.status === 'processing') botResponseText = 'Odpowiedź w trakcie generowania...'
+    else if (data?.status === 'ok')
+      botResponseText = data?.payload?.text || 'Nie udało się odebrać odpowiedzi.'
+    else if (data?.status === 'error')
+      botResponseText = `Błąd: ${data?.payload?.error || 'Nieznany błąd'}`
     else botResponseText = 'Nie udało się odebrać odpowiedzi.'
 
     // 3. Display response on the left
@@ -114,7 +201,34 @@ const send = async (text: string) => {
         :key="index"
         :class="['message-bubble', msg.sender === 'me' ? 'right' : 'left']"
       >
-        {{ msg.text }}
+        <template v-for="(part, partIndex) in msg.parts" :key="`${index}-${partIndex}`">
+          <span v-if="part.type === 'text'">{{ part.content }}</span>
+
+          <button
+            v-else-if="part.type === 'command'"
+            class="message-link-button"
+            type="button"
+            :title="part.command"
+            @click="send(part.command)"
+          >
+            {{ part.label }}
+          </button>
+
+          <button
+            v-else
+            class="message-link-button"
+            type="button"
+            :title="part.href"
+            @click="openExternalLink(part.href)"
+          >
+            <template v-if="part.label">
+              {{ part.label }}
+            </template>
+            <template v-else>
+              <i class="fa-solid fa-link"></i>
+            </template>
+          </button>
+        </template>
       </div>
       <!-- Typing Indicator -->
       <div v-if="isLoadingTyping" class="message-bubble left typing-indicator">
@@ -169,6 +283,25 @@ const send = async (text: string) => {
   border-radius: 20px;
   line-height: 1.4;
   font-size: 14px;
+}
+
+.message-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 3px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: var(--field-border);
+  background-color: var(--key-color-light);
+  color: var(--key-color-dark);
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.message-link-button:hover {
+  filter: brightness(0.97);
 }
 
 /* Right aligned messages (User) */
@@ -239,5 +372,4 @@ const send = async (text: string) => {
     0 0 0 2px rgba(139, 92, 246, 0.08),
     0 10px 16px rgba(139, 92, 246, 0.12);
 }
-
 </style>
