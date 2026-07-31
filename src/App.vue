@@ -339,7 +339,7 @@ body {
 
 /* Tweaks */
 
-/* .bottom-sheet__main[data-v-f0c780e0] {
+main.bottom-sheet__main:has(.chat-container) {
   overflow: hidden !important;
-} */
+}
 </style>
