@@ -49,6 +49,12 @@ npm run dev
 npm run build
 ```
 
+### Run Type-Check Only
+
+```sh
+npm run type-check
+```
+
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh
@@ -71,8 +77,10 @@ npm run build
 npm run test:e2e
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Lint (Oxlint + ESLint)
 
 ```sh
 npm run lint
 ```
+
+This command runs both oxlint and eslint using the project scripts.
