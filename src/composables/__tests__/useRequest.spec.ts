@@ -95,4 +95,66 @@ describe('useRequest', () => {
     })
     expect(isFetching.value).toBe(false)
   })
+
+  it('returns an error immediately for an invalid URL', () => {
+    const { data, error, isFetching } = useRequest('not-a-url')
+
+    expect(data.value).toBeNull()
+    expect(error.value).toBeInstanceOf(Error)
+    expect(error.value?.message).toBe('Invalid URL: not-a-url')
+    expect(isFetching.value).toBe(false)
+  })
+
+  it('stores network errors when fetch rejects', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('Failed to fetch')))
+
+    const { data, error, isFetching } = useRequest('https://example.com')
+
+    await waitForFetchToSettle()
+
+    expect(data.value).toBeNull()
+    expect(error.value).toBeInstanceOf(TypeError)
+    expect(error.value?.message).toBe('Failed to fetch')
+    expect(isFetching.value).toBe(false)
+  })
+
+  it('falls back to JSON parsing for text responses containing JSON', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        new Response('{"total":7}', {
+          headers: { 'Content-Type': 'application/custom' },
+        }),
+      ),
+    )
+
+    const { data, error, isFetching } = useRequest<{ total: number }>('https://example.com')
+
+    await waitForFetchToSettle()
+
+    expect(data.value).toEqual({ total: 7 })
+    expect(error.value).toBeNull()
+    expect(isFetching.value).toBe(false)
+  })
+
+  it('parses form data responses for form content type', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        new Response('name=dash', {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        }),
+      ),
+    )
+
+    const { data, error, isFetching } = useRequest<FormData>('https://example.com')
+
+    await waitForFetchToSettle()
+
+    expect(data.value).not.toBeNull()
+    expect(typeof (data.value as FormData).get).toBe('function')
+    expect((data.value as FormData).get('name')).toBe('dash')
+    expect(error.value).toBeNull()
+    expect(isFetching.value).toBe(false)
+  })
 })
