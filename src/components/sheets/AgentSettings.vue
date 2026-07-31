@@ -13,12 +13,10 @@ const workspaceStore = useWorkspaceStore()
 const { updateWidget } = workspaceStore
 const workspaceIndex = ref(
   workspaceStore.workspaces.findIndex((workspace) =>
-    workspace.some((item) => item.i === props.widgetId)
-  )
+    workspace.some((item) => item.i === props.widgetId),
+  ),
 )
-const widget = ref(
-  workspaceStore.workspaces.flat().find((item) => item.i === props.widgetId)
-)
+const widget = ref(workspaceStore.workspaces.flat().find((item) => item.i === props.widgetId))
 
 const form = ref({
   url: widget.value?.props?.url || '',
@@ -59,17 +57,14 @@ function close() {
     </div>
     <div class="field">
       <label>System prompt</label>
-      <textarea
-        v-model="form.systemPrompt"
-        placeholder="System prompt for the agent"
-      ></textarea>
+      <textarea v-model="form.systemPrompt" placeholder="System prompt for the agent"></textarea>
     </div>
     <div class="field">
       <label>Initial command</label>
       <input
         type="text"
         v-model="form.command"
-        placeholder="Initial invisible command to run when the agent starts"
+        placeholder="Initial command to run when the agent starts"
       />
     </div>
     <div class="sheet-footer">
@@ -78,4 +73,3 @@ function close() {
     </div>
   </div>
 </template>
-    

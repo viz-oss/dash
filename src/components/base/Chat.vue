@@ -2,10 +2,17 @@
 import { ref, onMounted } from 'vue'
 import { parseCurlToFetch } from '@/utils/curlParser'
 
+type JsonValue = string | number | boolean | null | { [key: string]: JsonValue } | JsonValue[]
+
+type JsonTablePart = { type: 'json-table'; columns: string[]; rows: string[][] }
+type JsonTreePart = { type: 'json-tree'; lines: string[] }
+
 type MessagePart =
   | { type: 'text'; content: string }
   | { type: 'external-link'; href: string; label: string }
   | { type: 'command'; command: string; label: string }
+  | JsonTablePart
+  | JsonTreePart
 
 type ChatMessage = { sender: 'me' | 'other'; text: string; parts: MessagePart[] }
 
@@ -40,6 +47,120 @@ const isLoadingTyping = ref(false)
 const systemPromptSent = ref(false) // Track if system prompt has been sent
 
 const isHttpUrl = (value: string) => /^https?:\/\//i.test(value)
+const isObject = (value: JsonValue): value is { [key: string]: JsonValue } =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+const isPrimitive = (value: JsonValue) =>
+  typeof value === 'string' ||
+  typeof value === 'number' ||
+  typeof value === 'boolean' ||
+  value === null
+
+const formatPrimitive = (value: JsonValue) => {
+  if (value === null) return 'null'
+  if (typeof value === 'string') return value
+  if (typeof value === 'boolean') return value ? 'true' : 'false'
+  if (typeof value === 'number')
+    return Number.isFinite(value) ? String(value) : JSON.stringify(value)
+  return JSON.stringify(value)
+}
+
+const tryParseJson = (text: string): JsonValue | null => {
+  const trimmed = text.trim()
+  if (!trimmed) return null
+
+  const fenceMatch = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i)
+  const candidate = fenceMatch ? (fenceMatch[1] ?? '').trim() : trimmed
+  if (!candidate) return null
+
+  if (!(candidate.startsWith('{') || candidate.startsWith('['))) {
+    return null
+  }
+
+  try {
+    return JSON.parse(candidate) as JsonValue
+  } catch {
+    return null
+  }
+}
+
+const isFlatObject = (value: JsonValue): value is { [key: string]: JsonValue } =>
+  isObject(value) && Object.values(value).every(isPrimitive)
+
+const isPrimitiveArray = (value: JsonValue): value is JsonValue[] =>
+  Array.isArray(value) && value.every(isPrimitive)
+
+const isTabularArray = (value: JsonValue): value is Array<{ [key: string]: JsonValue }> => {
+  if (!Array.isArray(value) || !value.length) return false
+  return value.every((row) => isObject(row) && Object.values(row).every(isPrimitive))
+}
+
+const toObjectRows = (value: { [key: string]: JsonValue }): string[][] =>
+  Object.entries(value).map(([key, val]) => [key, formatPrimitive(val)])
+
+const toPrimitiveRows = (value: JsonValue[]): string[][] =>
+  value.map((item) => [formatPrimitive(item)])
+
+const toTabularRows = (value: Array<{ [key: string]: JsonValue }>) => {
+  const columns = Array.from(new Set(value.flatMap((row) => Object.keys(row))))
+  const rows = value.map((row) => columns.map((column) => formatPrimitive(row[column] ?? null)))
+  return { columns, rows }
+}
+
+const appendTreeNode = (
+  lines: string[],
+  key: string,
+  value: JsonValue,
+  prefix: string,
+  isLast: boolean,
+) => {
+  const connector = isLast ? '└─' : '├─'
+  const nextPrefix = `${prefix}${isLast ? '  ' : '│ '}`
+
+  if (isPrimitive(value)) {
+    lines.push(`${prefix}${connector} ${key}: ${formatPrimitive(value)}`)
+    return
+  }
+
+  if (Array.isArray(value)) {
+    lines.push(`${prefix}${connector} ${key}: [${value.length}]`)
+    value.forEach((item, index) => {
+      appendTreeNode(lines, `[${index}]`, item, nextPrefix, index === value.length - 1)
+    })
+    return
+  }
+
+  const entries = Object.entries(value)
+  lines.push(`${prefix}${connector} ${key}: {${entries.length}}`)
+  entries.forEach(([childKey, childValue], index) => {
+    appendTreeNode(lines, childKey, childValue, nextPrefix, index === entries.length - 1)
+  })
+}
+
+const toTreeLines = (value: JsonValue) => {
+  const lines: string[] = ['JSON']
+  appendTreeNode(lines, 'root', value, '', true)
+  return lines
+}
+
+const parseJsonPart = (text: string): MessagePart | null => {
+  const parsedJson = tryParseJson(text)
+  if (!parsedJson) return null
+
+  if (isFlatObject(parsedJson)) {
+    return { type: 'json-table', columns: ['Key', 'Value'], rows: toObjectRows(parsedJson) }
+  }
+
+  if (isPrimitiveArray(parsedJson)) {
+    return { type: 'json-table', columns: ['Value'], rows: toPrimitiveRows(parsedJson) }
+  }
+
+  if (isTabularArray(parsedJson)) {
+    const { columns, rows } = toTabularRows(parsedJson)
+    return { type: 'json-table', columns, rows }
+  }
+
+  return { type: 'json-tree', lines: toTreeLines(parsedJson) }
+}
 
 const parseRawHttpLinks = (text: string) => {
   const parts: MessagePart[] = []
@@ -66,6 +187,11 @@ const parseRawHttpLinks = (text: string) => {
 }
 
 const parseMessageParts = (text: string) => {
+  const jsonPart = parseJsonPart(text)
+  if (jsonPart) {
+    return [jsonPart]
+  }
+
   const parts: MessagePart[] = []
   let lastIndex = 0
   markdownLinkRegex.lastIndex = 0
@@ -204,6 +330,27 @@ const send = async (text: string) => {
         <template v-for="(part, partIndex) in msg.parts" :key="`${index}-${partIndex}`">
           <span v-if="part.type === 'text'">{{ part.content }}</span>
 
+          <div v-else-if="part.type === 'json-table'" class="json-table-wrap">
+            <table class="json-table">
+              <thead>
+                <tr>
+                  <th v-for="column in part.columns" :key="column">{{ column }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, rowIndex) in part.rows" :key="rowIndex">
+                  <td v-for="(cell, cellIndex) in row" :key="`${rowIndex}-${cellIndex}`">
+                    {{ cell }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div v-else-if="part.type === 'json-tree'" class="json-tree-wrap">
+            <pre class="json-tree">{{ part.lines.join('\n') }}</pre>
+          </div>
+
           <button
             v-else-if="part.type === 'command'"
             class="message-link-button"
@@ -303,6 +450,56 @@ const send = async (text: string) => {
 
 .message-link-button:hover {
   filter: brightness(0.97);
+}
+
+.json-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin: 6px 0;
+}
+
+.json-table {
+  border-collapse: collapse;
+  min-width: 220px;
+  width: max-content;
+  max-width: 100%;
+  font-size: 13px;
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+}
+
+.json-table th,
+.json-table td {
+  border: 1px solid #edf0f3;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.json-table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+}
+
+.json-tree-wrap {
+  width: 100%;
+  margin: 6px 0;
+}
+
+.json-tree {
+  margin: 0;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #e9ecef;
+  background-color: #f8fafc;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  white-space: pre;
+  overflow-x: auto;
 }
 
 /* Right aligned messages (User) */
