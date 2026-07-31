@@ -417,8 +417,14 @@ const send = async (text: string) => {
 
 .message-list {
   flex-grow: 1;
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 15px 0 15px;
   overflow-y: auto;
+}
+
+.message-list > :first-child {
+  margin-top: auto;
 }
 
 /* Message Bubble Styling (General) */
