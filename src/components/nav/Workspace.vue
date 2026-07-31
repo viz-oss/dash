@@ -5,6 +5,7 @@ import { useEditmodeStore } from '@/stores/editmode'
 import { useWorkspaceStore } from '@/stores/workspaceStore'
 import { tileDefinitions, type WorkspaceLayout } from '@/types/workspace'
 import TopNav from '@/components/nav/TopNav.vue'
+import Footer from '@/components/nav/Footer.vue'
 import inobounce from 'inobounce'
 
 const props = defineProps<{
@@ -62,58 +63,74 @@ function removeTile(id: string | number) {
 const dragOptions = {
   onstart: () => {
     document.body.classList.add('body-no-scroll')
-    inobounce.enable();
+    inobounce.enable()
   },
   onend: () => {
     document.body.classList.remove('body-no-scroll')
-    inobounce.disable();
+    inobounce.disable()
   },
   autoScroll: false,
-};
+}
 </script>
 
 <template>
-  <TopNav :id="`topnav-${props.index}`" :workspace-index="props.index" @add="addTile" />
-  <GridLayout
-    v-model:layout="layoutModel"
-    :col-num="3"
-    :row-height="50"
-    :margin="[4, 16]"
-    :is-draggable="editmodeStore.editmode"
-    :is-resizable="editmodeStore.editmode"
-    :prevent-collision="false"
-    :vertical-compact="false"
-    :use-css-transforms="true"
-    :responsive="false"
-    class="dashboard-grid"
-    :class="editmodeStore.editmode ? 'editmode' : ''"
-  >
-    <GridItem
-      v-for="item in layoutModel"
-      :key="item.i"
-      v-bind="item"
-      drag-ignore-from=".close, .bottom-sheet, .chat"
-      :drag-option="dragOptions"
-      @move="onTileMove"
-      @moved="onTileMoved"
-    >
-      <div
-        class="tile-frame"
-        :class="{ 'tile-frame--drag': editmodeStore.editmode }"
-        @click.capture="preventClickAfterDrag"
+  <div class="workspace-shell">
+    <TopNav :id="`topnav-${props.index}`" :workspace-index="props.index" @add="addTile" />
+    <main class="workspace-content">
+      <GridLayout
+        v-model:layout="layoutModel"
+        :col-num="3"
+        :row-height="50"
+        :margin="[4, 16]"
+        :is-draggable="editmodeStore.editmode"
+        :is-resizable="editmodeStore.editmode"
+        :prevent-collision="false"
+        :vertical-compact="false"
+        :use-css-transforms="true"
+        :responsive="false"
+        class="dashboard-grid"
+        :class="editmodeStore.editmode ? 'editmode' : ''"
       >
-        <component
-          :id="item.i"
-          :is="tileDefinitions[item.tile]?.component"
-          v-bind="item.props"
-          @remove="removeTile(item.i)"
-        />
-      </div>
-    </GridItem>
-  </GridLayout>
+        <GridItem
+          v-for="item in layoutModel"
+          :key="item.i"
+          v-bind="item"
+          drag-ignore-from=".close, .bottom-sheet, .chat"
+          :drag-option="dragOptions"
+          @move="onTileMove"
+          @moved="onTileMoved"
+        >
+          <div
+            class="tile-frame"
+            :class="{ 'tile-frame--drag': editmodeStore.editmode }"
+            @click.capture="preventClickAfterDrag"
+          >
+            <component
+              :id="item.i"
+              :is="tileDefinitions[item.tile]?.component"
+              v-bind="item.props"
+              @remove="removeTile(item.i)"
+            />
+          </div>
+        </GridItem>
+      </GridLayout>
+    </main>
+    <Footer />
+  </div>
 </template>
 
 <style>
+.workspace-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.workspace-content {
+  flex: 1;
+  display: flex;
+}
+
 .dashboard-grid {
   width: 100%;
 }

@@ -339,8 +339,7 @@ body {
 
 /* Tweaks */
 
-.bottom-sheet__main[data-v-f0c780e0] {
+/* .bottom-sheet__main[data-v-f0c780e0] {
   overflow: hidden !important;
-}
-
+} */
 </style>
