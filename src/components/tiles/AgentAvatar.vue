@@ -2,7 +2,8 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import VueBottomSheet, { type VueBottomSheetRef } from '@webzlodimir/vue-bottom-sheet'
 import '@webzlodimir/vue-bottom-sheet/dist/style.css'
-import { useOS } from '@/composables/useOS'
+// import { useOS } from '@/composables/useOS'
+// const { osName } = useOS()
 import Chat from '@/components/base/Chat.vue'
 import { useEditmodeStore } from '@/stores/editmode'
 import AgentSettings from '@/components/sheets/AgentSettings.vue'
@@ -53,6 +54,13 @@ const eyeRight = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   window.addEventListener('mousemove', onMouseMove, { passive: true })
+
+  // if (osName.value === 'ios') {
+  //   if (eyeLeft.value && eyeRight.value) {
+  //     eyeLeft.value.style.top = '6px'
+  //     eyeRight.value.style.top = '6px'
+  //   }
+  // }
   startAnimationLoop()
   randomizeBlinkTiming(true)
 
@@ -256,7 +264,7 @@ const onMouseMove = (event: MouseEvent) => {
 
 .cactus .eye {
   position: absolute;
-  top: 12px;
+  bottom: 60px;
   width: 8px;
   height: 8px;
   background-color: white;
