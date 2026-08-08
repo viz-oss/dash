@@ -12,7 +12,9 @@ const props = defineProps({
 const workspaceStore = useWorkspaceStore()
 const { updateWidget } = workspaceStore
 const workspaceIndex = ref(
-  workspaceStore.workspaces.findIndex((workspace) => workspace.some((item) => item.i === props.widgetId)),
+  workspaceStore.workspaces.findIndex((workspace) =>
+    workspace.some((item) => item.i === props.widgetId),
+  ),
 )
 const widget = ref(workspaceStore.workspaces.flat().find((item) => item.i === props.widgetId))
 
@@ -57,6 +59,7 @@ const landscapes = [
   'treasure',
   'marina',
   'construction',
+  'shopping',
 ]
 </script>
 
